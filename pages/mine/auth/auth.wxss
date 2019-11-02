@@ -1,13 +1,51 @@
-.orc-wrapper{
+.container{
+  overflow: scroll;
+  margin-bottom: 180px;
+}
+.orc-wrapper {
   margin: 40rpx auto;
   width: 375rpx;
 }
-.intro{
+
+.intro {
   margin: 40rpx;
 }
-.btn{
-  position: absolute;
-  transform: translate(-50%, -50%);
-  left: 50%;
-  top: 50%;
+
+.btn {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #1296db;
+  color: #fff;
+}
+
+.big-logos {
+  text-align: center;
+  margin: 0 auto;
+  padding: 8rpx;
+}
+
+.form-wrapper {
+  display: flex;
+  flex-direction: row;
+  border-bottom: 1px solid #666666;
+  height: 50px;
+  padding: 0 12rpx;
+}
+
+.label {
+  display: inline-block;
+  width: 25%;
+  font-size: 18px;
+  height: 50rpx;
+  line-height: 100rpx;
+}
+.input{
+  display: inline-block;
+  width: 75%;
+  font-size: 18px;
+  height: 50rpx;
+  line-height: 100rpx;
+  color: #666666;
+  text-align: right;
 }

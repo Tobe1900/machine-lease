@@ -1,14 +1,18 @@
 let adds = {}
 Page({
   data:{
-    name: '',
-    idCode: '',
+    name: '拍照自动识别',
+    idCode: '拍照自动识别',
     access_token: null,
-    img_arr:[],
+    default_front:'../../../icons/front.png',
+    default_back:'../../../icons/back.png',
+    front:null,
+    back: null,
     formData: ''
   },
   onLoad:function(){
-    this.getAccessToken()
+    // 页面加载时调用
+    // this.getAccessToken()
   },
   getAccessToken:function(){
     let that = this
@@ -28,16 +32,14 @@ Page({
   },
 
   formSubmit: function (e) {
-    var id = e.target.id
-    adds = e.detail.value;
     this.upload()
   },
 
-  upload: function () {
+  upload: function (img_file) {
     var that = this
       wx.uploadFile({
-        url: 'http://nkh.m-th.cn/nkh/api/ocrIdCard?access_token='+that.data.access_token,
-        filePath: that.data.img_arr[0],
+        url: 'http://nkh.m-th.cn/nkh/api/ocrIdCard',
+        filePath: img_file,
         header:{
           'content-type':'multipart/form-data'
           },
@@ -55,23 +57,31 @@ Page({
         }
       })
   },
-  upimg: function () {
+  upimg: function (e) {
+    let type = e.target.id
     var that = this;
-    if (this.data.img_arr.length < 3) {
       wx.chooseImage({
         sizeType: ['original', 'compressed'],
         success: function (res) {
-          that.setData({
-            img_arr: that.data.img_arr.concat(res.tempFilePaths)
-          })
+          switch(type){
+            case 'front':
+              console.log('heeeh front')
+              that.setData({
+                front: res.tempFilePaths[0]
+              })
+              that.upload(res.tempFilePaths[0])
+              break
+            case 'back':
+              that.setData({
+                back: res.tempFilePaths[0]
+              })
+              that.upload(res.tempFilePaths[0])
+              break
+            default:
+              break  
+          }
+         
         }
       })
-    } else {
-      wx.showToast({
-        title: '最多上传三张图片',
-        icon: 'loading',
-        duration: 3000
-      });
-    }
   }
 })

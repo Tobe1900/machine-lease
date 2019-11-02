@@ -1,0 +1,87 @@
+<view class="container">
+  <view class="userinfo">
+    <block wx:if="{{!isUserLogin && canIUse}}">
+    <image bindtap="bindViewTap" class="userinfo-avatar" src="{{default_avatarUrl}}" mode="cover"></image>
+    <text bindtap="loginOrRegist" class="login-btn">登录/注册</text>
+    </block>
+    <block wx:else>
+      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
+      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+    </block>
+  </view>
+
+  <dialogCom id='dialog' title='提示' content='需要您授权, 取得用户信息' confirmText='授权' bind:confirmEvent='confirmEvent' bind:bindGetUserInfo='bindGetUserInfo'>
+  </dialogCom>
+
+  <view class="news-item-container" bindtap="setPersonalAuth">
+    <view class="news-item">
+      <view class="news-item-left">
+        <image src="../../icons/person.png" class="news-image" />
+        <!-- <text class="fa fa-credit-card"></text> -->
+        <text class="news-item-title">个人认证</text>
+      </view>
+      <view class="news-item-right">
+        <image src="../../icons/arrow.png" class="news-image-right" />
+      </view>
+    </view>
+  </view>
+  <view class="news-item-container" bindtap="goToMyCards">
+    <view class="news-item">
+      <view class="news-item-left">
+        <image src="../../icons/enterprise.png" class="news-image" />
+        <text class="news-item-title">企业认证</text>
+      </view>
+      <view class="news-item-right">
+        <image src="../../icons/arrow.png" class="news-image-right" />
+      </view>
+    </view>
+  </view>
+  <view class="news-item-container" bindtap="">
+    <view class="news-item">
+      <view class="news-item-left">
+        <image src="../../icons/coupon.png" class="news-image" />
+        <!-- <text class="fa fa-credit-card"></text> -->
+        <text class="news-item-title">优惠券</text>
+      </view>
+      <view class="news-item-right">
+        <image src="../../icons/arrow.png" class="news-image-right" />
+      </view>
+    </view>
+  </view>
+  <view class="news-item-container" bindtap="goToMyCards">
+    <view class="news-item">
+      <view class="news-item-left">
+        <image src="../../icons/guarantee.png" class="news-image" />
+        <!-- <text class="fa fa-credit-card"></text> -->
+        <text class="news-item-title">报修记录</text>
+      </view>
+      <view class="news-item-right">
+        <image src="../../icons/arrow.png" class="news-image-right" />
+      </view>
+    </view>
+  </view>
+  <view class="news-item-container" bindtap="goToMyCards">
+    <view class="news-item">
+      <view class="news-item-left">
+        <image src="../../icons/invite.png" class="news-image" />
+        <!-- <text class="fa fa-credit-card"></text> -->
+        <text class="news-item-title">邀请码</text>
+      </view>
+      <view class="news-item-right">
+        <image src="../../icons/arrow.png" class="news-image-right" />
+      </view>
+    </view>
+  </view>
+  <view class="news-item-container" bindtap="goToMyCards">
+    <view class="news-item">
+      <view class="news-item-left">
+        <image src="../../icons/phone.png" class="news-image" />
+        <!-- <text class="fa fa-credit-card"></text> -->
+        <text class="news-item-title">客户电话</text>
+      </view>
+      <view class="news-item-right">
+        <text>400 000 000</text>
+      </view>
+    </view>
+  </view>
+</view>

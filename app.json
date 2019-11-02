@@ -1,0 +1,58 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/mine/mine",
+    "pages/order/order",
+    "pages/bill/bill",
+    "pages/mine/auth/auth",
+    "pages/cityList/cityList"
+  ],
+  "permission": {
+    "scope.userLocation": {
+      "desc": "您的地址信息将用于确定设备机械的地址"
+    }
+  },
+  "plugins": {
+    "ocr-plugin": {
+      "version": "2.0.2",
+      "provider": "wx4418e3e031e551be"
+    }
+  },
+  "tabBar": {
+    "color": "#000000",
+    "selectedColor": "#1296db",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "icons/home.png",
+        "selectedIconPath": "icons/home_actived.png"
+      },
+      {
+        "pagePath": "pages/order/order",
+        "text": "订单",
+        "iconPath": "icons/order.png",
+        "selectedIconPath": "icons/order_actived.png"
+      },
+      {
+        "pagePath": "pages/bill/bill",
+        "text": "对账",
+        "iconPath": "icons/bill.png",
+        "selectedIconPath": "icons/bill_actived.png"
+      },
+      {
+        "pagePath": "pages/mine/mine",
+        "text": "我的",
+        "iconPath": "icons/mine.png",
+        "selectedIconPath": "icons/mine_actived.png"
+      }
+    ]
+  },
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#1296db",
+    "navigationBarTitleText": "首页",
+    "navigationBarTextStyle": "white"
+  },
+  "sitemapLocation": "sitemap27.json"
+}

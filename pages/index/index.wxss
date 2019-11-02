@@ -1,0 +1,12 @@
+.cityBtn{
+  position: relative;
+  display: inline-block;
+  background-color: #fff;
+  border-top-right-radius:10px;
+  border-bottom-right-radius:10px;
+  border: 1px solid #ccc;
+  padding: 8px;
+  top: 20rpx;
+  font-size: 12px; 
+  text-indent: 3px;
+}

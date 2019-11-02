@@ -1,0 +1,4 @@
+  <view>
+  <!-- <text>{{city}}</text> -->
+  <span bindtap="selectCity" class="cityBtn" wx:if="{{city!==''}}">{{city}}</span>
+  </view>

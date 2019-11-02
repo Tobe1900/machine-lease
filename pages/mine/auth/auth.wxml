@@ -1,0 +1,21 @@
+<view class="container">
+
+<form bindsubmit="formSubmit" id='2' bindreset="formReset">  
+<input style='display:none' name='program_id' value='{{program_id}}'></input>  
+      <view class='caigou_centent'>描述说明(选填)</view>  
+      <textarea class='textarea' placeholder="" name="content" value='{{formdata}}' />  
+  
+      <view class="big-logos">  
+        <image bindtap="upimg" src='../../../icons/default_avatar.jpg'></image>  
+        <block wx:for="{{img_arr}}">  
+          <view class='logoinfo'>  
+            <image src='{{item}}'></image>  
+          </view>  
+        </block>  
+      </view>  
+      <button class='btn' formType="submit">发布</button>  
+</form> 
+<!-- <ocr-navigator bind:onSuccess="success" certificateType="idCard" selectedOptions="{{['id','name']}}">
+  <button class="btn">身份证识别</button>
+</ocr-navigator> -->
+</view>

@@ -6,7 +6,12 @@
       <text class="message">{{text}}</text>
       <button class="authBtn">立即实名</button>
     </view> -->
-    <image class="slide" src="{{slideImg}}" style="heigh:240px;"></image>
+    <image class="slide" src="{{slideImg}}" mode="aspectFill" style="height:200px;"></image>
+    <view class="instruction">
+    <text class="desc">15分钟及时响应</text>
+    <text class="desc">6小时按时交付</text>
+    <text class="desc">5小时及时维修</text>
+    </view>
   </view>
   <view>
 

@@ -1,4 +1,30 @@
-  <view>
-  <!-- <text>{{city}}</text> -->
+<view>
   <span bindtap="selectCity" class="cityBtn" wx:if="{{city!==''}}">{{city}}</span>
+  <view class="slideContainer">
+    <prompt />
+    <!-- <view style="display:flex;flex-direction:row">
+      <text class="message">{{text}}</text>
+      <button class="authBtn">立即实名</button>
+    </view> -->
+    <image class="slide" src="{{slideImg}}" style="heigh:240px;"></image>
   </view>
+  <view>
+
+    <view class="goodsContainer">
+      <goodItem />
+      <goodItem />
+      <goodItem />
+      <goodItem />
+      <goodItem />
+      <goodItem />
+      <goodItem />
+      <goodItem />
+      <goodItem />
+      <goodItem />
+      <goodItem />
+      <text class="nothingText">已到底</text>
+    </view>
+
+
+  </view>
+</view>

@@ -12,12 +12,12 @@ Page({
   },
   onLoad:function(){
     // 页面加载时调用
-    // this.getAccessToken()
+    this.getAccessToken()
   },
   getAccessToken:function(){
     let that = this
     wx.request({
-      url: 'http://nkh.m-th.cn/nkh/api/getAccessToken',
+      url: 'https://www.m-th.cn/orchid/api/getAccessToken',
       method: 'GET',
       header:{'content-type':'application/json'},
       success:function(res){

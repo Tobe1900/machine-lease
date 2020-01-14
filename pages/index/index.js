@@ -2,15 +2,16 @@ const app = getApp()
 import QQmap from '../../utils/map.js';
 const qqmapObj = new QQmap()
 Page({
-  data:{
-    city:''
+  data: {
+    city: '',
+    slideImg: '../../icons/slide.jpg'
   },
-  onShow(){
+  onShow() {
     this.setData({
       city: app.globalData.city !== '' ? app.globalData.city : ''
     })
   },
-  onLoad: function(){
+  onLoad: function () {
     let that = this
     wx.getSetting({
       success(res) {
@@ -50,12 +51,12 @@ Page({
     })
 
   },
-  selectCity(){
+  selectCity() {
     wx.navigateTo({
       url: '../cityList/cityList',
     })
   },
-  getLocation(target){
+  getLocation(target) {
     qqmapObj.getLocateInfo().then(function (res) {
       let val = res
       if (val.indexOf('市') !== -1) { // 去掉“市”

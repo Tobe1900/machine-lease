@@ -5,7 +5,9 @@
     "pages/order/order",
     "pages/bill/bill",
     "pages/mine/auth/auth",
-    "pages/cityList/cityList"
+    "pages/cityList/cityList",
+    "components/goodItemCom/goodItemCom",
+    "components/promptCom/promptCom"
   ],
   "permission": {
     "scope.userLocation": {

@@ -1,0 +1,16 @@
+.message {
+  height: 40px;
+  line-height: 40px;
+  font-size: 28rpx;
+  padding-left: 10rpx;
+}
+.authBtn {
+  background-color: #1296db;
+  color: #fff;
+  height: 28px;
+  width: 70px;
+  line-height: 28px;
+  margin-top: 6px;
+  font-size: 30rpx;
+  padding: 0;
+}

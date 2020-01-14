@@ -1,0 +1,4 @@
+<view style="display:flex;flex-direction:row">
+  <text class="message">{{text}}</text>
+  <button class="authBtn">立即实名</button>
+</view>

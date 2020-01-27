@@ -15,18 +15,8 @@
   </view>
   <view>
 
-    <view class="goodsContainer">
-      <goodItem />
-      <goodItem />
-      <goodItem />
-      <goodItem />
-      <goodItem />
-      <goodItem />
-      <goodItem />
-      <goodItem />
-      <goodItem />
-      <goodItem />
-      <goodItem />
+    <view class="goodsContainer" >
+      <goodItem goodItem="{{item}}" wx:for="{{goods}}" wx:key="index"/>
       <text class="nothingText">已到底</text>
     </view>
 

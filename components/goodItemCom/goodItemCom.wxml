@@ -1,9 +1,9 @@
 <view style="display:flex;flex-direction:row;justify-content: center;align-items:center;border-bottom: 1px solid #e1e1e1;padding:20px 0;background-color:#fefefe;">
-  <image src="{{itemImg}}" mode="aspectFit" style="flex:1;height:120px;"></image>
+  <image src="{{goodItem.img}}" mode="aspectFit" style="flex:1;height:120px;"></image>
   <view class="desc" style="">
-    <text>6米 剪叉 8.7折</text>
-    <text>宽0.81米 / 载重227kg</text>
-    <text>￥ 3120/月 ￥190/天</text>
+    <text>{{goodItem.name}}</text>
+    <text>高{{goodItem.description.height}}米 载重{{goodItem.description.load}}kg</text>
+    <text>￥{{goodItem.mPrice}}/月 ￥{{goodItem.dPrice}}/天</text>
   </view>
   <button class="selectBtn">选择</button>
 </view>

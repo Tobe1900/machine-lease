@@ -5,7 +5,8 @@ const qqmapObj = new QQmap()
 Page({
   data: {
     city: '',
-    slideImg: '../../icons/slide.jpg'
+    slideImg: '../../icons/slide.jpg',
+    goods:[]
   },
   onShow() {
     this.setData({
@@ -61,6 +62,11 @@ Page({
         let data = res.data
         if (!data.errcode) {
           // 获取产品列表
+          let tmp = data.map(item => {
+            item.img = config.imageUrl + item.id +'/img.jpg'
+            return item
+          })
+          that.setData({goods:tmp})
         } else {
           wx.showToast({
             title: data.errmsg,
@@ -69,8 +75,8 @@ Page({
           })
         }
       },
-      fail: function () {
-        console.log('errrr', err)
+      fail: function (error) {
+        console.log('errrr',error)
       }
     })
   },

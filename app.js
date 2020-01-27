@@ -10,7 +10,7 @@ App({
         if (res.code) {
           // 发送 res.code 到后台换取 openId, sessionKey, unionId
           wx.request({
-            url: config.requestUrl + 'onLogin',
+            url: config.loginUrl + 'onlogin',
             data: {
               code: res.code
             },
@@ -28,9 +28,9 @@ App({
                 })
               }
             },
-            fail: function (err) {
+            fail: function () {
               // 请求失败
-              console.log('ee',err)
+              console.log('ee')
             }
           })
         }

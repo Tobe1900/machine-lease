@@ -14,12 +14,6 @@
       "desc": "您的地址信息将用于确定设备机械的地址"
     }
   },
-  "plugins": {
-    "ocr-plugin": {
-      "version": "2.0.2",
-      "provider": "wx4418e3e031e551be"
-    }
-  },
   "tabBar": {
     "color": "#000000",
     "selectedColor": "#1296db",

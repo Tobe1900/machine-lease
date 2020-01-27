@@ -1,11 +1,16 @@
 // components/goodItemCom/goodItemCom.js
-Page({
-
+Component({
+  properties: {
+    goodItem: {
+      type: Object,
+      value: ''
+    }
+  },
   /**
    * 页面的初始数据
    */
   data: {
-    itemImg: '../../icons/slide.jpg'
+    // itemImg: '../../icons/slide.jpg'
   },
 
   /**

@@ -7,26 +7,30 @@ App({
     // 登录
     wx.login({
       success: res => {
-        if(res.code){
+        if (res.code) {
           // 发送 res.code 到后台换取 openId, sessionKey, unionId
           wx.request({
-            url: config.requesUrl + 'onLogin',
-            data:{
+            url: config.requestUrl + 'onLogin',
+            data: {
               code: res.code
             },
             header: { 'content-type': 'application/json' },
-            method:'POST',
-            success:function(res){
-              if(!res.errcode){
-                app.globalData.token = res.data.token
-                wx.setStorageSync('token', res.data.token)
+            method: 'POST',
+            success: function (res) {
+              let data = res.data
+              if (!data.errcode) {
+                wx.setStorageSync('token', data.token)
               } else {
                 wx.showToast({
-                  title: res.errmsg,
+                  title: data.errmsg,
                   icon: 'none',
                   duration: 2000
                 })
               }
+            },
+            fail: function (err) {
+              // 请求失败
+              console.log('ee',err)
             }
           })
         }
@@ -35,7 +39,7 @@ App({
   },
   globalData: {
     userInfo: null,
-    city:'',
+    city: '',
     hasLogin: false,
     token: undefined
   }

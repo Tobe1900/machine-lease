@@ -1,5 +1,6 @@
 const config = {
-  requestUrl: 'https://www.m-th.cn/jsd/api/'
+  requestUrl: 'https://xcx.jishidaoche.com/jsd/api/1/',
+  // loginUrl: 'https://xcx.jishidaoche.com/jsd/'
 }
 
 module.exports = config

@@ -1,5 +1,6 @@
 const app = getApp()
 import QQmap from '../../utils/map.js';
+import config from '../../config/index.js'
 const qqmapObj = new QQmap()
 Page({
   data: {
@@ -48,8 +49,30 @@ Page({
           that.getLocation(that)
         }
       }
+    });
+    wx.request({
+      url: config.requestUrl + 'queryProduct',
+      data: {
+        token: wx.getStorageSync('token')
+      },
+      header: { 'content-type': 'application/json' },
+      method: 'POST',
+      success: function (res) {
+        let data = res.data
+        if (!data.errcode) {
+          // 获取产品列表
+        } else {
+          wx.showToast({
+            title: data.errmsg,
+            icon: 'none',
+            duration: 2000
+          })
+        }
+      },
+      fail: function () {
+        console.log('errrr', err)
+      }
     })
-
   },
   selectCity() {
     wx.navigateTo({

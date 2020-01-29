@@ -1,0 +1,5 @@
+<view>
+  <view bindtap="selectAddress" class="dashed_container">
+    点击选择用车地址
+  </view>
+</view>

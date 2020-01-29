@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "首页",
+  "navigationBarTitleText": "及时到",
   "usingComponents": {
     "goodItem": "../../components/goodItemCom/goodItemCom",
     "prompt": "../../components/promptCom/promptCom"

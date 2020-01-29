@@ -3,11 +3,14 @@
     "pages/index/index",
     "pages/mine/mine",
     "pages/order/order",
-    "pages/bill/bill",
+    "pages/cart/cart",
     "pages/mine/auth/auth",
     "pages/cityList/cityList",
     "components/goodItemCom/goodItemCom",
-    "components/promptCom/promptCom"
+    "components/promptCom/promptCom",
+    "pages/goodDetail/goodDetail",
+    "pages/order/createOrder/index",
+    "pages/order/selectAddress/index"
   ],
   "permission": {
     "scope.userLocation": {
@@ -31,8 +34,8 @@
         "selectedIconPath": "icons/order_actived.png"
       },
       {
-        "pagePath": "pages/bill/bill",
-        "text": "对账",
+        "pagePath": "pages/cart/cart",
+        "text": "购物车",
         "iconPath": "icons/bill.png",
         "selectedIconPath": "icons/bill_actived.png"
       },

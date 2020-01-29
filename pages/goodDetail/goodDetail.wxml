@@ -1,0 +1,41 @@
+<view class="page-section page-section-spacing swiper">
+  <swiper autoplay="{{autoplay}}" indicator-dots="{{indicatorDots}}" interval="{{interval}}" duration="{{duration}}" style="height:240px">
+    <block wx:for="{{detailImags}}" wx:key="*this">
+      <swiper-item>
+        <view class="swiper-item {{item}}">
+          <image class="slide" src="{{item}}" mode="aspectFill"></image>
+        </view>
+      </swiper-item>
+    </block>
+  </swiper>
+  <view class="price_container">
+    <text>{{item.name}}</text>
+    <text class="price_item">￥{{item.mPrice}}/月   ￥{{item.dPrice}}/天</text>
+  </view>
+  <view class="description_container">
+    <view class="description_item">
+      <text class="item_label">平台高度</text>
+      <text class="item_value">{{item.description.height}}m</text>
+    </view>
+    <view wx:if="{{item.description.outreach}}" class="description_item">
+      <text class="item_label">平台延伸</text>
+      <text class="item_value">{{item.description.outreach}}m</text>
+    </view>
+    <view class="description_item">
+      <text class="item_label">平台尺寸</text>
+      <text class="item_value">{{item.description.size}}m</text>
+    </view>
+    <view class="description_item">
+      <text class="item_label">平台载重</text>
+      <text class="item_value">{{item.description.load}}kg</text>
+    </view>
+    <view class="description_item">
+      <text class="item_label">自重</text>
+      <text class="item_value">{{item.description.weight}}kg</text>
+    </view>
+    <view class="description_item">
+      <text class="item_label">机器(长宽高)</text>
+      <text class="item_value">{{item.description.machineSize}}m</text>
+    </view>
+  </view>
+</view>

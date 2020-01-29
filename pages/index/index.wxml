@@ -8,18 +8,21 @@
     </view> -->
     <image class="slide" src="{{slideImg}}" mode="aspectFill" style="height:200px;"></image>
     <view class="instruction">
-    <text class="desc">15分钟及时响应</text>
-    <text class="desc">6小时按时交付</text>
-    <text class="desc">5小时及时维修</text>
+      <text class="desc">15分钟及时响应</text>
+      <text class="desc">6小时按时交付</text>
+      <text class="desc">5小时及时维修</text>
     </view>
   </view>
   <view>
-
-    <view class="goodsContainer" >
-      <goodItem goodItem="{{item}}" wx:for="{{goods}}" wx:key="index"/>
-      <text class="nothingText">已到底</text>
+    <view class="goods_container">
+      <goodItem goodItem="{{item}}" wx:for="{{goods}}" wx:key="index" bind:addcart="addCart"/>
+      <!-- <text class="nothingText">已到底</text> -->
     </view>
-
-
   </view>
-</view>
+  <view class="cart_bottom_container">
+    <text class="cart_bottom_label">已选<text style="color:#1296db">3</text>台</text>
+    <view class="cart_bottom_btn" bindtap="createOrder">
+      去下单
+    </view>
+    </view>
+  </view>

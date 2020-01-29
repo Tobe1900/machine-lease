@@ -1,23 +1,29 @@
-// components/goodItemCom/goodItemCom.js
-Component({
-  properties: {
-    goodItem: {
-      type: Object,
-      value: ''
-    }
-  },
+// pages/goodDetail.js
+Page({
+
   /**
    * 页面的初始数据
    */
   data: {
-    // itemImg: '../../icons/slide.jpg'
+    detailImags: [],
+    indicatorDots: true,
+    autoplay: true,
+    interval: 2000,
+    duraion: 500,
+    item: null
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-
+    let itemObj = JSON.parse(options.item)
+    this.setData({
+      item: itemObj
+    })
+    this.setData({
+      detailImags: itemObj.detailImgs
+    })
   },
 
   /**
@@ -67,18 +73,5 @@ Component({
    */
   onShareAppMessage: function() {
 
-  },
-  methods: {
-    showGoodDetail: function(e) {
-      let itemObj = e.currentTarget.dataset.obj;
-      console.log('itemObj', itemObj)
-      wx.navigateTo({
-        url: '../../pages/goodDetail/goodDetail?item=' + JSON.stringify(itemObj)
-      })
-    },
-    handleAddCart: function(e){
-      let productID = e.currentTarget.dataset.id
-      this.triggerEvent('addcart',{productID})
-    }
   }
 })

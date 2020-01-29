@@ -1,0 +1,10 @@
+/* pages/order/createOrder/index.js.wxss */
+
+.dashed_container {
+  text-align: center;
+  padding: 30rpx;
+  border: 2px dashed #666;
+  color: #666;
+  margin: 40rpx;
+  background-color: #f8f8f8;
+}

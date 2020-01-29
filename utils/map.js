@@ -4,9 +4,9 @@ const qqwxmap = new wxqqmap({
   });
 export default class qqmap { //获取定位信息
   getLocateInfo() {
-    let that = this;
+    let _this = this;
     return new Promise(function(resolve, reject) {
-      that.location().then(function(val) {
+      _this.location().then(function(val) {
         //如果通过授权，那么直接使用腾讯的微信小程序sdk获取当前定位城市
         qqwxmap.reverseGeocoder({
           location: {
@@ -32,7 +32,7 @@ export default class qqmap { //获取定位信息
             if (res.confirm) {
               wx.openSetting({
                 success(res) {
-                  that.getLocateInfo();
+                  _this.getLocateInfo();
                 }
               })
             }

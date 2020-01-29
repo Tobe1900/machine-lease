@@ -1,23 +1,39 @@
-.googContainer {
+.good_container {
   display: flex;
   flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid #e1e1e1;
+  padding: 15px 0;
+  background-color: #fefefe;
 }
 
-.selectBtn {
+.select_btn {
   background-color: #1296db;
   color: #fff;
-  width: 70px;
-  height: 32px;
-  line-height: 32px;
+  width: 96px;
+  height: 30px;
+  line-height: 30px;
   border-radius: 30rpx;
   margin-right: 10px;
-  font-size: 14px;
+  font-size: 12px;
 }
 
-.desc {
+.description_container {
+  display: flex;
+  flex-direction: row;
+  width: 65%;
+  font-size: 28rpx;
+}
+
+.description_item {
   display: flex;
   flex-direction: column;
-  flex: 2;
-  font-size: 28rpx;
-  margin-left: 15px;
+  width: calc(65% - 10px);
+  padding-left: 10px;
+  padding-top: 30px;
+}
+
+.btn_container {
+  flex: 1;
 }

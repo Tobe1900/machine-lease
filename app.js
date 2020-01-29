@@ -4,6 +4,7 @@ const app = getApp()
 
 App({
   onLaunch: function () {
+    let _this = this
     // 登录
     wx.login({
       success: res => {
@@ -19,6 +20,7 @@ App({
             success: function (res) {
               let data = res.data
               if (!data.errcode) {
+                _this.globalData.token = data.token
                 wx.setStorageSync('token', data.token)
               } else {
                 wx.showToast({

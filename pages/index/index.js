@@ -6,7 +6,7 @@ Page({
   data: {
     city: '',
     slideImg: '../../icons/slide.jpg',
-    goods:[]
+    goods: []
   },
   onShow() {
     this.setData({
@@ -14,7 +14,7 @@ Page({
     })
   },
   onLoad: function () {
-    let that = this
+    let _this = this
     wx.getSetting({
       success(res) {
         if (!res.authSetting['scope.userLocation']) {
@@ -25,7 +25,7 @@ Page({
               wx.getLocation({
                 type: 'wgs84',
                 success: function (res) {
-                  that.getLocation(that)
+                  _this.getLocation(_this)
                 }
               })
             },
@@ -47,14 +47,14 @@ Page({
             }
           })
         } else {
-          that.getLocation(that)
+          _this.getLocation(_this)
         }
       }
     });
     wx.request({
       url: config.requestUrl + 'queryProduct',
       data: {
-        token: wx.getStorageSync('token')
+        token: wx.getStorageSync('token') || app.globalData.token
       },
       header: { 'content-type': 'application/json' },
       method: 'POST',
@@ -63,10 +63,18 @@ Page({
         if (!data.errcode) {
           // 获取产品列表
           let tmp = data.map(item => {
-            item.img = config.imageUrl + item.id +'/img.jpg'
+            item.img = config.imageUrl + item.id + '/img.jpg'
+            item.headImg = config.imageUrl + item.id + '/headImg.jpg'
+            item.detailImgs = item.picNames && item.picNames.pics.map(picItem => {
+              return config.imageUrl + item.id + '/' + picItem + '.jpg'
+            })
             return item
           })
-          that.setData({goods:tmp})
+          // _this.setData({ goods: tmp })
+          let mokoData = [...Array(6)].map(item => {
+            return tmp[0]
+          })
+          _this.setData({ goods: mokoData })
         } else {
           wx.showToast({
             title: data.errmsg,
@@ -76,8 +84,45 @@ Page({
         }
       },
       fail: function (error) {
-        console.log('errrr',error)
+        console.log('error', error)
       }
+    })
+  },
+  addCart(event) {
+    let {productID} = event.detail
+    console.log('productID', productID)
+    wx.request({
+      url: config.requestUrl + 'addToCart',
+      data: {
+        token: wx.getStorageSync('token') || app.globalData.token,
+        productID
+      },
+      header: { 'content-type': 'application/json' },
+      method: 'POST',
+      success: function (res) {
+        let data = res.data
+        if (!data.errcode) {
+          wx.showToast({
+            title: '添加成功',
+            icon: 'success',
+            duration: 1000
+          });
+        } else {
+          wx.showToast({
+            title: data.errmsg,
+            icon: 'none',
+            duration: 2000
+          })
+        }
+      },
+      fail: function (error) {
+        console.log('error', error)
+      }
+    })
+  },
+  createOrder(){
+    wx.navigateTo({
+      url: '../order/createOrder/index',
     })
   },
   selectCity() {

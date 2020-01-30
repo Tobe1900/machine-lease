@@ -1,0 +1,50 @@
+<view>
+
+  <view style="margin-bottom:40px;position:absolute;margin-top:40px;width:100%;">
+    <checkbox-group wx:if="{{cartList.length>0}}" bindchange="checkboxChange">
+      <view class="cart_top_container">
+        <text bindtap="handleEdit" wx:if="{{isEdit}}" class="cart_top_btn">编辑</text>
+        <text bindtap="handleEdit" wx:else class="cart_top_btn">完成</text>
+      </view>
+      <view class="good_container" wx:for="{{cartList}}" wx:for-item="cart" wx:key="index">
+        <checkbox value="{{cart.name}}" checked="{{cart.selected}}" bindtap="checkItem" data-num="{{cart.num}}" data-selected="{{cart.selected}}" data-cart-index="{{index}}" />
+        <view class="description_container">
+          <image src="{{cart.headImg}}" mode="aspectFit" style="width:120px;height:120px;"></image>
+          <view class="description_item">
+            <text>{{cart.name}}</text>
+            <text style="color:red;padding-top:5px;">￥{{cart.dPrice}}/天</text>
+            <text style="color:red;padding-top:5px;">￥{{cart.mPrice}}/月</text>
+          </view>
+          <view class="btn_container">
+            <button class="btn" data-target="minus" disabled="{{cart.num < 2 ? true: false}}" data-num="{{cart.num}}" data-select="{{cart.selected}}" data-cart-index="{{index}}" bindtap="changeCount">-</button>
+            <text class="num">{{cart.num}}</text>
+            <button class="btn" data-target="add" data-num="{{cart.num}}" data-select="{{cart.selected}}" data-cart-index="{{index}}" bindtap="changeCount">+</button>
+          </view>
+        </view>
+      </view>
+      <view class="cart_bottom_container">
+        <view class="check_all">
+          <checkbox-group bindchange="checkAll">
+            <label class="checkbox">
+              <checkbox checked="{{isCheckAll}}" value="checkAll">全选</checkbox>
+            </label>
+          </checkbox-group>
+        </view>
+        <view wx:if="{{isEdit}}" style="flex:2;display:flex">
+          <text class="cart_bottom_label">已选<text style="color:#1296db">{{totalCount}}</text>台</text>
+          <view class="cart_bottom_btn" bindtap="createOrder">
+            去下单({{totalCount}})
+          </view>
+        </view>
+
+        <view wx:else style="padding-top: 5px;border-top: 1px solid #dedede;">
+          <button plain="true" size="mini" catchtap="deleteCartProduct">删除</button>
+        </view>
+      </view>
+    </checkbox-group>
+    <view style="padding-top:80px;text-align:center;" wx:else>
+      <text style="color:#b1b1b1">购物车空空如也,快去首页选购吧！</text>
+    </view>
+  </view>
+
+</view>

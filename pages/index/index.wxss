@@ -33,7 +33,7 @@
   z-index: -9999;
   top: 0;
   background: #eff0f2;
-  margin-bottom:40px;
+  margin-bottom:50px;
 }
 
 .nothingText {
@@ -51,30 +51,4 @@
   line-height: 32px;
   background: #e6e9f0;
   border-bottom: 1px solid #555;
-}
-
-.cart_bottom_container {
-  position: fixed;
-  bottom: 0;
-  height: 40px;
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  background-color: #fff;
-}
-
-.cart_bottom_label {
-  flex: 2;
-  height: 39px;
-  line-height: 39px;
-  border-top: 1px solid #d8d8d8;
-}
-
-.cart_bottom_btn {
-  flex: 1;
-  background-color: #1296db;
-  color: #fff;
-  height: 40px;
-  line-height: 40px;
-  text-align: center;
 }

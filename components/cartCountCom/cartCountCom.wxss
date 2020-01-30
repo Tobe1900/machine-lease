@@ -1,0 +1,25 @@
+/* components/cartCountCom/cartCountCom.wxss */
+.btn_container {
+  width: 35%;
+  display: flex;
+  flex-direction: row;
+  margin-left: 10px;
+}
+
+.btn {
+  height: 18px;
+  border: 1px solid #c8c8c8;
+  line-height: 16px;
+  padding: 5px 6px;
+  font-size: 24px;
+}
+
+.num {
+  border-top: 1px solid #c8c8c8;
+  border-bottom: 1px solid #c8c8c8;
+  height: 18px;
+  line-height: 18px;
+  background-color: #e8e8e8;
+  display: inline-block;
+  padding: 5px 12px;
+}

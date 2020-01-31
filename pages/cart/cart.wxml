@@ -4,7 +4,7 @@
     <checkbox-group wx:if="{{cartList.length>0}}" bindchange="checkboxChange">
       <view class="cart_top_container">
         <text bindtap="handleEdit" wx:if="{{isEdit}}" class="cart_top_btn">编辑</text>
-        <text bindtap="handleEdit" wx:else class="cart_top_btn">完成</text>
+        <text bindtap="handleComplete" wx:else class="cart_top_btn">完成</text>
       </view>
       <view class="good_container" wx:for="{{cartList}}" wx:for-item="cart" wx:key="index">
         <checkbox value="{{cart.name}}" checked="{{cart.selected}}" bindtap="checkItem" data-num="{{cart.num}}" data-selected="{{cart.selected}}" data-cart-index="{{index}}" />
@@ -37,7 +37,7 @@
           </view>
         </view>
 
-        <view wx:else style="padding-top: 5px;border-top: 1px solid #dedede;">
+        <view wx:else style="padding-top: 5px;padding-right:15px;border-top: 1px solid #dedede;">
           <button plain="true" size="mini" catchtap="deleteCartProduct">删除</button>
         </view>
       </view>

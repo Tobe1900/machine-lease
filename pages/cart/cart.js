@@ -11,7 +11,9 @@ Page({
   },
   onHide: function() {
     this.setData({
-      totalCount: 0
+      isCheckAll: false,
+      totalCount: 0,
+      isEdit: true,
     })
   },
   getCart() {
@@ -26,38 +28,38 @@ Page({
       },
       method: 'POST',
       success: function(res) {
-        let data = res.data
-        // let data = [{
-        //   productID: 4,
-        //   name: '3米检查',
-        //   num: 3,
-        //   dPrice: 270,
-        //   mPrice: 6500
-        // }, {
-        //   productID: 5,
-        //   name: '5米剪叉',
-        //   num: 6,
-        //   dPrice: 188,
-        //   mPrice: 4500
-        // }, {
-        //   productID: 6,
-        //   name: '6米高台',
-        //   num: 2,
-        //   dPrice: 190,
-        //   mPrice: 6800
-        // }, {
-        //   productID: 7,
-        //   name: '8米高台',
-        //   num: 2,
-        //   dPrice: 190,
-        //   mPrice: 6800
-        // }, {
-        //   productID: 8,
-        //   name: '9米高台',
-        //   num: 2,
-        //   dPrice: 190,
-        //   mPrice: 6800
-        // }]
+        // let data = res.data
+        let data = [{
+          productID: 4,
+          name: '3米检查',
+          num: 3,
+          dPrice: 270,
+          mPrice: 6500
+        }, {
+          productID: 4,
+          name: '5米剪叉',
+          num: 6,
+          dPrice: 188,
+          mPrice: 4500
+        }, {
+          productID: 4,
+          name: '6米高台',
+          num: 2,
+          dPrice: 190,
+          mPrice: 6800
+        }, {
+          productID: 4,
+          name: '8米高台',
+          num: 2,
+          dPrice: 190,
+          mPrice: 6800
+        }, {
+          productID: 4,
+          name: '9米高台',
+          num: 2,
+          dPrice: 190,
+          mPrice: 6800
+        }]
 
         if (!data.errcode) {
           if (Array.isArray(data) && data.length !== 0) {
@@ -122,6 +124,58 @@ Page({
       isEdit: !this.data.isEdit
     })
   },
+  handleComplete() {
+    let _this = this,
+      cartList = _this.data.cartList;
+    let selectedItems = cartList.filter(item => {
+      return item.selected
+    })
+    let products = selectedItems.map(item => {
+      return {
+        id: item.productID,
+        num: item.num
+      }
+    })
+    if (products.length !== 0) {
+      wx.request({
+        url: config.requestUrl + 'editCartProduct',
+        data: {
+          token: wx.getStorageSync('token') || app.globalData.token,
+          products
+        },
+        header: {
+          'content-type': 'application/json'
+        },
+        method: 'POST',
+        success: function(res) {
+          let data = res.data
+          if (!data.errcode) {
+            wx.showToast({
+              title: '编辑成功',
+              icon: 'success',
+              duration: 1000
+            });
+            _this.setData({
+              isEdit: true
+            })
+          } else {
+            wx.showToast({
+              title: data.errmsg,
+              icon: 'none',
+              duration: 2000
+            })
+          }
+        },
+        fail: function(error) {
+          console.log('error', error)
+        }
+      })
+    } else {
+      _this.setData({
+        isEdit: true
+      })
+    }
+  },
   // 全选
   checkAll(e) {
     let _this = this,
@@ -160,7 +214,28 @@ Page({
       itemSelect = itemDataset.select,
       itemIndex = itemDataset.cartIndex,
       changeTarget = itemDataset.target,
+      itemChangeSelect = `cartList[${itemIndex}].selected`,
       cartListCount = `cartList[${itemIndex}].num`;
+    // 点击 “- +” 商品时的代码逻辑（加入了定时器）：
+    setTimeout(function() {
+      let selectedItems = cartList.filter(item => {
+        return item.selected
+      })
+      if (selectedItems.length !== 0) {
+        let tmpTotal = 0
+        for (let i = 0; i < selectedItems.length; i++) {
+          tmpTotal += Number(selectedItems[i].num)
+        }
+        totalCount = tmpTotal
+      }
+      // console.log('ses', selectedItems)
+      // console.log('totalCount', totalCount)
+      _this.setData({
+        totalCount: totalCount
+      })
+    }, 500)
+
+
     changeTarget == 'minus' ? itemCount-- : itemCount++
       if (itemSelect) {
         if (changeTarget == 'minus') {
@@ -173,7 +248,8 @@ Page({
         })
       }
     _this.setData({
-      [cartListCount]: itemCount
+      [cartListCount]: itemCount,
+      [itemChangeSelect]: true
     })
   },
   deleteCartProduct() {
@@ -215,7 +291,8 @@ Page({
               duration: 1000
             });
             _this.setData({
-              cartList: unselectedItem
+              cartList: unselectedItem,
+              isEdit: true
             })
           } else {
             wx.showToast({
@@ -232,8 +309,19 @@ Page({
     }
   },
   createOrder() {
+    let cartList = this.data.cartList
+    let selectedItems = cartList.filter(item => {
+      return item.selected
+    })
+    if(selectedItems.length === 0) {
+      return wx.showToast({
+        title: '您还没有选择商品哦',
+        icon: 'none',
+        duration: 1500
+      })
+    }
     wx.navigateTo({
-      url: '../order/createOrder/index',
+      url: '../order/createOrder/index?selectedItems=' + JSON.stringify(selectedItems)
     })
   }
 })

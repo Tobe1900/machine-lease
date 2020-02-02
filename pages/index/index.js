@@ -24,7 +24,7 @@ Page({
   },
   onLoad: function() {
     this.setData({
-      havePhone: wx.getStorageSync("havePhone") || app.globalData.havePhone 
+      havePhone: wx.getStorageSync("havePhone") || app.globalData.havePhone
     })
     this.dialog = this.selectComponent("#phone_dialog"); //设置dialog组件以获得手机号码
     this.setUserLocation() // 授权获取地理位置
@@ -81,7 +81,7 @@ Page({
     wx.request({
       url: config.requestUrl + 'queryProduct',
       data: {
-        token: wx.getStorageSync('token') || app.globalData.token 
+        token: wx.getStorageSync('token') || app.globalData.token
       },
       header: {
         'content-type': 'application/json'
@@ -104,7 +104,7 @@ Page({
           })
 
           // 弹出获取手机号码弹框
-          let havePhone = wx.getStorageSync("havePhone") || app.globalData.havePhone 
+          let havePhone = wx.getStorageSync("havePhone") || app.globalData.havePhone
           if (!havePhone) {
             setTimeout(() => {
               _this.showDialog()
@@ -173,17 +173,21 @@ Page({
       url: '../cityList/cityList',
     })
   },
-  getLocation(target) {
+  getLocation(self) {
     qqmapObj.getLocateInfo().then(function(res) {
-      let val = res
-      if (val.indexOf('市') !== -1) { // 去掉“市”
-        val = val.slice(0, val.indexOf('市'));
+      let {
+        city,
+        addressObj
+      } = res
+      if (city.indexOf('市') !== -1) { // 去掉“市”
+        city = city.slice(0, city.indexOf('市'));
       }
-      target.setData({
-        city: val
+      self.setData({
+        city
       })
-      app.globalData.city = val
-      wx.setStorageSync('city', val)
+      app.globalData.city = city
+      wx.setStorageSync('city', city)
+      wx.setStorageSync('addressObj', JSON.stringify(addressObj))
     }, function(err) {
       console.log(err)
     })

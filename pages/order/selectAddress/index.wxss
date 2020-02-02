@@ -10,3 +10,10 @@
   width: 32px;
   height: 32px;
 }
+
+.confirm_btn {
+  height: 40px;
+  line-height: 40px;
+  color: #fff;
+  background-color: #1296db;
+}

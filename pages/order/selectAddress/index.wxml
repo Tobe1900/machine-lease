@@ -1,9 +1,18 @@
 <view>
-  <map id="map" longitude="{{longitude}}" latitude="{{latitude}}" scale="14" markers="{{markers}}" bindmarkertap="markertap" bindregionchange="getCenterMap1" end="getCenterMap" show-location style="width:100%; height:300px;">
+  <map id="map" longitude="{{addressObj.longitude}}" latitude="{{addressObj.latitude}}" scale="15" markers="{{markers}}" bindmarkertap="markertap" bindregionchange="getCenterMap" show-location style="width:100%; height:300px;">
     <cover-view class="image-cnt">
       <cover-image class="cover-image" src="{{centerPointIcon}}"></cover-image>
     </cover-view>
   </map>
+  <view style="display:flex;flex-direction:row;height:75px;padding:5px;border-bottom:1px solid #eeeeee;">
+    <view style="flex:3;display:flex;flex-direction:column;padding-right:8px;">
+      <text style="font-size:15px;">{{addressObj.name}}</text>
+      <text style="color:#6e6e6e;font-size:14px;">{{addressObj.address}}</text>
+    </view>
+    <view style="flex:1;padding-top:15px;">
+      <button class="confirm_btn">确定</button>
+    </view>
+  </view>
   <!-- 中心点 -->
 
 

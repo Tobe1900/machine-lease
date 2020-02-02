@@ -1,6 +1,3 @@
 {
-  "navigationBarTitleText": "购物车",
-  "usingComponents": {
-    "cartCountCom": "../../components/cartCountCom/cartCountCom"
-  }
+  "navigationBarTitleText": "购物车"
 }

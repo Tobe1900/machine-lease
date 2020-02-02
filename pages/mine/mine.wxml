@@ -1,8 +1,8 @@
 <view class="container">
   <view class="userinfo">
     <block wx:if="{{!isUserLogin && canIUse}}">
-    <image bindtap="bindViewTap" class="userinfo-avatar" src="{{default_avatarUrl}}" mode="cover"></image>
-    <text bindtap="loginOrRegist" class="login-btn">登录/注册</text>
+      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{default_avatarUrl}}" mode="cover"></image>
+      <text bindtap="loginOrRegist" class="login-btn">登录/注册</text>
     </block>
     <block wx:else>
       <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
@@ -10,7 +10,7 @@
     </block>
   </view>
 
-  <dialogCom id='dialog' title='提示' content='需要您授权, 取得用户信息' confirmText='授权' bind:confirmEvent='confirmEvent' bind:bindGetUserInfo='bindGetUserInfo'>
+  <dialogCom id='dialog' title='提示' content='【及时到】需要您授权以获取用户信息' confirmText='授权' bind:confirmEvent='confirmEvent' bind:bindGetUserInfo='bindGetUserInfo'>
   </dialogCom>
 
   <view class="news-item-container" bindtap="setPersonalAuth">

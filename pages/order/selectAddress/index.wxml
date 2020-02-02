@@ -1,8 +1,12 @@
 <view>
-  <map id="map" :longitude="longitude" :latitude="latitude" scale="13" :markers="markers" markertap="markertap" regionchange="getCenterMap1" end="getCenterMap" show-location style="width:100%; height:300px;">
+  <map id="map" longitude="{{longitude}}" latitude="{{latitude}}" scale="14" markers="{{markers}}" bindmarkertap="markertap" bindregionchange="getCenterMap1" end="getCenterMap" show-location style="width:100%; height:300px;">
+    <cover-view class="image-cnt">
+      <cover-image class="cover-image" src="{{centerPointIcon}}"></cover-image>
+    </cover-view>
   </map>
   <!-- 中心点 -->
-  <cover-image class="centerImg" src="/static/images/person.png"></cover-image>
+
+
   <!-- 回到我的定位 -->
-  <cover-image bindtap="getMyPosition" class="backMyPosition" src="/static/images/location.png"></cover-image>
+  <!-- <cover-image bindtap="getMyPosition" class="backMyPosition" src="/static/images/location.png"></cover-image> -->
 </view>

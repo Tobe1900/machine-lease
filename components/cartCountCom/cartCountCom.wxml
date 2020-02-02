@@ -1,5 +1,0 @@
-<view class="btn_container">
-  <view class="btn" bindtap="bindMinus">-</view>
-  <text class="num">{{num}}</text>
-  <view class="btn" bindtap="bindPlus">+</view>
-</view>

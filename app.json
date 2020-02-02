@@ -36,8 +36,8 @@
       {
         "pagePath": "pages/cart/cart",
         "text": "购物车",
-        "iconPath": "icons/bill.png",
-        "selectedIconPath": "icons/bill_actived.png"
+        "iconPath": "icons/cart.png",
+        "selectedIconPath": "icons/cart_actived.png"
       },
       {
         "pagePath": "pages/mine/mine",

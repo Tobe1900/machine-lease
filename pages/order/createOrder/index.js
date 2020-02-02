@@ -4,6 +4,7 @@ import config from '../../../config/index.js'
 Page({
   data: {
     selectedItems: [],
+    startTimeText: '请选择',
     startDate: '',
     time: '',
     multiArray: [
@@ -11,7 +12,61 @@ Page({
       [],
       []
     ],
-    multiIndex: [0, 0, 0]
+    multiIndex: [0, 0, 0],
+    day: 0,
+    rent: 0,
+    days: [{
+        value: 3
+      },
+      {
+        value: 10
+      },
+      {
+        value: 30
+      },
+      {
+        value: 60
+      },
+      {
+        value: 90
+      }
+    ],
+    otherDay: ''
+  },
+  onReady: function() {
+    //获得dialog组件
+    this.useDaysDialog = this.selectComponent("#useDaysDialog");
+  },
+  testBackCar() {
+    this.useDaysDialog.show()
+  },
+  hideUseDaysDialog() {
+    this.useDaysDialog.hide()
+  },
+  setUseDays(e) {
+    let {
+      day
+    } = e.currentTarget.dataset
+    this.setData({
+      day: day
+    })
+    this.useDaysDialog.hide()
+  },
+  bindKeyInput(e) {
+    this.setData({
+      otherDay: e.detail.value
+    })
+  },
+  confirmDay() {
+    let otherDay = this.data.otherDay
+    if (otherDay == '') {
+      return this.useDaysDialog.hide()
+    }
+    this.setData({
+      day: otherDay,
+      otherDay: ''
+    })
+    this.useDaysDialog.hide()
   },
   onLoad: function(option) {
     let selectedItems = JSON.parse(option.selectedItems)
@@ -55,8 +110,11 @@ Page({
     data.multiArray[2] = minute;
     this.setData(data);
   },
-  bindMultiPickerColumnChange(e){
-    console.log('修改的列为',e.detail.column,',值为', e.detail.value)
+  bindMultiPickerColumnChange(e) {
+    this.setData({
+      startTimeText: '正在选择'
+    })
+    console.log('修改的列为', e.detail.column, ',值为', e.detail.value)
     var data = {
       multiArray: this.data.multiArray,
       multiIndex: this.data.multiIndex

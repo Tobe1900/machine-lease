@@ -1,5 +1,7 @@
 <view>
   <span bindtap="selectCity" class="cityBtn" wx:if="{{city!==''}}">{{city}}</span>
+  <dialogCom id='phone_dialog' isPhone="true" title='提示' content='【及时到】需要您授权以获取手机号码' confirmText='授权' bind:confirmEvent='confirmEvent' bind:getPhoneNumber='getPhoneNumber'>
+  </dialogCom>
   <view class="slideContainer">
     <prompt />
     <!-- <view style="display:flex;flex-direction:row">
@@ -19,5 +21,5 @@
       <!-- <text class="nothingText">已到底</text> -->
     </view>
   </view>
-  
+
 </view>

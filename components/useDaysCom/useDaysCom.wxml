@@ -1,0 +1,14 @@
+<view class="dialog-container" hidden="{{!isShow}}">
+  <view class="dialog-mask"></view>
+  <view class="dialog-info">
+    <view class="dialog-title">
+      <slot name="title"></slot>
+    </view>
+    <view class="dialog-content">
+      <slot name="content"></slot>
+    </view>
+    <view class="dialog-footer">
+      <slot name="footer"></slot>
+    </view>
+  </view>
+</view>

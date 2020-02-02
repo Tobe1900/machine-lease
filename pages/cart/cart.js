@@ -28,38 +28,38 @@ Page({
       },
       method: 'POST',
       success: function(res) {
-        // let data = res.data
-        let data = [{
-          productID: 4,
-          name: '3米检查',
-          num: 3,
-          dPrice: 270,
-          mPrice: 6500
-        }, {
-          productID: 4,
-          name: '5米剪叉',
-          num: 6,
-          dPrice: 188,
-          mPrice: 4500
-        }, {
-          productID: 4,
-          name: '6米高台',
-          num: 2,
-          dPrice: 190,
-          mPrice: 6800
-        }, {
-          productID: 4,
-          name: '8米高台',
-          num: 2,
-          dPrice: 190,
-          mPrice: 6800
-        }, {
-          productID: 4,
-          name: '9米高台',
-          num: 2,
-          dPrice: 190,
-          mPrice: 6800
-        }]
+        let data = res.data
+        // let data = [{
+        //   productID: 4,
+        //   name: '3米检查',
+        //   num: 3,
+        //   dPrice: 270,
+        //   mPrice: 6500
+        // }, {
+        //   productID: 4,
+        //   name: '5米剪叉',
+        //   num: 6,
+        //   dPrice: 188,
+        //   mPrice: 4500
+        // }, {
+        //   productID: 4,
+        //   name: '6米高台',
+        //   num: 2,
+        //   dPrice: 190,
+        //   mPrice: 6800
+        // }, {
+        //   productID: 4,
+        //   name: '8米高台',
+        //   num: 2,
+        //   dPrice: 190,
+        //   mPrice: 6800
+        // }, {
+        //   productID: 4,
+        //   name: '9米高台',
+        //   num: 2,
+        //   dPrice: 190,
+        //   mPrice: 6800
+        // }]
 
         if (!data.errcode) {
           if (Array.isArray(data) && data.length !== 0) {

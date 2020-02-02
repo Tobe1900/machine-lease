@@ -1,1 +1,12 @@
 /* pages/order/selectAddress/index.wxss */
+.image-cnt {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 134px;
+}
+
+.cover-image {
+  width: 32px;
+  height: 32px;
+}

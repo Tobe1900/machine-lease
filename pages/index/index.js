@@ -5,8 +5,10 @@ const qqmapObj = new QQmap()
 Page({
   data: {
     city: '',
+    isUserLogin: false,
     slideImg: '../../icons/slide.jpg',
-    goods: []
+    goods: [],
+    havePhone: false
   },
   onShow() {
     wx.showLoading({
@@ -16,9 +18,24 @@ Page({
     this.setData({
       city: app.globalData.city !== '' ? app.globalData.city : ''
     })
-    this.queryProduct()
+    setTimeout(() => {
+      this.queryProduct()
+    }, 500)
   },
-  onLoad: function () {
+  onLoad: function() {
+    this.setData({
+      havePhone: wx.getStorageSync("havePhone") || app.globalData.havePhone 
+    })
+    this.dialog = this.selectComponent("#phone_dialog"); //设置dialog组件以获得手机号码
+    this.setUserLocation() // 授权获取地理位置
+  },
+  showDialog: function() {
+    this.dialog.showDialog();
+  },
+  confirmEvent: function() {
+    this.dialog.hideDialog();
+  },
+  setUserLocation() {
     let _this = this
     wx.getSetting({
       success(res) {
@@ -29,12 +46,12 @@ Page({
               // 用户已经同意小程序使用位置功能，后续调用 wx.getLocation不会调弹窗询问
               wx.getLocation({
                 type: 'wgs84',
-                success: function (res) {
+                success: function(res) {
                   _this.getLocation(_this)
                 }
               })
             },
-            fail: function () {
+            fail: function() {
               wx.showModal({
                 title: '提示',
                 content: '未取得授权，无法匹配到城市信息，请选择所在城市',
@@ -57,16 +74,20 @@ Page({
       }
     })
   },
-  queryProduct(){
+  queryProduct() {
     let _this = this
+    // console.log('token appgloabl', app.globalData.token)
+    // console.log('token storage', wx.getStorageSync('token'))
     wx.request({
       url: config.requestUrl + 'queryProduct',
       data: {
-        token: wx.getStorageSync('token') || app.globalData.token
+        token: wx.getStorageSync('token') || app.globalData.token 
       },
-      header: { 'content-type': 'application/json' },
+      header: {
+        'content-type': 'application/json'
+      },
       method: 'POST',
-      success: function (res) {
+      success: function(res) {
         let data = res.data
         if (!data.errcode) {
           // 获取产品列表
@@ -78,7 +99,19 @@ Page({
             })
             return item
           })
-          _this.setData({ goods: tmp })
+          _this.setData({
+            goods: tmp
+          })
+
+          // 弹出获取手机号码弹框
+          let havePhone = wx.getStorageSync("havePhone") || app.globalData.havePhone 
+          if (!havePhone) {
+            setTimeout(() => {
+              _this.showDialog()
+            }, 500)
+          }
+
+          // 模拟数据：
           // let mokoData = [...Array(6)].map(item => {
           //   return tmp[0]
           // })
@@ -91,16 +124,18 @@ Page({
           })
         }
       },
-      fail: function (error) {
+      fail: function(error) {
         console.log('error', error)
       },
-      complete: function () {
+      complete: function() {
         wx.hideLoading()
       }
     })
   },
   addCart(event) {
-    let {productID} = event.detail
+    let {
+      productID
+    } = event.detail
     console.log('productID', productID)
     wx.request({
       url: config.requestUrl + 'addToCart',
@@ -108,9 +143,11 @@ Page({
         token: wx.getStorageSync('token') || app.globalData.token,
         productID
       },
-      header: { 'content-type': 'application/json' },
+      header: {
+        'content-type': 'application/json'
+      },
       method: 'POST',
-      success: function (res) {
+      success: function(res) {
         let data = res.data
         if (!data.errcode) {
           wx.showToast({
@@ -126,7 +163,7 @@ Page({
           })
         }
       },
-      fail: function (error) {
+      fail: function(error) {
         console.log('error', error)
       }
     })
@@ -137,18 +174,68 @@ Page({
     })
   },
   getLocation(target) {
-    qqmapObj.getLocateInfo().then(function (res) {
+    qqmapObj.getLocateInfo().then(function(res) {
       let val = res
-      // if (val.indexOf('市') !== -1) { // 去掉“市”
-      //   val = val.slice(0, val.indexOf('市'));
-      // }
+      if (val.indexOf('市') !== -1) { // 去掉“市”
+        val = val.slice(0, val.indexOf('市'));
+      }
       target.setData({
         city: val
       })
       app.globalData.city = val
       wx.setStorageSync('city', val)
-    }, function (err) {
+    }, function(err) {
       console.log(err)
     })
+  },
+  getPhoneNumber(event) {
+    let _this = this
+    let {
+      code
+    } = event.detail
+    console.log(code)
+    console.log(code.errMsg)
+    if (code.iv && code.encryptedData) {
+      // 用户同意授权获取手机号码
+      let {
+        iv,
+        encryptedData
+      } = code
+      wx.request({
+        url: config.requestUrl + 'getPhone',
+        data: {
+          token: wx.getStorageSync('token') || app.globalData.token,
+          iv,
+          encryptedData
+        },
+        header: {
+          'content-type': 'application/json'
+        },
+        method: 'POST',
+        success: function(res) {
+          let data = res.data
+          if (!data.errcode) {
+            _this.dialog.hideDialog()
+            wx.showToast({
+              title: '绑定成功',
+              icon: 'success',
+              duration: 1000
+            });
+          } else {
+            wx.showToast({
+              title: data.errmsg,
+              icon: 'none',
+              duration: 2000
+            })
+          }
+        },
+        fail: function(error) {
+          console.log('error', error)
+        }
+      })
+    } else {
+      // 用户拒绝授权
+      _this.dialog.hideDialog();
+    }
   }
 })

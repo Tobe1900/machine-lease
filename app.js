@@ -3,7 +3,7 @@ import config from './config/index.js'
 const app = getApp()
 
 App({
-  onLaunch: function () {
+  onLaunch: function() {
     let _this = this
     // 登录
     wx.login({
@@ -15,13 +15,19 @@ App({
             data: {
               code: res.code
             },
-            header: { 'content-type': 'application/json' },
+            header: {
+              'content-type': 'application/json'
+            },
             method: 'POST',
-            success: function (res) {
+            success: function(res) {
               let data = res.data
               if (!data.errcode) {
                 _this.globalData.token = data.token
+                _this.globalData.havePhone = data.havePhone
+                _this.globalData.isAuth = data.isAuth
                 wx.setStorageSync('token', data.token)
+                wx.setStorageSync('havePhone', data.havePhone)
+                wx.setStorageSync('isAuth', data.isAuth)
               } else {
                 wx.showToast({
                   title: data.errmsg,
@@ -30,7 +36,7 @@ App({
                 })
               }
             },
-            fail: function () {
+            fail: function() {
               // 请求失败
               console.log('ee')
             }
@@ -43,6 +49,8 @@ App({
     userInfo: null,
     city: '',
     hasLogin: false,
-    token: undefined
+    token: undefined,
+    hasPhone: false,
+    isAuth: false
   }
 })

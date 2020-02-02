@@ -11,8 +11,8 @@
 .dialog-info {
   position: fixed;
   z-index: 5000;
-  width: 80%;
-  max-width: 600rpx;
+  width: 100%;
+  min-width: 600rpx;
   top: 50%;
   left: 50%;
   -webkit-transform: translate(-50%, -50%);
@@ -43,20 +43,4 @@
   position: relative;
   line-height: 90rpx;
   font-size: 34rpx;
-}
-
-.dialog-btn-confirm {
-  display: block;
-  -webkit-flex: 1;
-  flex: 1;
-  position: relative;
-  color: #1296db;
-}
-
-.dialog-btn-cancel {
-  display: block;
-  -webkit-flex: 1;
-  flex: 1;
-  position: relative;
-  color: #b1b1b1;
 }

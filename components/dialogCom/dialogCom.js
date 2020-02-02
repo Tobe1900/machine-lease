@@ -11,6 +11,10 @@ Component({
       type:String,
       value:'弹窗内容'
     },
+    isPhone:{
+      type:Boolean,
+      value: false
+    },
     confirmText:{
       type: String,
       value: '确定'
@@ -19,6 +23,7 @@ Component({
   data:{
     isShow:false
   },
+  
   methods:{
     hideDialog(){
       this.setData({
@@ -35,6 +40,10 @@ Component({
     },
     bindGetUserInfo(){
       this.triggerEvent("bindGetUserInfo")
+    },
+    getPhoneNumber(event){
+      let detail = event.detail
+      this.triggerEvent("getPhoneNumber",{code:detail})
     }
   }
 })

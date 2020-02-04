@@ -14,6 +14,31 @@ const formatNumber = n => {
   return n[1] ? n : '0' + n
 }
 
+const handleFormat = d => {
+  if (d.indexOf('-') >= 0) {
+    let tmp = d.split('-')
+    return {
+      date: tmp[0],
+      day: tmp[1]
+    }
+  }
+}
+
+const replaceMonth = str => {
+  let tmp = str.replace("月","-")
+  let result = tmp.replace("日","")
+  return result
+}
+
+const replacePonit = time => {
+  let tmp = time.replace("点",":")
+  let result = tmp.replace("分","")
+  return result
+}
+
 module.exports = {
-  formatTime: formatTime
+  formatTime,
+  handleFormat,
+  replaceMonth,
+  replacePonit
 }

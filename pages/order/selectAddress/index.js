@@ -5,8 +5,6 @@ const qqmapObj = new QQmap()
 
 Page({
   data: {
-    latitude: '',
-    longitude: '',
     centerPointIcon: '../../../icons/location.png',
     addressObj: {
       name: '',
@@ -68,7 +66,14 @@ Page({
     // console.log(this.longitude)
     let _this = this
     if (e.type == 'begin') {
-      // console.log('beigining')
+      // _this.setData({
+      //   addressObj: {
+      //     name: '',
+      //     address: '正在获取用车地点.....',
+      //     latitude: '',
+      //     longitude: ''
+      //   }
+      // })
     }
     if (e.type == 'end') {
       _this.mapCtx.getCenterLocation({
@@ -87,6 +92,20 @@ Page({
         }
       })
     }
+  },
+  // 确定地址:
+  confirmAddress() {
+    let _this = this
+    let pages = getCurrentPages()
+    let prePage = pages[pages.length - 2]
+    prePage.setData({
+      addressObj: { ..._this.data.addressObj,
+        isSetAddress: true
+      }
+    })
+    wx.navigateBack({
+      delta: 1
+    })
   },
   // 点击标记点时触发：
   markertap(e) {

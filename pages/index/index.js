@@ -12,7 +12,7 @@ Page({
   },
   onShow() {
     wx.showLoading({
-      title: '加载中',
+      title: '获取数据中...',
       mask: true
     })
     this.setData({

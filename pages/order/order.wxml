@@ -1,0 +1,62 @@
+<view style="background-color:#dedede">
+  <scroll-view class='scrollContainer' scroll-x>
+    <block report-submit='true' data-id="{{item.id}}" wx:for="{{tabs}}" wx:key="{{index}}" data-status="{{item.value}}">
+      <block>
+        <view class="{{selectedIndex !== index ? 'tab':'tab_selected'}}" bindtap="selectTab" data-status="{{item.value}}" data-index="{{index}}">{{item.title}}</view>
+      </block>
+    </block>
+  </scroll-view>
+  <view style="padding-top:80px;" hidden="{{hasRecords}}">
+    <text class="no_records">{{noRecordsText}}</text>
+  </view>
+  <scroll-view scroll-top="{{scrollTop}}" scroll-y="true" style="height:{{scrollHeight}}px;margin-top:42px;" class="list" bindscrolltolower="bindDownLoad" bindscrolltoupper="refresh">
+
+    <view class="item" wx:for="{{orderList}}" wx:key="index" bindtap="getOrderDetail" data-obj="{{item}}" data-id="{{item.orderId}}">
+      <view wx:if="{{item.noMore}}" class="no_more_text">
+        {{item.value}}
+      </view>
+      <view class="text" wx:else>
+        <view class="description">
+          <text class="item_label">订单号:</text>
+          <text class="item_value">{{item.orderId}}</text>
+        </view>
+        <view class="description">
+          <text class="item_label">租金:</text>
+          <text>{{item.rent}}元</text>
+        </view>
+        <view class="description">
+          <text class="item_label">租用天数:</text>
+          <text>{{item.days}}天</text>
+        </view>
+        <view class="description">
+          <text class="item_label">用车时间:</text>
+          <text>{{item.beginTime}}</text>
+        </view>
+        <view class="description">
+          <text class="item_label">用车地点:</text>
+          <text>{{item.addressDesc.address}}</text>
+        </view>
+        <view class="description">
+          <text class="item_label">下单时间:</text>
+          <text>{{item.time}}</text>
+        </view>
+        <view wx:for="{{item.products}}" wx:for-item="product" wx:key="index">
+          <image src="{{product.img}}" mode="aspectFill" style="width:80px;height:100px"></image>
+          <text class="description">{{product.name}}</text>
+          <text class="description">{{product.num}}</text>
+        </view>
+        <view>
+          <text class="item_label">订单状态:</text>
+          <text wx:if="{{item.status=='0'}}">已下单未审核</text>
+          <text wx:elif="{{item.status=='1'}}">已审核可签约</text>
+          <text wx:elif="{{item.status=='2'}}">已签约未支付</text>
+          <text wx:elif="{{item.status=='3'}}">已支付</text>
+          <text wx:elif="{{item.status=='4'}}">已取消</text>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+  <view class="weui-loadmore">
+    <view class="weui-loadmore__tips" hidden="{{bottomInVisiable}}">正在加载</view>
+  </view>
+</view>

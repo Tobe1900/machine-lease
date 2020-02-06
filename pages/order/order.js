@@ -158,6 +158,10 @@ Page({
   getOrderDetail() {
     // 订单详情
   },
+  imageLoad(event){
+    console.log(event.detail)
+    event.detail.height = 100
+  },
   refresh(event) {
     if (this.data.locked) {
       console.log("尝试解锁")

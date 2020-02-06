@@ -53,6 +53,17 @@ Page({
     this.useDaysDialog = this.selectComponent("#useDaysDialog");
   },
   chooseUseDays() {
+    let {
+      startTimeText
+    } = this.data
+    if (startTimeText == '请选择') {
+      wx.showToast({
+        title: '请选择用车时间',
+        icon: 'none',
+        duration: 1000
+      })
+      return
+    }
     this.useDaysDialog.show()
   },
   hideUseDaysDialog() {
@@ -96,20 +107,23 @@ Page({
     })
   },
   pickerTap: function() {
-    let date = new Date();
-    let weekday = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"]
+    // 获取当前时间的 让picker选中当前时间的时和分值
+    let currentDate = new Date(),
+      hourIndex = currentDate.getHours(),
+      minuteIndex = currentDate.getMinutes()
+    const weekday = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"]
     let monthDay = [];
     let hours = [];
     let minute = [];
     // 月-日
     for (let i = 0; i <= 120; i++) {
-      let tmpDate = new Date(date);
-      tmpDate.setDate(date.getDate() + i);
+      let tmpDate = new Date(currentDate);
+      tmpDate.setDate(currentDate.getDate() + i);
       let md = `${(tmpDate.getMonth() + 1)}月${tmpDate.getDate()}日-${weekday[tmpDate.getDay()]}`;
       monthDay.push(md);
     }
     // 时
-    for (let i = 0; i < 24; i++) {
+    for (let i = hourIndex; i < 24; i++) {
       if (i < 10) {
         hours.push(`0${i}点`);
       } else {
@@ -117,7 +131,7 @@ Page({
       }
     }
     // 分
-    for (let i = 0; i < 60; i += 1) {
+    for (let i = minuteIndex; i < 60; i += 1) {
       if (i < 10) {
         minute.push(`0${i}分`);
       } else {
@@ -135,13 +149,60 @@ Page({
   },
   bindMultiPickerColumnChange(e) {
     this.setData({
-      startTimeText: '正在选择'
+      startTimeText: '正在选择...'
     })
-    console.log('修改的列为', e.detail.column, ',值为', e.detail.value)
-    var data = {
+    let data = {
       multiArray: this.data.multiArray,
       multiIndex: this.data.multiIndex
     };
+    // let dateIndex = this.data.multiIndex[0] // 日期的索引值
+    // let hourIndex = this.data.multiIndex[1] // 时的索引值
+    // let minuteIndex = this.data.multiIndex[1] // 分的索引值
+    let currentDate = new Date(),
+      hourIndex = currentDate.getHours(),
+      minuteIndex = currentDate.getMinutes(),
+      hours = [],
+      minutes = []
+    if (e.detail.column === 0 && e.detail.value === 0) { // 如果选择的日期是今天
+      console.log('hhhhh today')
+      for (let h = hourIndex; h < 24; h++) {
+        if (h < 10) {
+          hours.push(`0${h}点`);
+        } else {
+          hours.push(`${h}点`);
+        }
+      }
+      for (let m = minuteIndex; m < 60; m++) {
+        if (m < 10) {
+          minutes.push(`0${m}分`);
+        } else {
+          minutes.push(`${m}分`);
+        }
+      }
+      data.multiArray[1] = hours;
+      data.multiArray[2] = minutes;
+      data.multiIndex = [e.detail.value, 0, 0]
+      this.setData(data)
+    } else if (e.detail.column === 0 && e.detail.value !== 0) { // 如果选择的日期不是今天
+      for (let h = 0; h < 24; h++) {
+        if (h < 10) {
+          hours.push(`0${h}点`);
+        } else {
+          hours.push(`${h}点`);
+        }
+      }
+      for (let m = 0; m < 60; m++) {
+        if (m < 10) {
+          minutes.push(`0${m}分`);
+        } else {
+          minutes.push(`${m}分`);
+        }
+      }
+      data.multiArray[1] = hours;
+      data.multiArray[2] = minutes;
+      data.multiIndex = [e.detail.value, 0, 0]
+      this.setData(data)
+    }
     data.multiIndex[e.detail.column] = e.detail.value;
     this.setData(data)
     setTimeout(() => {
@@ -151,14 +212,21 @@ Page({
         selectedTime: (this.data.multiArray[1])[this.data.multiIndex[1]] + (this.data.multiArray[2])[this.data.multiIndex[2]]
       })
     }, 200)
+    console.log('修改的列为', e.detail.column, ',值为', e.detail.value)
   },
   submitOrder() {
     let products = this.data.selectedItems.map(item => {
+      let {
+        productID,
+        num,
+        dPrice,
+        mPrice
+      } = item
       return {
-        productID: item.productID,
-        num: item.num,
-        dPrice: item.dPrice,
-        mPrice: item.mPrice
+        productID,
+        num,
+        dPrice,
+        mPrice
       }
     })
     let {
@@ -193,10 +261,13 @@ Page({
         let data = res.data
         if (!data.errcode) {
           wx.showToast({
-            title: '提交成功',
+            title: '订单提交成功',
             icon: 'success',
             duration: 1000
           });
+          wx.switchTab({
+            url: '/pages/order/order',
+          })
           // 跳转到订单页面
         } else {
           wx.showToast({

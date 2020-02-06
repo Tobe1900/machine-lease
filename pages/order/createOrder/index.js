@@ -2,8 +2,10 @@ const app = getApp()
 import config from '../../../config/index.js'
 import {
   handleFormat,
-  replaceMonth,
-  replacePonit
+  convertDate,
+  convertTime,
+  replaceMinuteStr,
+  replaceHourStr
 } from '../../../utils/util.js'
 
 Page({
@@ -17,6 +19,12 @@ Page({
       [],
       []
     ],
+    selectedDateIndex:0,
+    selectedHourIndex:0,
+    selectedMinuteIndex:0,
+    sendbackDateText:'请选择', // 还车日期
+    sendbackDate:'',
+    sendbackDay:'',
     selectedDay: '',
     selectedDate: '',
     selectedTime: '',
@@ -24,20 +32,20 @@ Page({
     day: 0,
     rent: 24530,
     days: [{
-        value: 3
-      },
-      {
-        value: 10
-      },
-      {
-        value: 30
-      },
-      {
-        value: 60
-      },
-      {
-        value: 90
-      }
+      value: 3
+    },
+    {
+      value: 10
+    },
+    {
+      value: 30
+    },
+    {
+      value: 60
+    },
+    {
+      value: 90
+    }
     ],
     otherDay: '',
     addressObj: {
@@ -48,9 +56,16 @@ Page({
       isSetAddress: false
     }
   },
-  onReady: function() {
+  onReady: function () {
     //获得dialog组件
     this.useDaysDialog = this.selectComponent("#useDaysDialog");
+  },
+  onLoad: function (option) {
+    let selectedItems = JSON.parse(option.selectedItems)
+    this.setData({
+      selectedItems: selectedItems
+    })
+    this.pickerTap()
   },
   chooseUseDays() {
     let {
@@ -69,12 +84,28 @@ Page({
   hideUseDaysDialog() {
     this.useDaysDialog.hide()
   },
-  setUseDays(e) {
-    let {
-      day
-    } = e.currentTarget.dataset
+  setUseDays(e, arg) {
+    let sendbackDateInex = 0
+    let day = !!e ? e.currentTarget.dataset.day : arg
+    let {multiArray,selectedMinuteIndex,selectedHourIndex,selectedDateIndex} = this.data
+    let selectedHour = replaceHourStr(multiArray[1][selectedHourIndex])
+    let selectedMinute = replaceMinuteStr(multiArray[2][selectedMinuteIndex])
+    let time = Number(selectedHour + selectedMinute)
+    if (time < 1500){
+      // 当天用车时间在15:00以前 不计当天
+      sendbackDateInex = selectedDateIndex + Number(day) - 1
+    } else {
+      sendbackDateInex = selectedDateIndex + Number(day)
+    }
+    console.log('sendbackDateInex', sendbackDateInex)
+    // 在这里根据天数计算租金
+    // code here ..........
     this.setData({
-      day: day
+      day: day,
+      sendbackDateInex: sendbackDateInex,
+      sendbackDateText:'正在获取还车日期',
+      sendbackDate:handleFormat(multiArray[0][sendbackDateInex]).date,
+      sendbackDay: handleFormat(multiArray[0][sendbackDateInex]).day
     })
     this.useDaysDialog.hide()
   },
@@ -88,26 +119,18 @@ Page({
     if (otherDay == '') {
       return this.useDaysDialog.hide()
     }
+    this.setUseDays(undefined,otherDay)
     this.setData({
-      day: otherDay,
-      otherDay: ''
+      otherDay:''
     })
-    this.useDaysDialog.hide()
-  },
-  onLoad: function(option) {
-    let selectedItems = JSON.parse(option.selectedItems)
-    this.setData({
-      selectedItems: selectedItems
-    })
-    this.pickerTap()
   },
   selectAddress() {
     wx.navigateTo({
       url: '../selectAddress/index'
     })
   },
-  pickerTap: function() {
-    // 获取当前时间的 让picker选中当前时间的时和分值
+  pickerTap: function () {
+    // 获取当前时间 让picker选中当前时间的时和分值
     let currentDate = new Date(),
       hourIndex = currentDate.getHours(),
       minuteIndex = currentDate.getMinutes()
@@ -116,7 +139,7 @@ Page({
     let hours = [];
     let minute = [];
     // 月-日
-    for (let i = 0; i <= 120; i++) {
+    for (let i = 0; i <= 365; i++) {
       let tmpDate = new Date(currentDate);
       tmpDate.setDate(currentDate.getDate() + i);
       let md = `${(tmpDate.getMonth() + 1)}月${tmpDate.getDate()}日-${weekday[tmpDate.getDay()]}`;
@@ -147,24 +170,35 @@ Page({
     data.multiArray[2] = minute;
     this.setData(data);
   },
-  bindMultiPickerColumnChange(e) {
+  bindStartMultiPickerChange(e) {  // 点击picker上的“确定”时触发
     this.setData({
-      startTimeText: '正在选择...'
+      day:0,
+      sendbackDateText:'请选择'
     })
+    let { multiArray, multiIndex } = this.data
+    let {value} = e.detail   // value: picker每列选中索引值构成的数组
+    this.setData({
+      selectedDateIndex: value[0],  // 获取选中日期的索引值
+      selectedHourIndex: value[1],  // 获取选择小时的索引值
+      selectedMinuteIndex: value[2], // 获取选择分钟的索引值
+      startTimeText: '正在获取用车日期',
+      selectedDay: handleFormat((multiArray[0])[multiIndex[0]]).day,
+      selectedDate: handleFormat((multiArray[0])[multiIndex[0]]).date,
+      selectedTime: (multiArray[1])[multiIndex[1]] + (multiArray[2])[multiIndex[2]]
+    })
+  },
+  bindMultiPickerColumnChange(e) {
     let data = {
       multiArray: this.data.multiArray,
       multiIndex: this.data.multiIndex
     };
-    // let dateIndex = this.data.multiIndex[0] // 日期的索引值
-    // let hourIndex = this.data.multiIndex[1] // 时的索引值
-    // let minuteIndex = this.data.multiIndex[1] // 分的索引值
     let currentDate = new Date(),
       hourIndex = currentDate.getHours(),
       minuteIndex = currentDate.getMinutes(),
       hours = [],
       minutes = []
     if (e.detail.column === 0 && e.detail.value === 0) { // 如果选择的日期是今天
-      console.log('hhhhh today')
+      console.log('today')
       for (let h = hourIndex; h < 24; h++) {
         if (h < 10) {
           hours.push(`0${h}点`);
@@ -205,13 +239,6 @@ Page({
     }
     data.multiIndex[e.detail.column] = e.detail.value;
     this.setData(data)
-    setTimeout(() => {
-      this.setData({
-        selectedDay: handleFormat((this.data.multiArray[0])[this.data.multiIndex[0]]).day,
-        selectedDate: handleFormat((this.data.multiArray[0])[this.data.multiIndex[0]]).date,
-        selectedTime: (this.data.multiArray[1])[this.data.multiIndex[1]] + (this.data.multiArray[2])[this.data.multiIndex[2]]
-      })
-    }, 200)
     console.log('修改的列为', e.detail.column, ',值为', e.detail.value)
   },
   submitOrder() {
@@ -241,7 +268,7 @@ Page({
       latitude,
       longitude
     }
-    let beginTime = new Date().getFullYear() + '-' + replaceMonth(this.data.selectedDate) + ' ' + replacePonit(this.data.selectedTime)
+    let beginTime = new Date().getFullYear() + '-' + convertDate(this.data.selectedDate) + ' ' + convertTime(this.data.selectedTime)
     let formData = {
       token: wx.getStorageSync('token') || app.globalData.token,
       rent: this.data.rent,
@@ -257,7 +284,7 @@ Page({
         'content-type': 'application/json'
       },
       method: 'POST',
-      success: function(res) {
+      success: function (res) {
         let data = res.data
         if (!data.errcode) {
           wx.showToast({
@@ -277,7 +304,7 @@ Page({
           })
         }
       },
-      fail: function(error) {
+      fail: function (error) {
         console.log('error', error)
       }
     })

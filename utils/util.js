@@ -24,17 +24,28 @@ const handleFormat = d => {
   }
 }
 
-const replaceMonth = str => {
+const convertDate = str => {
   let tmp = str.replace("月","-")
   let result = tmp.replace("日","")
   return result
 }
 
-const replacePonit = time => {
+const convertTime = time => {
   let tmp = time.replace("点",":")
   let result = tmp.replace("分","")
   return result
 }
+
+const replaceHourStr = h => {
+  let tmp = h.replace("点","")
+  return tmp
+}
+
+const replaceMinuteStr = m => {
+  let tmp = m.replace("分","")
+  return tmp
+}
+
 
 const formatDate = (date, fmt) => {
   let o = {
@@ -62,6 +73,8 @@ const formatTime = (date, match) => {
 module.exports = {
   formatTime,
   handleFormat,
-  replaceMonth,
-  replacePonit
+  convertDate,
+  convertTime,
+  replaceHourStr,
+  replaceMinuteStr
 }

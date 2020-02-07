@@ -77,7 +77,7 @@ Page({
   data: {
     orderList: [],
     page: 1,
-    type: 0,
+    type: '0',
     hasRecords: false,
     totalPage: 0,
     scrollTop: 0,
@@ -88,23 +88,23 @@ Page({
     noRecordsText: '',
     tabs: [{
         title: "已下单未审核",
-        value: 0
+        value: "0"
       },
       {
         title: "已审核可签约",
-        value: 1
+        value: "1"
       },
       {
         title: "已签约未支付",
-        value: 2
+        value: "2"
       },
       {
         title: "已支付",
-        value: 3
+        value: "3"
       },
       {
         title: "已取消",
-        value: 4
+        value: "4"
       }
     ],
   },

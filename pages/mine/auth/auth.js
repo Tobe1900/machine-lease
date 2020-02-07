@@ -1,4 +1,6 @@
-let adds = {}
+import config from '../../../config/index.js'
+const app = getApp()
+
 Page({
   data:{
     name: '拍照自动识别',
@@ -12,47 +14,36 @@ Page({
   },
   onLoad:function(){
     // 页面加载时调用
-    this.getAccessToken()
+    
   },
-  getAccessToken:function(){
-    let that = this
-    wx.request({
-      url: 'https://www.m-th.cn/orchid/api/getAccessToken',
-      method: 'GET',
-      header:{'content-type':'application/json'},
-      success:function(res){
-        if(res){
-          let data = res.data
-          that.setData({
-            access_token: data.access_token
-          })
-        }
-      }
-    })
-  },
-
   formSubmit: function (e) {
     this.upload()
   },
-
   upload: function (img_file) {
     var that = this
       wx.uploadFile({
-        url: 'http://nkh.m-th.cn/nkh/api/ocrIdCard',
+        url: config.requestUrl + 'authName',
         filePath: img_file,
         header:{
           'content-type':'multipart/form-data'
           },
-        name: 'idCodeImg',
+        name: 'file',
         formData: {
-          method: 'POST'
+          method: 'POST',
+          token: wx.getStorageSync('token') || app.globalData.token
         },
         success: function (res) {
           if (!res.errcode) {
             wx.showToast({
-              title: '上传成功',
+              title: '认证成功',
               duration: 3000
             });
+            console.log(res)
+          } else {
+            wx.showModal({
+              title: '提示',
+              content: res.errmsg,
+            })
           }
         }
       })
@@ -66,6 +57,9 @@ Page({
           switch(type){
             case 'front':
               console.log('heeeh front')
+              wx.showLoading({
+                title: '正在上传'
+              })
               that.setData({
                 front: res.tempFilePaths[0]
               })
@@ -80,7 +74,6 @@ Page({
             default:
               break  
           }
-         
         }
       })
   }

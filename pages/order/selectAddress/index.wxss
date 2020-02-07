@@ -1,10 +1,9 @@
 /* pages/order/selectAddress/index.wxss */
 
-.image-cnt {
+.image-center {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 134px;
 }
 
 .cover-image {
@@ -18,4 +17,18 @@
   color: #fff;
   background-color: #1296db;
   width: 70px;
+}
+
+.address_container {
+  display: flex;
+  flex-direction: row;
+  height: 80px;
+  padding: 8px;
+  border-bottom: 1px solid #eee;
+  background-color: #fff;
+  position: fixed;
+  bottom: 20px;
+  left: 10px;
+  right: 10px;
+  box-shadow: 2px 5px 8px #888888;
 }

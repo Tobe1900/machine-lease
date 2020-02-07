@@ -15,13 +15,23 @@ Component({
   
   data: {
     letter: letterList,
-    cityListId: '',
+    cityListId: '',// 用于点击字母索引时做联动
     citylist: cityList,
-    locateCity: ''
+    locateCity: '',
+    scrollHeight:0
   },
   pageLifetimes: {
     // 组件所在页面的生命周期函数
     show: function () {
+      let _this = this
+      wx.getSystemInfo({
+      success: function (res) {
+        console.info(res.windowHeight);
+        _this.setData({
+          scrollHeight: res.windowHeight
+        });
+      }
+    });
       this.setData({
         locateCity: app.globalData.city ? app.globalData.city : '无法定位，请选择城市'
       })

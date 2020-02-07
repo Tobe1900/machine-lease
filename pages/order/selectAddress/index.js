@@ -6,6 +6,7 @@ const qqmapObj = new QQmap()
 Page({
   data: {
     centerPointIcon: '../../../icons/location.png',
+    mapHeight:0,
     addressObj: {
       name: '',
       latitude: '',
@@ -34,7 +35,7 @@ Page({
     // }],
     controls: [{
       id: 1,
-      iconPath: '/resources/location.png',
+      iconPath: '../../../icons/location.png',
       position: {
         left: 0,
         top: 300 - 50,
@@ -45,22 +46,25 @@ Page({
     }]
   },
   onLoad: function() {
+    let _this = this;
     let addressObj = wx.getStorageSync("addressObj")
     if (!!addressObj) {
-      // let {
-      //   latitude,
-      //   longitude
-      // } = JSON.parse(addressObj)
-      this.setData({
+      _this.setData({
         addressObj: JSON.parse(addressObj)
       })
     }
+    wx.getSystemInfo({
+      success: function (res) {
+        console.info(res.windowHeight);
+        _this.setData({
+          mapHeight: res.windowHeight,
+          centerMarginTop: (res.windowHeight / 2) - 16
+        });
+      }
+    });
   },
   onReady: function() {
     this.mapCtx = wx.createMapContext('map') // 获取map组件上下文
-  },
-  getCenterMap1() {
-    console.log('自身位置坐标', this.data.longitude, this.data.latitude)
   },
   getCenterMap(e) {
     // console.log(this.longitude)
@@ -76,21 +80,33 @@ Page({
       // })
     }
     if (e.type == 'end') {
-      _this.mapCtx.getCenterLocation({
-        success: function(res) {
-          let paramPromise = Promise.resolve({
-            latitude: res.latitude,
-            longitude: res.longitude
-          })
-          qqmapObj.getLocateInfo(paramPromise).then(res => {
-            _this.setData({
-              addressObj: res.addressObj
+      if (e.causedBy == 'scale' || e.causedBy == 'drag') {
+        _this.setData({
+          addressObj: {
+            name: '',
+            address: '正在获取用车地点.....',
+            latitude: '',
+            longitude: ''
+          }
+        })
+        _this.mapCtx.getCenterLocation({
+          success: function(res) {
+            let paramPromise = Promise.resolve({
+              latitude: res.latitude,
+              longitude: res.longitude
             })
-          }, err => {
-            console.log(err)
-          })
-        }
-      })
+            qqmapObj.getLocateInfo(paramPromise).then(res => {
+              _this.setData({
+                addressObj: res.addressObj
+              })
+            }, err => {
+              console.log('error', err)
+            })
+          }
+        })
+      } else {
+        // 其余事件不执行逻辑
+      }
     }
   },
   // 确定地址:

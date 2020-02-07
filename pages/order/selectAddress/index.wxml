@@ -1,10 +1,9 @@
 <view>
-  <map id="map" longitude="{{addressObj.longitude}}" latitude="{{addressObj.latitude}}" scale="15" markers="{{markers}}" bindmarkertap="markertap" bindregionchange="getCenterMap" show-location style="width:100%; height:300px;">
-    <cover-view class="image-cnt">
-      <cover-image class="cover-image" src="{{centerPointIcon}}"></cover-image>
-    </cover-view>
-  </map>
-  <view style="display:flex;flex-direction:row;height:75px;padding:8px;border-bottom:1px solid #eeeeee;">
+  <map id="map" longitude="{{addressObj.longitude}}" latitude="{{addressObj.latitude}}" scale="15" markers="{{markers}}" bindmarkertap="markertap" bindregionchange="getCenterMap" show-location style="width:100%; height:{{mapHeight}}px;">
+    <view class="image-center" style="margin-top:{{centerMarginTop}}px">
+      <image class="cover-image" src="{{centerPointIcon}}"></image>
+    </view>
+    <view class="address_container">
     <view style="flex:3;display:flex;flex-direction:column;padding-right:8px;">
       <text style="font-size:15px;">{{addressObj.name}}</text>
       <text style="color:#6e6e6e;font-size:14px;">{{addressObj.address}}</text>
@@ -13,6 +12,8 @@
       <button class="confirm_btn" bindtap="confirmAddress">确定</button>
     </view>
   </view>
+  </map>
+  
   <!-- 中心点 -->
 
 

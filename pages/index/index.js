@@ -76,8 +76,6 @@ Page({
   },
   queryProduct() {
     let _this = this
-    // console.log('token appgloabl', app.globalData.token)
-    // console.log('token storage', wx.getStorageSync('token'))
     wx.request({
       url: config.requestUrl + 'queryProduct',
       data: {
@@ -179,9 +177,9 @@ Page({
         city,
         addressObj
       } = res
-      if (city.indexOf('市') !== -1) { // 去掉“市”
-        city = city.slice(0, city.indexOf('市'));
-      }
+      // if (city.indexOf('市') !== -1) { // 去掉“市”
+      //   city = city.slice(0, city.indexOf('市'));
+      // }
       self.setData({
         city
       })
@@ -197,8 +195,7 @@ Page({
     let {
       code
     } = event.detail
-    console.log(code)
-    console.log(code.errMsg)
+    console.log('code get phonenmumber',code)
     if (code.iv && code.encryptedData) {
       // 用户同意授权获取手机号码
       let {

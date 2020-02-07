@@ -3,8 +3,6 @@ import {
   formatTime
 } from '../../utils/util.js'
 const queryOrder = (self, page, type) => {
-  // let totalPage = self.data.totalPage
-  // totalPage = totalPage + 1
   wx.request({
     url: config.requestUrl + 'queryOrder',
     data: {
@@ -16,14 +14,13 @@ const queryOrder = (self, page, type) => {
       'content-type': 'application/json'
     },
     method: 'POST',
-    success: function(res) {
+    success: function (res) {
       let {
         data
       } = res
       let orderList = self.data.orderList
       wx.hideLoading()
       if (Array.isArray(data) && data.length !== 0) {
-        // totalPage = totalPage + 1
         for (let i = 0; i < data.length; i++) {
           let products = data[i].products
           let tmpProducts = products.map(item => {
@@ -34,19 +31,19 @@ const queryOrder = (self, page, type) => {
             }
           })
           orderList.push(
-            Object.assign({}, { ...data[i]
+            Object.assign({}, {
+              ...data[i]
             }, {
-              time: formatTime(data[i].time, 'yyyy-MM-dd hh:mm'),
-              beginTime: formatTime(data[i].beginTime, 'yyyy-MM-dd hh:mm'),
-              products: tmpProducts
-            })
+                time: formatTime(data[i].time, 'yyyy-MM-dd hh:mm'),
+                beginTime: formatTime(data[i].beginTime, 'yyyy-MM-dd hh:mm'),
+                products: tmpProducts
+              })
           )
         }
         self.setData({
           orderList: orderList,
           page: page,
           hasRecords: true,
-          // totalPage: page
         })
       } else {
         let noMoreText = {
@@ -67,7 +64,7 @@ const queryOrder = (self, page, type) => {
 
       }
     },
-    fail: function(error) {
+    fail: function (error) {
       console.log('error', error)
     }
   })
@@ -79,7 +76,6 @@ Page({
     page: 1,
     type: '0',
     hasRecords: false,
-    totalPage: 0,
     scrollTop: 0,
     scrollHeight: 0,
     locked: false,
@@ -87,31 +83,31 @@ Page({
     selectedIndex: 0,
     noRecordsText: '',
     tabs: [{
-        title: "已下单未审核",
-        value: "0"
-      },
-      {
-        title: "已审核可签约",
-        value: "1"
-      },
-      {
-        title: "已签约未支付",
-        value: "2"
-      },
-      {
-        title: "已支付",
-        value: "3"
-      },
-      {
-        title: "已取消",
-        value: "4"
-      }
+      title: "已下单未审核",
+      value: "0"
+    },
+    {
+      title: "已审核可签约",
+      value: "1"
+    },
+    {
+      title: "已签约未支付",
+      value: "2"
+    },
+    {
+      title: "已支付",
+      value: "3"
+    },
+    {
+      title: "已取消",
+      value: "4"
+    }
     ],
   },
-  onLoad: function() {
+  onLoad: function () {
     let _this = this;
     wx.getSystemInfo({
-      success: function(res) {
+      success: function (res) {
         console.info(res.windowHeight);
         _this.setData({
           scrollHeight: res.windowHeight - 40,
@@ -120,7 +116,7 @@ Page({
       }
     });
   },
-  onHide: function() {
+  onHide: function () {
     this.setData({
       page: 1,
       type: 0,
@@ -130,7 +126,7 @@ Page({
       hasRecords: false
     })
   },
-  onShow: function() {
+  onShow: function () {
     wx.showLoading({
       title: '获取数据中...',
     })
@@ -158,7 +154,7 @@ Page({
   getOrderDetail() {
     // 订单详情
   },
-  imageLoad(event){
+  imageLoad(event) {
     console.log(event.detail)
     event.detail.height = 100
   },
@@ -173,7 +169,7 @@ Page({
       _this.setData({
         locked: true
       })
-      setTimeout(function() {
+      setTimeout(function () {
         _this.setData({
           locked: false,
           orderList: []
@@ -188,8 +184,6 @@ Page({
     let currentPage = this.data.page;
     let orderList = this.data.orderList
     let lastItem = orderList[orderList.length - 1]
-    // let totalPage = this.data.totalPage;
-    // totalPage = totalPage + 1
     if (_this.data.locked) {
       console.log("尝试解锁");
     } else {
@@ -201,7 +195,7 @@ Page({
         wx.showLoading({
           title: "获取数据中..."
         });
-        setTimeout(function() {
+        setTimeout(function () {
           queryOrder(_this, currentPage, _this.data.type);
           _this.setData({
             bottomInVisiable: true,

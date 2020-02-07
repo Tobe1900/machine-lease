@@ -1,6 +1,6 @@
 <view class='city_box' style='{{styles}}'>
   <view class='city_left'>
-    <scroll-view scroll-y style='width:100%;height:100%;' scroll-with-animation scroll-into-view='{{cityListId}}'>
+    <scroll-view scroll-y='true' style='width:100%;height:{{scrollHeight}}px' scroll-with-animation='true' scroll-into-view='{{cityListId}}'>
       <view class='city_locate' data-types='locate'>
         <text class='city_locate_title'>当前定位城市：</text>
         <text class='city_locate_text' style='{{!locateCity&&"color:#33b9ff;"}}'>{{locateCity}}</text>

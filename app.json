@@ -7,7 +7,6 @@
     "pages/mine/auth/auth",
     "pages/cityList/cityList",
     "components/goodItemCom/goodItemCom",
-    "components/promptCom/promptCom",
     "pages/goodDetail/goodDetail",
     "pages/order/createOrder/index",
     "pages/order/selectAddress/index"

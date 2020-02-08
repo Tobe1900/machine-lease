@@ -42,8 +42,8 @@
       </view>
     </checkbox-group>
     <view style="text-align:center;padding-top:100px" wx:else>
-      <text style="color:#6e6e6e;">购物车空空如也,快去首页选购吧！</text>
+      <image src="{{emptyCartIcon}}" mode="aspectFit" class="empty_cart_image" wx:if="{{noRecordsText!==''}}"></image>
+      <text class="no_records">{{noRecordsText}}</text>
     </view>
   </view>
-
 </view>

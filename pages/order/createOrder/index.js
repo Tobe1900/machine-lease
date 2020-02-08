@@ -59,6 +59,7 @@ Page({
   onReady: function() {
     //获得dialog组件
     this.useDaysDialog = this.selectComponent("#useDaysDialog");
+    this.rentRuleDialog = this.selectComponent("#rentRuleDialog")
   },
   onLoad: function(option) {
     let selectedItems = JSON.parse(option.selectedItems)
@@ -83,6 +84,12 @@ Page({
   },
   hideUseDaysDialog() {
     this.useDaysDialog.hide()
+  },
+  hideRentRuleDialog(){
+    this.rentRuleDialog.hide()
+  },
+  showRentRuleDialog(){
+    this.rentRuleDialog.show()
   },
   setUseDays(e, arg) {
     let rent = 0

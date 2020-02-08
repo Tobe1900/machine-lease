@@ -6,20 +6,29 @@ Page({
     userInfo: {},
     isUserLogin: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
-    default_avatarUrl: '../../icons/default_avatar.jpg'
+    default_avatarUrl: '../../icons/default_avatar.jpg',
+    isAuth:false
   },
   onLoad: function() {
     let userInfo = wx.getStorageSync('userInfo') || null
+    let isAuth = wx.getStorageSync("isAuth")
     if (userInfo || app.globalData.userInfo) {
       this.setData({
         userInfo: userInfo || app.globalData.userInfo,
         isUserLogin: true
       })
     }
+    this.setData({
+      isAuth
+    })
   },
   setPersonalAuth: function() {
-    if (!this.data.isUserLogin) {
-      this.showDialog()
+    // if (!this.data.isUserLogin) {
+    //   this.showDialog()
+    //   return
+    // }
+    let isAuth = this.data.isAuth
+    if(isAuth){
       return
     }
     wx.navigateTo({

@@ -33,16 +33,20 @@ Page({
           token: wx.getStorageSync('token') || app.globalData.token
         },
         success: function (res) {
-          if (!res.errcode) {
+          let data = res.data
+          if (!!data && !data.errcode) {
             wx.showToast({
               title: '认证成功',
               duration: 3000
             });
-            console.log(res)
+            wx.setStorageSync("isAuth", true)
+            wx.navigateBack({
+              delta:1
+            })
           } else {
             wx.showModal({
               title: '提示',
-              content: res.errmsg,
+              content: data.errmsg,
             })
           }
         }

@@ -1,14 +1,18 @@
 <view>
-  <span bindtap="selectCity" class="cityBtn" wx:if="{{city!==''}}">{{city}}</span>
+  <!-- <span bindtap="selectCity" class="cityBtn" wx:if="{{city!==''}}">{{city}}</span> -->
   <dialogCom id='phone_dialog' isPhone="true" title='提示' content='【及时到】需要您授权以获取手机号码' confirmText='授权' bind:confirmEvent='confirmEvent' bind:getPhoneNumber='getPhoneNumber'>
   </dialogCom>
   <view class="slideContainer">
-    <prompt />
+    <view style="display:flex;flex-direction:row" wx:if="{{!isAuth}}">
+      <text class="message">{{message}}</text>
+      <button class="authBtn" catchtap="handleAuth">立即实名</button>
+    </view>
+    <span bindtap="selectCity" class="cityBtn" wx:if="{{city!==''}}">{{city}}</span>
     <!-- <view style="display:flex;flex-direction:row">
       <text class="message">{{text}}</text>
       <button class="authBtn">立即实名</button>
     </view> -->
-    <image class="slide" src="{{slideImg}}" mode="aspectFill" style="height:200px;"></image>
+    <image class="slide" src="{{slideImg}}" mode="aspectFill" style="height:240px;"></image>
     <view class="instruction">
       <text class="desc">15分钟及时响应</text>
       <text class="desc">6小时按时交付</text>

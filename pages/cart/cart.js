@@ -4,7 +4,9 @@ Page({
     cartList: [],
     totalCount: 0,
     isEdit: true,
-    isCheckAll: false
+    isCheckAll: false,
+    noRecordsText:'',
+    emptyCartIcon:'../../icons/empty_cart.png'
   },
   onShow: function() {
     this.getCart()
@@ -14,6 +16,7 @@ Page({
       isCheckAll: false,
       totalCount: 0,
       isEdit: true,
+      noRecordsText:''
     })
   },
   getCart() {
@@ -69,7 +72,12 @@ Page({
               return item
             })
             _this.setData({
-              cartList: tmp
+              cartList: tmp,
+              noRecordsText:''
+            })
+          } else {
+            _this.setData({
+              noRecordsText: '您的购物车空空如也，快去首页选购吧！'
             })
           }
         } else {
@@ -290,6 +298,11 @@ Page({
               icon: 'success',
               duration: 1000
             });
+            if(unselectedItem.length === 0){
+              _this.setData({
+                noRecordsText:'您的购物车空空如也，快去首页选购吧！'
+              })
+            }
             _this.setData({
               cartList: unselectedItem,
               isEdit: true

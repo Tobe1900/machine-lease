@@ -1,15 +1,23 @@
 <view style="background-color:#dedede">
-  <scroll-view class='scrollContainer' scroll-x>
+  <!-- <scroll-view class='scrollContainer' scroll-x>
     <block report-submit='true' data-id="{{item.id}}" wx:for="{{tabs}}" wx:key="{{index}}" data-status="{{item.value}}">
       <block>
         <view class="{{selectedIndex !== index ? 'tab':'tab_selected'}}" bindtap="selectTab" data-status="{{item.value}}" data-index="{{index}}">{{item.title}}</view>
       </block>
     </block>
-  </scroll-view>
-  <view style="margin-top:42px;height:{{scrollHeight}}px;background-color:#fff;" hidden="{{hasRecords}}">
+  </scroll-view> -->
+  <view class="scrollContainer">
+  <block report-submit='true' data-id="{{item.id}}" wx:for="{{tabs}}" wx:key="{{index}}" data-status="{{item.value}}">
+      <block>
+        <view class="{{selectedIndex !== index ? 'tab':'tab_selected'}}" bindtap="selectTab" data-status="{{item.value}}" data-index="{{index}}">{{item.title}}</view>
+      </block>
+    </block>
+  </view>
+  <view style="margin-top:42px;height:{{scrollHeight}}px;background-color:#fff;text-align:center" hidden="{{hasRecords}}">
+    <image src="{{noOrderIcon}}" mode="aspectFit" class="no_order_image" wx:if="{{noRecordsText!==''}}"></image>
     <text class="no_records">{{noRecordsText}}</text>
   </view>
-  <scroll-view scroll-top="{{scrollTop}}" scroll-y="true" style="height:{{scrollHeight}}px;margin-top:42px;" class="list" bindscrolltolower="bindDownLoad" bindscrolltoupper="refresh">
+  <scroll-view scroll-top="{{scrollTop}}" scroll-y="true" style="height:{{scrollHeight}}px;margin-top:52px;" class="list" bindscrolltolower="bindDownLoad" bindscrolltoupper="refresh">
 
     <view class="item" wx:for="{{orderList}}" wx:key="index" bindtap="getOrderDetail" data-obj="{{item}}" data-id="{{item.orderId}}">
       <view wx:if="{{item.noMore}}" class="no_more_text">

@@ -107,3 +107,16 @@
   color: #666;
   padding-left: 15px;
 }
+
+.empty_cart_image {
+  height: 60px;
+  width: 50%;
+}
+
+.no_records {
+  color: #6e6e6e;
+  text-align: center;
+  width: 100%;
+  display: inline-block;
+  margin-top: 20px;
+}

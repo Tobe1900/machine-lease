@@ -19,7 +19,7 @@
             <text>{{startTimeText}}</text>
           </view>
           <view class="picker_actived" wx:else>
-            <text style="color:#000;">{{selectedDate}}</text>
+            <text style="color:#000;font-size:28rpx;">{{selectedDate}}</text>
             <text>{{selectedDay}} {{selectedTime}}</text>
           </view>
         </picker>
@@ -33,7 +33,7 @@
           <text>{{sendbackDateText}}</text>
         </view>
         <view class="picker_actived" wx:else>
-          <text style="color:#000;">{{sendbackDate}}</text>
+          <text style="color:#000;font-size:28rpx;">{{sendbackDate}}</text>
           <text>{{sendbackDay}} 14点59分</text>
         </view>
       </view>
@@ -49,9 +49,9 @@
       <view class="flex_num">{{cart.num}}台</view>
     </view>
   </view>
-  <view class="rent_container" style="">
+  <view class="rent_container">
     <view class="rent_item">
-      <text class="item_label">租金</text>
+      <text class="item_label rent_rule_label" bindtap="showRentRuleDialog">租金</text>
       <text class="item_value">￥{{rent}}</text>
     </view>
   </view>
@@ -82,6 +82,23 @@
     </view>
     <view slot="footer" class="confirm_btn_container">
       <button class="confirm_btn" catchtap="confirmDay">确认</button>
+    </view>
+  </useDaysCom>
+  <useDaysCom id="rentRuleDialog">
+    <view slot="title">
+      <view style="display:flex;flex-direction:row">
+        <text style="flex:3;padding-left:20px;">租金计算规则</text>
+        <view class="close_svg" bindtap="hideRentRuleDialog">
+        </view>
+      </view>
+    </view>
+    <view slot="content">
+      <view class="rent_rule_desc">
+        <text>1.超过30天，租金=(月租价÷30)×天数</text>
+      </view>
+      <view class="rent_rule_desc">
+        <text>2.少于30天，租金=天租价×天数(如果超过月租价，只收取月租价)</text>
+      </view>
     </view>
   </useDaysCom>
 </view>

@@ -17,15 +17,15 @@
     <view class="news-item">
       <view class="news-item-left">
         <image src="../../icons/person.png" class="news-image" />
-        <!-- <text class="fa fa-credit-card"></text> -->
-        <text class="news-item-title">个人认证</text>
+        <text class="news-item-title">实名认证</text>
       </view>
       <view class="news-item-right">
-        <image src="../../icons/arrow.png" class="news-image-right" />
+        <image src="../../icons/arrow.png" class="news-image-right" wx:if="{{!isAuth}}"/>
+        <text wx:else style="color: #888;margin-right: 10px;">已实名</text>
       </view>
     </view>
   </view>
-  <view class="news-item-container" bindtap="goToMyCards">
+  <!-- <view class="news-item-container" bindtap="goToMyCards">
     <view class="news-item">
       <view class="news-item-left">
         <image src="../../icons/enterprise.png" class="news-image" />
@@ -40,7 +40,6 @@
     <view class="news-item">
       <view class="news-item-left">
         <image src="../../icons/coupon.png" class="news-image" />
-        <!-- <text class="fa fa-credit-card"></text> -->
         <text class="news-item-title">优惠券</text>
       </view>
       <view class="news-item-right">
@@ -52,7 +51,6 @@
     <view class="news-item">
       <view class="news-item-left">
         <image src="../../icons/guarantee.png" class="news-image" />
-        <!-- <text class="fa fa-credit-card"></text> -->
         <text class="news-item-title">报修记录</text>
       </view>
       <view class="news-item-right">
@@ -64,7 +62,6 @@
     <view class="news-item">
       <view class="news-item-left">
         <image src="../../icons/invite.png" class="news-image" />
-        <!-- <text class="fa fa-credit-card"></text> -->
         <text class="news-item-title">邀请码</text>
       </view>
       <view class="news-item-right">
@@ -76,12 +73,11 @@
     <view class="news-item">
       <view class="news-item-left">
         <image src="../../icons/phone.png" class="news-image" />
-        <!-- <text class="fa fa-credit-card"></text> -->
         <text class="news-item-title">客户电话</text>
       </view>
       <view class="news-item-right">
         <text>400 000 000</text>
       </view>
     </view>
-  </view>
+  </view> -->
 </view>

@@ -82,6 +82,7 @@ Page({
     bottomInVisiable: true,
     selectedIndex: 0,
     noRecordsText: '',
+    noOrderIcon: '../../icons/no_order.png',
     tabs: [{
       title: "已下单未审核",
       value: "0"
@@ -153,10 +154,6 @@ Page({
   },
   getOrderDetail() {
     // 订单详情
-  },
-  imageLoad(event) {
-    console.log(event.detail)
-    event.detail.height = 100
   },
   refresh(event) {
     if (this.data.locked) {

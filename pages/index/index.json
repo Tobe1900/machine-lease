@@ -2,7 +2,6 @@
   "navigationBarTitleText": "及时到",
   "usingComponents": {
     "goodItem": "../../components/goodItemCom/goodItemCom",
-    "prompt": "../../components/promptCom/promptCom",
     "dialogCom": "../../components/dialogCom/dialogCom"
   }
 }

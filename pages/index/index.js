@@ -8,6 +8,8 @@ Page({
     isUserLogin: false,
     slideImg: '../../icons/slide.jpg',
     goods: [],
+    isAuth: false,
+    message: '为了您的账号安全，请尽快完成实名认证！',
     havePhone: false
   },
   onShow() {
@@ -18,21 +20,38 @@ Page({
     this.setData({
       city: app.globalData.city !== '' ? app.globalData.city : ''
     })
-    setTimeout(() => {
+    let token = wx.getStorageSync("token")
+    if (!token) {
+      app.userLogin().then(res => {
+        if (!res.errcode) {
+          this.queryProduct()
+          this.setData({
+            havePhone: wx.getStorageSync("havePhone") || app.globalData.havePhone,
+            isAuth: wx.getStorageSync("isAuth") || app.globalData.isAuth
+          })
+        }
+      })
+    } else {
       this.queryProduct()
-    }, 500)
+      this.setData({
+        havePhone: wx.getStorageSync("havePhone") || app.globalData.havePhone,
+        isAuth: wx.getStorageSync("isAuth") || app.globalData.isAuth
+      })
+    }
   },
   onLoad: function() {
-    this.setData({
-      havePhone: wx.getStorageSync("havePhone") || app.globalData.havePhone
-    })
     this.dialog = this.selectComponent("#phone_dialog"); //设置dialog组件以获得手机号码
     this.setUserLocation() // 授权获取地理位置
   },
-  showDialog: function() {
+  handleAuth() {
+    wx.navigateTo({
+      url: '../mine/auth/auth',
+    })
+  },
+  showDialog() {
     this.dialog.showDialog();
   },
-  confirmEvent: function() {
+  confirmEvent() {
     this.dialog.hideDialog();
   },
   setUserLocation() {
@@ -195,7 +214,7 @@ Page({
     let {
       code
     } = event.detail
-    console.log('code get phonenmumber',code)
+    console.log('code get phonenmumber', code)
     if (code.iv && code.encryptedData) {
       // 用户同意授权获取手机号码
       let {

@@ -14,7 +14,7 @@ const queryOrder = (self, page, type) => {
       'content-type': 'application/json'
     },
     method: 'POST',
-    success: function (res) {
+    success: function(res) {
       let {
         data
       } = res
@@ -34,10 +34,11 @@ const queryOrder = (self, page, type) => {
             Object.assign({}, {
               ...data[i]
             }, {
-                time: formatTime(data[i].time, 'yyyy-MM-dd hh:mm'),
-                beginTime: formatTime(data[i].beginTime, 'yyyy-MM-dd hh:mm'),
-                products: tmpProducts
-              })
+              time: formatTime(data[i].time, 'yyyy-MM-dd hh:mm'),
+              beginTime: formatTime(data[i].beginTime, 'yyyy-MM-dd hh:mm'),
+              products: tmpProducts,
+              agreementImg: data[i].agreementImage || self.data.agreementImage
+            })
           )
         }
         self.setData({
@@ -64,7 +65,7 @@ const queryOrder = (self, page, type) => {
 
       }
     },
-    fail: function (error) {
+    fail: function(error) {
       console.log('error', error)
     }
   })
@@ -83,32 +84,33 @@ Page({
     selectedIndex: 0,
     noRecordsText: '',
     noOrderIcon: '../../icons/no_order.png',
+    agreementImage: '../../../icons/agreement.png', // 模拟协议图片 后期可删除
     tabs: [{
-      title: "已下单未审核",
-      value: "0"
-    },
-    {
-      title: "已审核可签约",
-      value: "1"
-    },
-    {
-      title: "已签约未支付",
-      value: "2"
-    },
-    {
-      title: "已支付",
-      value: "3"
-    },
-    {
-      title: "已取消",
-      value: "4"
-    }
+        title: "已下单未审核",
+        value: "0"
+      },
+      {
+        title: "已审核可签约",
+        value: "1"
+      },
+      {
+        title: "已签约未支付",
+        value: "2"
+      },
+      {
+        title: "已支付",
+        value: "3"
+      },
+      {
+        title: "已取消",
+        value: "4"
+      }
     ],
   },
-  onLoad: function () {
+  onLoad: function() {
     let _this = this;
     wx.getSystemInfo({
-      success: function (res) {
+      success: function(res) {
         console.info(res.windowHeight);
         _this.setData({
           scrollHeight: res.windowHeight - 40,
@@ -117,7 +119,7 @@ Page({
       }
     });
   },
-  onHide: function () {
+  onHide: function() {
     this.setData({
       page: 1,
       type: 0,
@@ -127,7 +129,7 @@ Page({
       hasRecords: false
     })
   },
-  onShow: function () {
+  onShow: function() {
     wx.showLoading({
       title: '获取数据中...',
     })
@@ -155,6 +157,71 @@ Page({
   getOrderDetail() {
     // 订单详情
   },
+  navigateToSign(e) {
+    // 跳转签名
+    console.log(e.currentTarget)
+    let agreementImg = e.currentTarget.dataset.agreementimg
+    let orderid = e.currentTarget.dataset.orderid
+    wx.navigateTo({
+      url: './userSign/userSign?agreementimg=' + agreementImg + '&orderid=' + orderid
+    })
+  },
+  payOrder(e) {
+    let orderId = e.currentTarget.dataset.orderid
+    wx.request({
+      url: config.requestUrl + 'payOrder',
+      data: {
+        token: wx.getStorageSync('token') || app.globalData.token,
+        orderId: orderId
+      },
+      header: {
+        'content-type': 'application/json'
+      },
+      method: 'POST',
+      success: function(res) {
+        console.log('ressssss', res)
+        if (res.errMsg == "request:ok") {
+          let nonceStr = res.data.nonceStr,
+            _package = res.data.package,
+            paySign = res.data.paySign,
+            signType = res.data.signType,
+            timeStamp = res.data.timeStamp
+
+
+          wx.requestPayment({
+            nonceStr: nonceStr,
+            package: _package,
+            paySign: paySign,
+            signType: signType,
+            timeStamp: timeStamp,
+            success(res) {
+              if (res && res.errMsg === 'requestPayment:ok'){
+                wx.showToast({
+                  title: '支付成功',
+                  icon: 'success',
+                  duration:2000
+                })
+              }
+            },
+            fail(res) {
+              wx.showToast({
+                title: 'wx.requestPayment系统错误',
+                icon: 'none',
+                duration: 2000
+              })
+            }
+          })
+        }
+      },
+      fail: function(error) {
+        wx.showToast({
+          title: '系统错误',
+          icon: 'none',
+          duration: 2000
+        })
+      }
+    })
+  },
   refresh(event) {
     if (this.data.locked) {
       console.log("尝试解锁")
@@ -166,7 +233,7 @@ Page({
       _this.setData({
         locked: true
       })
-      setTimeout(function () {
+      setTimeout(function() {
         _this.setData({
           locked: false,
           orderList: []
@@ -192,7 +259,7 @@ Page({
         wx.showLoading({
           title: "获取数据中..."
         });
-        setTimeout(function () {
+        setTimeout(function() {
           queryOrder(_this, currentPage, _this.data.type);
           _this.setData({
             bottomInVisiable: true,

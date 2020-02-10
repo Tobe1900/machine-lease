@@ -1,6 +1,6 @@
 <view>
   <view style="margin-bottom:40px;position:absolute;margin-top:40px;width:100%;">
-    <checkbox-group wx:if="{{cartList.length>0}}" bindchange="checkboxChange">
+    <checkbox-group wx:if="{{cartList.length>0}}" bindchange="checkboxChange" style="margin-bottom:10px;">
       <view class="cart_top_container">
         <text bindtap="handleEdit" wx:if="{{isEdit}}" class="cart_top_btn">编辑</text>
         <text bindtap="handleComplete" wx:else class="cart_top_btn">完成</text>

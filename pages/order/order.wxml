@@ -1,23 +1,23 @@
 <view style="background-color:#dedede">
-  <!-- <scroll-view class='scrollContainer' scroll-x>
+  <scroll-view class='scrollContainer' scroll-x>
     <block report-submit='true' data-id="{{item.id}}" wx:for="{{tabs}}" wx:key="{{index}}" data-status="{{item.value}}">
       <block>
         <view class="{{selectedIndex !== index ? 'tab':'tab_selected'}}" bindtap="selectTab" data-status="{{item.value}}" data-index="{{index}}">{{item.title}}</view>
       </block>
     </block>
-  </scroll-view> -->
-  <view class="scrollContainer">
+  </scroll-view>
+  <!-- <view class="scrollContainer">
   <block report-submit='true' data-id="{{item.id}}" wx:for="{{tabs}}" wx:key="{{index}}" data-status="{{item.value}}">
       <block>
         <view class="{{selectedIndex !== index ? 'tab':'tab_selected'}}" bindtap="selectTab" data-status="{{item.value}}" data-index="{{index}}">{{item.title}}</view>
       </block>
     </block>
-  </view>
+  </view> -->
   <view style="margin-top:42px;height:{{scrollHeight}}px;background-color:#fff;text-align:center" hidden="{{hasRecords}}">
     <image src="{{noOrderIcon}}" mode="aspectFit" class="no_order_image" wx:if="{{noRecordsText!==''}}"></image>
     <text class="no_records">{{noRecordsText}}</text>
   </view>
-  <scroll-view scroll-top="{{scrollTop}}" scroll-y="true" style="height:{{scrollHeight}}px;margin-top:52px;" class="list" bindscrolltolower="bindDownLoad" bindscrolltoupper="refresh">
+  <scroll-view scroll-top="{{scrollTop}}" scroll-y="true" style="height:{{scrollHeight}}px;margin-top:34px;" class="list" bindscrolltolower="bindDownLoad" bindscrolltoupper="refresh">
 
     <view class="item" wx:for="{{orderList}}" wx:key="index" bindtap="getOrderDetail" data-obj="{{item}}" data-id="{{item.orderId}}">
       <view wx:if="{{item.noMore}}" class="no_more_text">
@@ -25,8 +25,8 @@
       </view>
       <view class="order_container" wx:else>
         <view class="description">
-          <text class="item_label">订单编号:</text>
-          <text class="item_value">{{item.orderId}}</text>
+          <!-- <text class="item_label">订单编号:</text> -->
+          <text class="item_value">{{item.addressDesc.name}}</text>
           <text wx:if="{{item.status=='0'}}" class="status_text">已下单未审核</text>
           <text wx:elif="{{item.status=='1'}}" class="status_text">已审核可签约</text>
           <text wx:elif="{{item.status=='2'}}" class="status_text">已签约未支付</text>
@@ -42,7 +42,7 @@
             <text class="product_name">数量:{{product.num}}台</text>
           </view>
         </view>
-        <view class="description">
+        <!-- <view class="description">
           <text class="item_label">租金:</text>
           <text class="item_value">{{item.rent}}元</text>
         </view>
@@ -61,6 +61,12 @@
         <view class="description">
           <text class="item_label">下单时间:</text>
           <text class="item_value">{{item.time}}</text>
+        </view> -->
+        <view class="description" wx:if="{{item.status=='1'}}">
+          <button plain="true" size="mini" catchtap="navigateToSign" style="margin-right:10px;" data-agreementimg="{{item.agreementImg}}" data-orderid="{{item.orderId}}">签约</button>
+        </view>
+         <view class="description" wx:if="{{item.status=='2'}}">
+          <button plain="true" size="mini" catchtap="payOrder" style="margin-right:10px;" data-orderid="{{item.orderId}}">支付</button>
         </view>
         <!-- <view>
           <text class="item_label">订单状态:</text>

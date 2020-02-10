@@ -18,7 +18,7 @@ page {
 }
 
 .product_container {
-  margin: 20rpx 0 20rpx 0;
+  margin: 10rpx 0 10rpx 0;
   padding: 5px;
   border-top: 1px solid #dedede;
   border-bottom: 1px solid #dedede;
@@ -72,11 +72,11 @@ page {
 }
 
 .time_container {
-  margin: 0 0 30rpx 0;
+  margin: 0 0 10rpx 0;
   display: flex;
   flex-direction: column;
   background-color: #fff;
-  padding: 15rpx 30rpx;
+  padding: 20rpx 30rpx;
   font-size: 28rpx;
   color: #555;
 }
@@ -86,7 +86,6 @@ page {
   flex-direction: column;
   background-color: #fff;
   padding: 15rpx 30rpx;
-  font-size: 28rpx;
+  font-size: 30rpx;
   color: #555;
-  margin-bottom: 60px;
 }

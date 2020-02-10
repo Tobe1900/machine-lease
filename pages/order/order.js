@@ -7,7 +7,7 @@ const queryOrder = (self, page, type) => {
   wx.request({
     url: config.requestUrl + 'queryOrder',
     data: {
-      token: wx.getStorageSync('token') || app.globalData.token,
+      token: wx.getStorageSync('token'),
       page: page,
       type: type
     },

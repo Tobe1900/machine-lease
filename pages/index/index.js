@@ -9,8 +9,7 @@ Page({
     slideImg: '../../icons/slide.jpg',
     goods: [],
     isAuth: false,
-    message: '为了您的账号安全，请尽快完成实名认证！',
-    havePhone: false
+    message: '为了您的账号安全，请尽快完成实名认证！'
   },
   onShow() {
     wx.showLoading({
@@ -26,21 +25,19 @@ Page({
         if (!res.errcode) {
           this.queryProduct()
           this.setData({
-            havePhone: wx.getStorageSync("havePhone") || app.globalData.havePhone,
-            isAuth: wx.getStorageSync("isAuth") || app.globalData.isAuth
+            isAuth: wx.getStorageSync("isAuth")
           })
         }
       })
     } else {
       this.queryProduct()
       this.setData({
-        havePhone: wx.getStorageSync("havePhone") || app.globalData.havePhone,
-        isAuth: wx.getStorageSync("isAuth") || app.globalData.isAuth
+        isAuth: wx.getStorageSync("isAuth")
       })
     }
   },
   onLoad: function() {
-    this.dialog = this.selectComponent("#phone_dialog"); //设置dialog组件以获得手机号码
+    // this.dialog = this.selectComponent("#phone_dialog"); //设置dialog组件以获得手机号码
     this.setUserLocation() // 授权获取地理位置
   },
   handleAuth() {
@@ -48,12 +45,12 @@ Page({
       url: '../mine/auth/auth',
     })
   },
-  showDialog() {
-    this.dialog.showDialog();
-  },
-  confirmEvent() {
-    this.dialog.hideDialog();
-  },
+  // showDialog() {
+  //   this.dialog.showDialog();
+  // },
+  // confirmEvent() {
+  //   this.dialog.hideDialog();
+  // },
   setUserLocation() {
     let _this = this
     wx.getSetting({
@@ -98,7 +95,7 @@ Page({
     wx.request({
       url: config.requestUrl + 'queryProduct',
       data: {
-        token: wx.getStorageSync('token') || app.globalData.token
+        token: wx.getStorageSync('token')
       },
       header: {
         'content-type': 'application/json'
@@ -121,12 +118,12 @@ Page({
           })
 
           // 弹出获取手机号码弹框
-          let havePhone = wx.getStorageSync("havePhone") || app.globalData.havePhone
-          if (!havePhone) {
-            setTimeout(() => {
-              _this.showDialog()
-            }, 500)
-          }
+          // let havePhone = wx.getStorageSync("havePhone") || app.globalData.havePhone
+          // if (!havePhone) {
+          //   setTimeout(() => {
+          //     _this.showDialog()
+          //   }, 500)
+          // }
 
           // 模拟数据：
           // let mokoData = [...Array(6)].map(item => {
@@ -157,7 +154,7 @@ Page({
     wx.request({
       url: config.requestUrl + 'addToCart',
       data: {
-        token: wx.getStorageSync('token') || app.globalData.token,
+        token: wx.getStorageSync('token'),
         productID
       },
       header: {
@@ -209,53 +206,53 @@ Page({
       console.log(err)
     })
   },
-  getPhoneNumber(event) {
-    let _this = this
-    let {
-      code
-    } = event.detail
-    console.log('code get phonenmumber', code)
-    if (code.iv && code.encryptedData) {
-      // 用户同意授权获取手机号码
-      let {
-        iv,
-        encryptedData
-      } = code
-      wx.request({
-        url: config.requestUrl + 'getPhone',
-        data: {
-          token: wx.getStorageSync('token') || app.globalData.token,
-          iv,
-          encryptedData
-        },
-        header: {
-          'content-type': 'application/json'
-        },
-        method: 'POST',
-        success: function(res) {
-          let data = res.data
-          if (!data.errcode) {
-            _this.dialog.hideDialog()
-            wx.showToast({
-              title: '绑定成功',
-              icon: 'success',
-              duration: 1000
-            });
-          } else {
-            wx.showToast({
-              title: data.errmsg,
-              icon: 'none',
-              duration: 2000
-            })
-          }
-        },
-        fail: function(error) {
-          console.log('error', error)
-        }
-      })
-    } else {
-      // 用户拒绝授权
-      _this.dialog.hideDialog();
-    }
-  }
+  // getPhoneNumber(event) {
+  //   let _this = this
+  //   let {
+  //     code
+  //   } = event.detail
+  //   console.log('code get phonenmumber', code)
+  //   if (code.iv && code.encryptedData) {
+  //     // 用户同意授权获取手机号码
+  //     let {
+  //       iv,
+  //       encryptedData
+  //     } = code
+  //     wx.request({
+  //       url: config.requestUrl + 'getPhone',
+  //       data: {
+  //         token: wx.getStorageSync('token'),
+  //         iv,
+  //         encryptedData
+  //       },
+  //       header: {
+  //         'content-type': 'application/json'
+  //       },
+  //       method: 'POST',
+  //       success: function(res) {
+  //         let data = res.data
+  //         if (!data.errcode) {
+  //           _this.dialog.hideDialog()
+  //           wx.showToast({
+  //             title: '绑定成功',
+  //             icon: 'success',
+  //             duration: 1000
+  //           });
+  //         } else {
+  //           wx.showToast({
+  //             title: data.errmsg,
+  //             icon: 'none',
+  //             duration: 2000
+  //           })
+  //         }
+  //       },
+  //       fail: function(error) {
+  //         console.log('error', error)
+  //       }
+  //     })
+  //   } else {
+  //     // 用户拒绝授权
+  //     _this.dialog.hideDialog();
+  //   }
+  // }
 })

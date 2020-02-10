@@ -89,7 +89,7 @@ Page({
           name: 'file',
           formData: {
             method: 'POST',
-            token: wx.getStorageSync('token') || app.globalData.token,
+            token: wx.getStorageSync('token'),
             orderId: _this.data.orderId
           },
           success: function(res) {

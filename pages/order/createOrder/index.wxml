@@ -1,60 +1,63 @@
 <view>
-  <view bindtap="selectAddress" class="dashed_container" wx:if="{{!addressObj.isSetAddress}}">
-    点击选择用车地址
-  </view>
-  <view wx:else style="display:flex;flex-direction:row;padding:8px 10px;height:60px;font-size:15px;">
-    <text style="flex:3;margin-top:-10px;">
+  <view class="app_container">
+    <view bindtap="selectAddress" class="dashed_container" wx:if="{{!addressObj.isSetAddress}}">
+      点击选择用车地址
+    </view>
+    <view wx:else style="display:flex;flex-direction:row;padding:8px 10px;height:60px;font-size:15px;">
+      <text style="flex:3;margin-top:-10px;">
     {{addressObj.address}}
   </text>
-    <text bindtap="selectAddress" style="flex: 1;text-align: center;color: #888888;font-size:15px">
+      <text bindtap="selectAddress" style="flex: 1;text-align: center;color: #888888;font-size:15px">
     更换地址
   </text>
-  </view>
-  <view class="container">
-    <view class="use_days_container">
-      <view class="use_days_flex">
-        <text style="font-size:12px;color:#07c160;">用车</text>
-        <picker class='time-picker' mode="multiSelector" bindchange="bindStartMultiPickerChange" bindtap='pickerTap' bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}">
-          <view class="picker_default" wx:if="{{startTimeText == '请选择'}}">
-            <text>{{startTimeText}}</text>
+    </view>
+    <view class="container">
+      <view class="use_days_container">
+        <view class="use_days_flex">
+          <text style="font-size:12px;color:#07c160;">用车</text>
+          <picker class='time-picker' mode="multiSelector" bindchange="bindStartMultiPickerChange" bindtap='pickerTap' bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}">
+            <view class="picker_default" wx:if="{{startTimeText == '请选择'}}">
+              <text>{{startTimeText}}</text>
+            </view>
+            <view class="picker_actived" wx:else>
+              <text style="color:#000;font-size:28rpx;">{{selectedDate}}</text>
+              <text>{{selectedDay}} {{selectedTime}}</text>
+            </view>
+          </picker>
+        </view>
+        <view class="days_flex">
+          <text class="days_flex_text" bindtap="chooseUseDays">{{day}}天</text>
+        </view>
+        <view class="use_days_flex" bindtap="chooseUseDays">
+          <text style="font-size:12px;color:#f29304;">还车</text>
+          <view class="picker_default" wx:if="{{sendbackDateText == '请选择'}}">
+            <text>{{sendbackDateText}}</text>
           </view>
           <view class="picker_actived" wx:else>
-            <text style="color:#000;font-size:28rpx;">{{selectedDate}}</text>
-            <text>{{selectedDay}} {{selectedTime}}</text>
+            <text style="color:#000;font-size:28rpx;">{{sendbackDate}}</text>
+            <text>{{sendbackDay}} 14点59分</text>
           </view>
-        </picker>
-      </view>
-      <view class="days_flex">
-        <text class="days_flex_text" bindtap="chooseUseDays">{{day}}天</text>
-      </view>
-      <view class="use_days_flex" bindtap="chooseUseDays">
-        <text style="font-size:12px;color:#f29304;">还车</text>
-        <view class="picker_default" wx:if="{{sendbackDateText == '请选择'}}">
-          <text>{{sendbackDateText}}</text>
-        </view>
-        <view class="picker_actived" wx:else>
-          <text style="color:#000;font-size:28rpx;">{{sendbackDate}}</text>
-          <text>{{sendbackDay}} 14点59分</text>
         </view>
       </view>
     </view>
-  </view>
-  <view class="">
-    <view class="flex_container" wx:for="{{selectedItems}}" wx:for-item="cart" wx:key="index">
-      <image src="{{cart.headImg}}" mode="aspectFit" class="flex_image"></image>
-      <view class="flex_name">
-        <text class="flex_text">{{cart.name}}</text>
-        <text class="flex_text">￥{{cart.dPrice}}/天 ￥{{cart.mPrice}}/月</text>
+    <view class="">
+      <view class="flex_container" wx:for="{{selectedItems}}" wx:for-item="cart" wx:key="index">
+        <image src="{{cart.headImg}}" mode="aspectFit" class="flex_image"></image>
+        <view class="flex_name">
+          <text class="flex_text">{{cart.name}}</text>
+          <text class="flex_text">￥{{cart.dPrice}}/天 ￥{{cart.mPrice}}/月</text>
+        </view>
+        <view class="flex_num">{{cart.num}}台</view>
       </view>
-      <view class="flex_num">{{cart.num}}台</view>
+    </view>
+    <view class="rent_container">
+      <view class="rent_item">
+        <text class="item_label rent_rule_label" bindtap="showRentRuleDialog">租金</text>
+        <text class="item_value">￥{{rent}}</text>
+      </view>
     </view>
   </view>
-  <view class="rent_container">
-    <view class="rent_item">
-      <text class="item_label rent_rule_label" bindtap="showRentRuleDialog">租金</text>
-      <text class="item_value">￥{{rent}}</text>
-    </view>
-  </view>
+
   <view class="bottom_container">
     <view class="bottom_label">
       <text>预估</text>

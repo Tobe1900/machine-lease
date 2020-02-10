@@ -139,7 +139,6 @@
   flex-direction: column;
   background-color: #fff;
   margin-top: 20rpx;
-  margin-bottom:80px;
 }
 
 .rent_item {

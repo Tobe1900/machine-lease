@@ -10,7 +10,7 @@
   overflow: hidden;
   flex-direction: column;
   border-bottom: 1px solid #dedede;
-  margin: 28rpx 0;
+  margin: 18rpx 0;
   background-color: #fff;
 }
 
@@ -33,7 +33,7 @@
   font-size: 28rpx;
   /* justify-content: center; */
   text-align: left;
-  padding: 5px 0;
+  padding: 2px 0;
   display: flex;
   flex-direction: row;
 }

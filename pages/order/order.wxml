@@ -20,10 +20,10 @@
   <scroll-view scroll-top="{{scrollTop}}" scroll-y="true" style="height:{{scrollHeight}}px;margin-top:34px;" class="list" bindscrolltolower="bindDownLoad" bindscrolltoupper="refresh">
 
     <view class="item" wx:for="{{orderList}}" wx:key="index">
-      <view wx:if="{{item.noMore}}" class="no_more_text">
-        {{item.value}}
+      <view wx:if="{{item.noMore}}" style="display:none">
+        
       </view>
-      <view class="order_container" wx:else>
+      <view class="order_container" wx:else bindtap="getOrderDetail" data-obj="{{item}}" data-id="{{item.orderId}}">
         <view class="description">
           <!-- <text class="item_label">订单编号:</text> -->
           <text class="item_value">{{item.addressDesc.name}}</text>
@@ -42,9 +42,9 @@
             <text class="product_name">数量:{{product.num}}台</text>
           </view>
         </view>
-        <view class="description">
+        <!-- <view class="description">
           <button plain="true" size="mini" bindtap="getOrderDetail" data-obj="{{item}}" data-id="{{item.orderId}}" style="margin-right:10px;">查看详情</button>
-        </view>
+        </view> -->
       </view>
     </view>
   </scroll-view>

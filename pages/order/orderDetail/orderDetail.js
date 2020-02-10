@@ -50,7 +50,7 @@ Page({
     wx.request({
       url: config.requestUrl + 'payOrder',
       data: {
-        token: wx.getStorageSync('token') || app.globalData.token,
+        token: wx.getStorageSync('token'),
         orderId: orderId
       },
       header: {

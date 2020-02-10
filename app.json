@@ -10,7 +10,8 @@
     "pages/goodDetail/goodDetail",
     "pages/order/createOrder/index",
     "pages/order/selectAddress/index",
-    "pages/order/userSign/userSign"
+    "pages/order/userSign/userSign",
+    "pages/order/orderDetail/orderDetail"
   ],
   "permission": {
     "scope.userLocation": {

@@ -164,35 +164,6 @@
   padding-right: 8px;
 }
 
-.bottom_container {
-  position: fixed;
-  bottom: 0;
-  height: 40px;
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  background-color: #f8f8f8;
-  z-index: 999;
-}
-
-.bottom_label {
-  flex: 2;
-  height: 39px;
-  line-height: 39px;
-  border-top: 1px solid #d8d8d8;
-  font-size: 14px;
-  text-indent: 10px;
-}
-
-.bottom_btn {
-  flex: 2;
-  background-color: #1296db;
-  color: #fff;
-  height: 40px;
-  line-height: 40px;
-  text-align: center;
-}
-
 .rent_rule_desc {
   text-align: left;
   padding: 12rpx;

@@ -1,0 +1,68 @@
+<view>
+  <view class="status_container">
+    <text wx:if="{{order.status=='0'}}" class="status_text">已下单未审核</text>
+    <text wx:elif="{{order.status=='1'}}" class="status_text">已审核可签约</text>
+    <text wx:elif="{{order.status=='2'}}" class="status_text">已签约未支付</text>
+    <text wx:elif="{{order.status=='3'}}" class="status_text">已支付</text>
+    <text wx:elif="{{order.status=='4'}}" class="status_text">已取消</text>
+  </view>
+  <view class="address_container">
+    <text>{{order.name}}</text>
+    <text>{{order.addressDesc.name}}</text>
+    <text style="color:#888;font-size:24rpx;">{{order.addressDesc.address}}</text>
+  </view>
+  <view class="product_container">
+    <view class="product_begin_time">
+      <text>{{order.beginTime}}</text>
+      <text>用车{{order.days}}天</text>
+    </view>
+    <view class="flex_container" wx:for="{{order.products}}" wx:for-item="product" wx:key="index">
+      <image src="{{product.img}}" mode="aspectFit" class="flex_image"></image>
+      <view class="flex_name">
+        <text class="flex_text">{{product.name}}</text>
+        <text class="flex_text">￥{{product.dPrice}}/天 ￥{{product.mPrice}}/月</text>
+      </view>
+      <view class="flex_num">{{product.num}}台</view>
+    </view>
+    <view class="product_rent">
+      <text style="color:#888;">租金:</text>
+      <text style="color:#1296db">￥{{order.rent}}</text>
+    </view>
+  </view>
+  <view class="time_container">
+    <view>
+      <text>订单编号:</text>
+      <text style="padding-left:15rpx">{{order.orderId}}</text>
+    </view>
+    <view>
+      <text>创建时间:</text>
+      <text style="padding-left:15rpx">{{order.time}}</text>
+    </view>
+  </view>
+  <view class="amount_container">
+    <text>租金:￥{{order.rent}}</text>
+    <text wx:if="{{!!order.freight}}">运费:￥{{order.freight}}</text>
+  </view>
+  <view class="bottom_container" wx:if="{{order.status=='1'}}">
+    <view class="bottom_label">
+      <text>预估</text>
+      <text>￥{{order.rent}}</text>
+    </view>
+    <view style="flex:2;display:flex">
+      <view class="bottom_btn" bindtap="navigateToSign" data-agreementimg="{{order.agreementImg}}" data-orderid="{{order.orderId}}">
+        签约
+      </view>
+    </view>
+  </view>
+  <view class="bottom_container" wx:elif="{{order.status=='2'}}">
+    <view class="bottom_label">
+      <text>预估</text>
+      <text>￥{{order.rent}}</text>
+    </view>
+    <view style="flex:2;display:flex">
+      <view class="bottom_btn" bindtap="payOrder"  data-orderid="{{order.orderId}}">
+        支付
+      </view>
+    </view>
+  </view>
+</view>

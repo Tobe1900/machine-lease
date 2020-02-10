@@ -19,7 +19,7 @@
   </view>
   <scroll-view scroll-top="{{scrollTop}}" scroll-y="true" style="height:{{scrollHeight}}px;margin-top:34px;" class="list" bindscrolltolower="bindDownLoad" bindscrolltoupper="refresh">
 
-    <view class="item" wx:for="{{orderList}}" wx:key="index" bindtap="getOrderDetail" data-obj="{{item}}" data-id="{{item.orderId}}">
+    <view class="item" wx:for="{{orderList}}" wx:key="index">
       <view wx:if="{{item.noMore}}" class="no_more_text">
         {{item.value}}
       </view>
@@ -36,46 +36,15 @@
         <view class="product_container">
           <view wx:for="{{item.products}}" wx:for-item="product" wx:key="index" class="product_item">
             <view style="flex:1;">
-              <image src="{{product.img}}" mode="aspectFit" class="product_image" bindload="imageLoad"></image>
+              <image src="{{product.img}}" mode="aspectFit" class="product_image"></image>
             </view>
             <text class="product_name">{{product.name}}</text>
             <text class="product_name">数量:{{product.num}}台</text>
           </view>
         </view>
-        <!-- <view class="description">
-          <text class="item_label">租金:</text>
-          <text class="item_value">{{item.rent}}元</text>
-        </view>
         <view class="description">
-          <text class="item_label">租用天数:</text>
-          <text class="item_value">{{item.days}}天</text>
+          <button plain="true" size="mini" bindtap="getOrderDetail" data-obj="{{item}}" data-id="{{item.orderId}}" style="margin-right:10px;">查看详情</button>
         </view>
-        <view class="description">
-          <text class="item_label">用车时间:</text>
-          <text class="item_value">{{item.beginTime}}</text>
-        </view>
-        <view class="description">
-          <text class="item_label">用车地点:</text>
-          <text class="item_value">{{item.addressDesc.address}}</text>
-        </view>
-        <view class="description">
-          <text class="item_label">下单时间:</text>
-          <text class="item_value">{{item.time}}</text>
-        </view> -->
-        <view class="description" wx:if="{{item.status=='1'}}">
-          <button plain="true" size="mini" catchtap="navigateToSign" style="margin-right:10px;" data-agreementimg="{{item.agreementImg}}" data-orderid="{{item.orderId}}">签约</button>
-        </view>
-         <view class="description" wx:if="{{item.status=='2'}}">
-          <button plain="true" size="mini" catchtap="payOrder" style="margin-right:10px;" data-orderid="{{item.orderId}}">支付</button>
-        </view>
-        <!-- <view>
-          <text class="item_label">订单状态:</text>
-          <text wx:if="{{item.status=='0'}}">已下单未审核</text>
-          <text wx:elif="{{item.status=='1'}}">已审核可签约</text>
-          <text wx:elif="{{item.status=='2'}}">已签约未支付</text>
-          <text wx:elif="{{item.status=='3'}}">已支付</text>
-          <text wx:elif="{{item.status=='4'}}">已取消</text>
-        </view> -->
       </view>
     </view>
   </scroll-view>

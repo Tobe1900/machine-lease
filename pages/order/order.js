@@ -1,6 +1,7 @@
 import config from '../../config/index.js'
 import {
-  formatTime
+  formatTime,
+  handleDate
 } from '../../utils/util.js'
 const queryOrder = (self, page, type) => {
   wx.request({
@@ -27,7 +28,9 @@ const queryOrder = (self, page, type) => {
             return {
               img: config.imageUrl + item.productID + '/img.jpg',
               name: item.name,
-              num: item.num
+              num: item.num,
+              dPrice: item.dPrice,
+              mPrice: item.mPrice
             }
           })
           orderList.push(
@@ -35,11 +38,18 @@ const queryOrder = (self, page, type) => {
               ...data[i]
             }, {
               time: formatTime(data[i].time, 'yyyy-MM-dd hh:mm'),
-              beginTime: formatTime(data[i].beginTime, 'yyyy-MM-dd hh:mm'),
+              beginTime: handleDate(data[i].beginTime),
               products: tmpProducts,
               agreementImg: data[i].agreementImage || self.data.agreementImage
             })
           )
+        }
+        if (page === 1 && data.length < 10) {
+          let noMoreText = {
+            noMore: true,
+            value: '已经到底'
+          }
+          orderList.push(noMoreText)
         }
         self.setData({
           orderList: orderList,
@@ -118,18 +128,6 @@ Page({
         });
       }
     });
-  },
-  onHide: function() {
-    this.setData({
-      page: 1,
-      type: 0,
-      selectedIndex: 0,
-      orderList: [],
-      noRecordsText: '',
-      hasRecords: false
-    })
-  },
-  onShow: function() {
     wx.showLoading({
       title: '获取数据中...',
     })
@@ -154,72 +152,11 @@ Page({
     })
     queryOrder(this, 1, status)
   },
-  getOrderDetail() {
+  getOrderDetail(e) {
     // 订单详情
-  },
-  navigateToSign(e) {
-    // 跳转签名
-    console.log(e.currentTarget)
-    let agreementImg = e.currentTarget.dataset.agreementimg
-    let orderid = e.currentTarget.dataset.orderid
+    let order = e.currentTarget.dataset.obj
     wx.navigateTo({
-      url: './userSign/userSign?agreementimg=' + agreementImg + '&orderid=' + orderid
-    })
-  },
-  payOrder(e) {
-    let orderId = e.currentTarget.dataset.orderid
-    wx.request({
-      url: config.requestUrl + 'payOrder',
-      data: {
-        token: wx.getStorageSync('token') || app.globalData.token,
-        orderId: orderId
-      },
-      header: {
-        'content-type': 'application/json'
-      },
-      method: 'POST',
-      success: function(res) {
-        console.log('ressssss', res)
-        if (res.errMsg == "request:ok") {
-          let nonceStr = res.data.nonceStr,
-            _package = res.data.package,
-            paySign = res.data.paySign,
-            signType = res.data.signType,
-            timeStamp = res.data.timeStamp
-
-
-          wx.requestPayment({
-            nonceStr: nonceStr,
-            package: _package,
-            paySign: paySign,
-            signType: signType,
-            timeStamp: timeStamp,
-            success(res) {
-              if (res && res.errMsg === 'requestPayment:ok'){
-                wx.showToast({
-                  title: '支付成功',
-                  icon: 'success',
-                  duration:2000
-                })
-              }
-            },
-            fail(res) {
-              wx.showToast({
-                title: 'wx.requestPayment系统错误',
-                icon: 'none',
-                duration: 2000
-              })
-            }
-          })
-        }
-      },
-      fail: function(error) {
-        wx.showToast({
-          title: '系统错误',
-          icon: 'none',
-          duration: 2000
-        })
-      }
+      url: './orderDetail/orderDetail?order=' + JSON.stringify(order)
     })
   },
   refresh(event) {

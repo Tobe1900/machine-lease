@@ -69,6 +69,11 @@ const formatTime = (date, match) => {
   let result = formatDate(new Date(tmp), match)
   return result
 }
+// 获取 *月*日 格式数据
+const handleDate = date => {
+  let tmpDate = new Date(date)
+  return `${tmpDate.getMonth() + 1}月${tmpDate.getDate()}日`
+}
 
 module.exports = {
   formatTime,
@@ -76,5 +81,6 @@ module.exports = {
   convertDate,
   convertTime,
   replaceHourStr,
-  replaceMinuteStr
+  replaceMinuteStr,
+  handleDate
 }

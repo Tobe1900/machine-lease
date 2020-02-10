@@ -18,7 +18,7 @@
   display: flex;
   flex-shrink: 1;
   flex-grow: 1;
-  padding: 20rpx 15rpx 20rpx 15rpx;
+  padding: 20rpx 15rpx 0 15rpx;
   flex-wrap: wrap;
   font-size: 28rpx;
   flex-direction: column;
@@ -50,7 +50,7 @@
 }
 
 .product_container {
-  margin: 5px 0 5px 0;
+  margin: 5px 0 0 0;
   padding: 5px;
   border-top: 1px solid #dedede;
   border-bottom: 1px solid #dedede;
@@ -74,7 +74,7 @@
 }
 
 .status_text {
-  color: #888;
+  color: #F5A623;
 }
 
 .address_text {

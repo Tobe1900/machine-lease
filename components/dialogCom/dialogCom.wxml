@@ -4,12 +4,17 @@
     <view class='dialog-title'>{{ title }}</view>
     <view class='dialog-content'>{{ content }}</view>
     <view class='dialog-footer' wx:if="{{isPhone}}">
-      <button open-type="getPhoneNumber" class='dialog-btn-confirm' bindgetphonenumber="getPhoneNumber">{{confirmText }}</button>
+      <button class='dialog-btn-cancel' catchtap='confirmEvent'>取消</button>
+      <button class='dialog-btn-confirm' open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">{{confirmText }}</button>
     </view>
 
-    <view class='dialog-footer' wx:else>
+    <view class='dialog-footer' wx:elif="{{isUserInfo}}">
       <button class='dialog-btn-cancel' catchtap='confirmEvent'>取消</button>
       <button class='dialog-btn-confirm' open-type="getUserInfo" bindgetuserinfo='bindGetUserInfo' catchtap='confirmEvent'>{{ confirmText }}</button>
+    </view>
+    <view class='dialog-footer' wx:elif="{{isNormal}}">
+      <button class='dialog-btn-cancel' catchtap='confirmEvent'>取消</button>
+      <button class='dialog-btn-confirm' catchtap='handleBindtap'>{{ confirmText }}</button>
     </view>
   </view>
 </view>

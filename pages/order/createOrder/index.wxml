@@ -1,4 +1,6 @@
 <view>
+  <dialogCom id='authDialog' isNormal="true" title='订单提交成功' content='您尚未完成实名认证，现在去认证？' confirmText='去认证' bind:confirmEvent='confirmEvent' bind:handleBindtap='handleAuth'>
+  </dialogCom>
   <view class="app_container">
     <view bindtap="selectAddress" class="dashed_container" wx:if="{{!addressObj.isSetAddress}}">
       点击选择用车地址

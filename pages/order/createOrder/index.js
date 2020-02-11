@@ -10,6 +10,7 @@ import {
 
 Page({
   data: {
+    isAuth: false,
     selectedItems: [],
     startTimeText: '请选择',
     startDate: '',
@@ -60,11 +61,14 @@ Page({
     //获得dialog组件
     this.useDaysDialog = this.selectComponent("#useDaysDialog");
     this.rentRuleDialog = this.selectComponent("#rentRuleDialog")
+    this.authDialog = this.selectComponent("#authDialog");
   },
   onLoad: function(option) {
-    let selectedItems = JSON.parse(option.selectedItems)
+    const isAuth = wx.getStorageSync("isAuth")
+    const selectedItems = JSON.parse(option.selectedItems)
     this.setData({
-      selectedItems: selectedItems
+      selectedItems: selectedItems,
+      isAuth
     })
     this.pickerTap()
   },
@@ -85,11 +89,25 @@ Page({
   hideUseDaysDialog() {
     this.useDaysDialog.hide()
   },
-  hideRentRuleDialog(){
+  hideRentRuleDialog() {
     this.rentRuleDialog.hide()
   },
-  showRentRuleDialog(){
+  showRentRuleDialog() {
     this.rentRuleDialog.show()
+  },
+  showAuthDialog() {
+    this.authDialog.showDialog();
+  },
+  confirmEvent() {
+    this.authDialog.hideDialog();
+    wx.switchTab({
+      url: '/pages/order/order',
+    })
+  },
+  handleAuth() {
+    wx.navigateTo({
+      url: '../../mine/auth/auth',
+    })
   },
   setUseDays(e, arg) {
     let rent = 0
@@ -155,9 +173,35 @@ Page({
     })
   },
   selectAddress() {
-    wx.navigateTo({
-      url: '../selectAddress/index'
+    wx.getSetting({
+      success(res) {
+        if (!res.authSetting['scope.userLocation']) {
+          wx.showModal({
+            title: '提示',
+            content: '无法获取定位,请确认位置授权是否开启！',
+            showCancel: false,
+            confirmText: '确认',
+            success(res) {
+              if (res.confirm) {
+                // openSetting
+                wx.openSetting({
+                  success(res){
+                    console.log(res.authSetting)
+                  }
+                })
+              }
+            }
+          })
+        } else {
+          wx.navigateTo({
+            url: '../selectAddress/index'
+          })
+        }
+      }
     })
+
+
+
   },
   pickerTap: function() {
     // 获取当前时间 让picker选中当前时间的时和分值
@@ -298,6 +342,7 @@ Page({
     console.log('修改的列为', e.detail.column, ',值为', e.detail.value)
   },
   submitOrder() {
+    let _this = this
     let products = this.data.selectedItems.map(item => {
       let {
         productID,
@@ -312,6 +357,7 @@ Page({
         mPrice
       }
     })
+    // let productIDs = this.data.selectedItems.map(item => item.productID)
     let {
       name,
       address,
@@ -324,25 +370,27 @@ Page({
       latitude,
       longitude
     }
-    let {rent,day} = this.data
+    let {
+      rent,
+      day,
+      isAuth
+    } = this.data
     let beginTime = new Date().getFullYear() + '-' + convertDate(this.data.selectedDate) + ' ' + convertTime(this.data.selectedTime)
-    if(address == '') {
-      wx.showToast({
+    if (address == '') {
+      return wx.showToast({
         title: '请选择用车地址',
         icon: 'none',
         duration: 2000
       })
-      return
-    } else if(rent == 0){
-      wx.showToast({
+    } else if (rent == 0) {
+      return wx.showToast({
         title: '请选择用车天数',
         icon: 'none',
         duration: 2000
       })
-      return
     }
     let formData = {
-      token: wx.getStorageSync('token') || app.globalData.token,
+      token: wx.getStorageSync('token'),
       rent: rent,
       products: products,
       days: Number(day),
@@ -359,14 +407,19 @@ Page({
       success: function(res) {
         let data = res.data
         if (!data.errcode) {
-          wx.showToast({
-            title: '订单提交成功',
-            icon: 'success',
-            duration: 1000
-          });
-          wx.switchTab({
-            url: '/pages/order/order',
-          })
+          // _this.deleteCartProduct(productIDs)
+          if (!isAuth) {
+            _this.showAuthDialog()
+          } else {
+            wx.showToast({
+              title: '订单提交成功',
+              icon: 'success',
+              duration: 1000
+            });
+            wx.switchTab({
+              url: '/pages/order/order',
+            })
+          }
           // 跳转到订单页面
         } else {
           wx.showToast({
@@ -380,5 +433,27 @@ Page({
         console.log('error', error)
       }
     })
-  }
+  },
+  // deleteCartProduct(productIDs) {
+  //   wx.request({
+  //     url: config.requestUrl + 'delCartProduct',
+  //     data: {
+  //       token: wx.getStorageSync('token'),
+  //       productIDs
+  //     },
+  //     header: {
+  //       'content-type': 'application/json'
+  //     },
+  //     method: 'POST',
+  //     success: function (res) {
+  //       let data = res.data
+  //       if (!data.errcode) {
+  //       } else {
+  //       }
+  //     },
+  //     fail: function (error) {
+  //       console.log('DelCart Error:', error)
+  //     }
+  //   })
+  // },
 })

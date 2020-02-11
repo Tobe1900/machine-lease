@@ -1,8 +1,11 @@
 <view>
   <map id="map" longitude="{{addressObj.longitude}}" latitude="{{addressObj.latitude}}" scale="15" markers="{{markers}}" bindmarkertap="markertap" bindregionchange="getCenterMap" show-location style="width:100%; height:{{mapHeight}}px;">
-    <view class="image-center" style="margin-top:{{centerMarginTop}}px">
-      <image class="cover-image" src="{{centerPointIcon}}"></image>
+    <view class="image_center" style="margin-top:{{centerMarginTop}}px">
+      <image class="cover_image" src="{{centerPointIcon}}"></image>
     </view>
+    <cover-view class="image_right_bottom" style="left:{{mapWidth - 50}}px" catchtap="locateCurrent">
+      <cover-image class="cover_image" src="{{myLocationIcon}}"></cover-image>
+    </cover-view>
     <view class="address_container">
     <view style="flex:3;display:flex;flex-direction:column;padding-right:8px;">
       <text style="font-size:15px;">{{addressObj.name}}</text>

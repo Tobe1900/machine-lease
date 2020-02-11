@@ -42,9 +42,9 @@
             <text class="product_name">数量:{{product.num}}台</text>
           </view>
         </view>
-        <!-- <view class="description">
-          <button plain="true" size="mini" bindtap="getOrderDetail" data-obj="{{item}}" data-id="{{item.orderId}}" style="margin-right:10px;">查看详情</button>
-        </view> -->
+        <view class="description" wx-if="{{!isAuth && item.status == '0'}}" class="order_item_btn">
+          <button plain="true" size="mini" bindtap="handleAuth">实名认证</button>
+        </view>
       </view>
     </view>
   </scroll-view>

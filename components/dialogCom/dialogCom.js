@@ -15,6 +15,14 @@ Component({
       type:Boolean,
       value: false
     },
+    isUserInfo:{
+      type: Boolean,
+      value: false
+    },
+    isNormal:{
+      type: Boolean, 
+      value: false
+    },
     confirmText:{
       type: String,
       value: '确定'
@@ -44,6 +52,9 @@ Component({
     getPhoneNumber(event){
       let detail = event.detail
       this.triggerEvent("getPhoneNumber",{code:detail})
+    },
+    handleBindtap(){
+      this.triggerEvent("handleBindtap")
     }
   }
 })

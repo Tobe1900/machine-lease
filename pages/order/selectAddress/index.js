@@ -6,7 +6,9 @@ const qqmapObj = new QQmap()
 Page({
   data: {
     centerPointIcon: '../../../icons/location.png',
-    mapHeight:0,
+    myLocationIcon: '../../../icons/my_location.png',
+    mapHeight: 0,
+    mapWidth: 0,
     addressObj: {
       name: '',
       latitude: '',
@@ -52,12 +54,31 @@ Page({
       _this.setData({
         addressObj: JSON.parse(addressObj)
       })
+    } else {
+      // 调用qqmapsdk 获取位置信息
+      qqmapObj.getLocateInfo().then(function(res) {
+        let {
+          city,
+          addressObj
+        } = res
+        // if (city.indexOf('市') !== -1) { // 去掉“市”
+        //   city = city.slice(0, city.indexOf('市'));
+        // }
+        _this.setData({
+          addressObj: addressObj
+        })
+        wx.setStorageSync('city', city)
+        wx.setStorageSync('addressObj', JSON.stringify(addressObj))
+      }, function(err) {
+        console.log(err)
+      })
     }
     wx.getSystemInfo({
-      success: function (res) {
+      success: function(res) {
         console.info(res.windowHeight);
         _this.setData({
           mapHeight: res.windowHeight,
+          mapWidth: res.windowWidth,
           centerMarginTop: (res.windowHeight / 2) - 16
         });
       }
@@ -65,6 +86,13 @@ Page({
   },
   onReady: function() {
     this.mapCtx = wx.createMapContext('map') // 获取map组件上下文
+  },
+  locateCurrent(){
+    console.log('heeeeloo')
+    let addressObj = JSON.parse(wx.getStorageSync('addressObj'))
+    this.setData({
+      addressObj
+    })
   },
   getCenterMap(e) {
     // console.log(this.longitude)

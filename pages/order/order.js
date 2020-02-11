@@ -83,6 +83,7 @@ const queryOrder = (self, page, type) => {
 
 Page({
   data: {
+    isAuth:false,
     orderList: [],
     page: 1,
     type: '0',
@@ -119,6 +120,10 @@ Page({
   },
   onLoad: function() {
     let _this = this;
+    const isAuth = wx.getStorageSync("isAuth")
+    _this.setData({
+      isAuth
+    })
     wx.getSystemInfo({
       success: function(res) {
         console.info(res.windowHeight);
@@ -157,6 +162,11 @@ Page({
     let order = e.currentTarget.dataset.obj
     wx.navigateTo({
       url: './orderDetail/orderDetail?order=' + JSON.stringify(order)
+    })
+  },
+  handleAuth(){
+    wx.navigateTo({
+      url: '../mine/auth/auth',
     })
   },
   refresh(event) {

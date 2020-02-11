@@ -1,6 +1,7 @@
 {
   "navigationBarTitleText": "确认订单",
   "usingComponents": {
-    "useDaysCom": "../../../components/useDaysCom/useDaysCom"
+    "useDaysCom": "../../../components/useDaysCom/useDaysCom",
+    "dialogCom": "../../../components/dialogCom/dialogCom"
   }
 }

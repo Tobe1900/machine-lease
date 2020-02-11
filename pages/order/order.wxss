@@ -33,9 +33,23 @@
   font-size: 28rpx;
   /* justify-content: center; */
   text-align: left;
-  padding: 2px 0;
+  padding: 4px 0;
   display: flex;
   flex-direction: row;
+}
+.order_item_btn{
+  padding: 6px 0;
+  text-align: right;
+}
+.order_item_btn button {
+  height: 28px;
+  line-height: 28px;
+  width: 65px;
+  font-size: 11px;
+  padding: 0;
+  border:1px solid #1296db;
+  color:#1296db;
+  border-radius: none;
 }
 
 .item_label {
@@ -74,7 +88,7 @@
 }
 
 .status_text {
-  color: #F5A623;
+  color: #1296db;
 }
 
 .address_text {
@@ -146,7 +160,7 @@
   top: 0;
   width: 100%;
   height: 32px;
-  background-color: #ffffff;
+  background-color: #fff;
   white-space: nowrap;
   display: flex;
   flex-wrap: wrap;

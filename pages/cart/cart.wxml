@@ -1,5 +1,5 @@
 <view>
-<dialogCom id='phone_dialog' isPhone="true" title='提示' content='【及时到】需要您授权以获取手机号码' confirmText='授权' bind:confirmEvent='confirmEvent' bind:getPhoneNumber='getPhoneNumber'>
+  <dialogCom id='phone_dialog' isPhone="true" title='提示' content='【及时到】需要您授权以获取手机号码' confirmText='授权' bind:confirmEvent='confirmEvent' bind:getPhoneNumber='getPhoneNumber'>
   </dialogCom>
   <view style="margin-bottom:40px;position:absolute;margin-top:40px;width:100%;">
     <checkbox-group wx:if="{{cartList.length>0}}" bindchange="checkboxChange" style="margin-bottom:10px;">

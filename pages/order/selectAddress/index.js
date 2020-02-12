@@ -5,8 +5,6 @@ const qqmapObj = new QQmap()
 
 Page({
   data: {
-    centerPointIcon: '../../../icons/location.png',
-    myLocationIcon: '../../../icons/my_location.png',
     mapHeight: 0,
     mapWidth: 0,
     addressObj: {
@@ -14,40 +12,9 @@ Page({
       latitude: '',
       longitude: '',
       address: ''
-    },
-    // markers: [{ // 标记点
-    //   // iconPath: "../../others.png",
-    //   id: 0,
-    //   latitude: 29.55537,
-    //   longitude: 114.03892,
-    //   width: 50,
-    //   height: 50
-    // }],
-    // polyline: [{
-    //   points: [{
-    //     longitude: 113.3245211,
-    //     latitude: 23.10229
-    //   }, {
-    //     longitude: 113.324520,
-    //     latitude: 23.21229
-    //   }],
-    //   color: "#FF0000DD",
-    //   width: 2,
-    //   dottedLine: true
-    // }],
-    controls: [{
-      id: 1,
-      iconPath: '../../../icons/location.png',
-      position: {
-        left: 0,
-        top: 300 - 50,
-        width: 50,
-        height: 50
-      },
-      clickable: true
-    }]
+    }
   },
-  onLoad: function() {
+  onShow: function() {
     let _this = this;
     let addressObj = wx.getStorageSync("addressObj")
     if (!!addressObj) {
@@ -87,26 +54,24 @@ Page({
   onReady: function() {
     this.mapCtx = wx.createMapContext('map') // 获取map组件上下文
   },
-  locateCurrent(){
-    console.log('heeeeloo')
-    let addressObj = JSON.parse(wx.getStorageSync('addressObj'))
-    this.setData({
-      addressObj
+  searchAddress() {
+    wx.navigateTo({
+      url: '../searchAddress/searchAddress',
+    })
+  },
+  locateCurrent() {
+    let _this = this
+    qqmapObj.getLocateInfo().then(res => {
+      _this.setData({
+        addressObj: res.addressObj
+      })
+    }, err => {
+      console.log('error', err)
     })
   },
   getCenterMap(e) {
     // console.log(this.longitude)
     let _this = this
-    if (e.type == 'begin') {
-      // _this.setData({
-      //   addressObj: {
-      //     name: '',
-      //     address: '正在获取用车地点.....',
-      //     latitude: '',
-      //     longitude: ''
-      //   }
-      // })
-    }
     if (e.type == 'end') {
       if (e.causedBy == 'scale' || e.causedBy == 'drag') {
         _this.setData({

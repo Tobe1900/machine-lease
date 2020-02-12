@@ -1,0 +1,12 @@
+<view>
+  <view class="search_item">
+    <text catchtap="selectCity">{{city}}</text>
+    <input placeholder='搜索工程地址' placeholder-style='color:#97a7b7;font-size:28rpx' bindinput='bindSearch'/>
+  </view>
+  <view>
+    <view class="address_item" wx:for="{{locationList}}" wx:for-item="location" wx:key="{{location.id}}" data-location="{{location}}" bindtap="selectLocation">
+      <text>{{location.title}}</text>
+      <text>{{location.address}}</text>
+    </view>
+  </view>
+</view>

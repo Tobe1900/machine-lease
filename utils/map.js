@@ -70,4 +70,8 @@ export default class qqmap { //获取定位信息
       })
     });
   }
+
+  search(params){
+    return qqwxmap.search(params)
+  }
 }

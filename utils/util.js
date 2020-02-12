@@ -25,24 +25,24 @@ const handleFormat = d => {
 }
 
 const convertDate = str => {
-  let tmp = str.replace("月","-")
-  let result = tmp.replace("日","")
+  let tmp = str.replace("月", "-")
+  let result = tmp.replace("日", "")
   return result
 }
 
 const convertTime = time => {
-  let tmp = time.replace("点",":")
-  let result = tmp.replace("分","")
+  let tmp = time.replace("点", ":")
+  let result = tmp.replace("分", "")
   return result
 }
 
 const replaceHourStr = h => {
-  let tmp = h.replace("点","")
+  let tmp = h.replace("点", "")
   return tmp
 }
 
 const replaceMinuteStr = m => {
-  let tmp = m.replace("分","")
+  let tmp = m.replace("分", "")
   return tmp
 }
 
@@ -75,6 +75,26 @@ const handleDate = date => {
   return `${tmpDate.getMonth() + 1}月${tmpDate.getDate()}日`
 }
 
+//防止多次重复点击  （函数节流）
+const throttle = (fn, gapTime) => {
+  if (gapTime == null || gapTime == undefined) {
+    gapTime = 1000
+  }
+
+  let _lastTime = null
+
+  // 返回新的函数
+  return function(e) {
+    console.log(this)
+    let _nowTime = +new Date()
+    if (_nowTime - _lastTime > gapTime || !_lastTime) {
+      // fn.apply(this, arguments)   //将this和参数传给原函数
+      fn(this, e) //上方法不可行的解决办法 改变this和e
+      _lastTime = _nowTime
+    }
+  }
+}
+
 module.exports = {
   formatTime,
   handleFormat,
@@ -82,5 +102,6 @@ module.exports = {
   convertTime,
   replaceHourStr,
   replaceMinuteStr,
-  handleDate
+  handleDate,
+  throttle
 }

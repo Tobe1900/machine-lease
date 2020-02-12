@@ -1,0 +1,39 @@
+/* pages/order/searchAddress/searchAddress.wxss */
+
+.search_item {
+  background-color: #eee;
+  padding: 5px;
+  display: flex;
+  border-radius: 5px;
+  margin: 8px 3px;
+}
+
+.search_item text {
+  flex: 1;
+  padding-left: 15rpx;
+  background-image: url("data:image/svg+xml,%3Csvg t='1581495635217' class='icon' viewBox='0 0 1024 1024' version='1.1' xmlns='http://www.w3.org/2000/svg' p-id='1796' width='32' height='32'%3E%3Cpath d='M726.652801 429.305603 297.347199 429.305603 512.193405 638.156258Z' p-id='1797' fill='%23515151'%3E%3C/path%3E%3C/svg%3E");
+  background-position: center right;
+  background-repeat: no-repeat;
+}
+
+.search_item input {
+  flex: 3;
+}
+
+.address_item {
+  display: flex;
+  flex-direction: column;
+  padding: 5px 8px;
+  border-bottom: 1px solid #dedede;
+  margin: 0 8px;
+}
+
+.address_item text:nth-child(1) {
+  font-size: 30rpx;
+  color: #111;
+}
+
+.address_item text:nth-child(2) {
+  font-size: 26rpx;
+  color: #888;
+}

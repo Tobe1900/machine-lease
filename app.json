@@ -11,7 +11,8 @@
     "pages/order/createOrder/index",
     "pages/order/selectAddress/index",
     "pages/order/userSign/userSign",
-    "pages/order/orderDetail/orderDetail"
+    "pages/order/orderDetail/orderDetail",
+    "pages/order/searchAddress/searchAddress"
   ],
   "permission": {
     "scope.userLocation": {

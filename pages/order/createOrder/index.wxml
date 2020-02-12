@@ -6,9 +6,10 @@
       点击选择用车地址
     </view>
     <view wx:else style="display:flex;flex-direction:row;padding:8px 10px;height:60px;font-size:15px;">
-      <text style="flex:3;margin-top:-10px;">
-    {{addressObj.address}}
-  </text>
+      <view class="address_container" style="">
+    <text>{{addressObj.name}}</text>
+    <text>{{addressObj.address}}</text>
+  </view>
       <text bindtap="selectAddress" style="flex: 1;text-align: center;color: #888888;font-size:15px">
     更换地址
   </text>

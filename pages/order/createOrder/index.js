@@ -185,7 +185,7 @@ Page({
               if (res.confirm) {
                 // openSetting
                 wx.openSetting({
-                  success(res){
+                  success(res) {
                     console.log(res.authSetting)
                   }
                 })
@@ -199,9 +199,6 @@ Page({
         }
       }
     })
-
-
-
   },
   pickerTap: function() {
     // 获取当前时间 让picker选中当前时间的时和分值
@@ -336,6 +333,26 @@ Page({
       data.multiArray[2] = minutes;
       data.multiIndex = [e.detail.value, 0, 0]
       this.setData(data)
+    } else if (data.multiIndex[0] === 0 && e.detail.column === 1 && e.detail.value !== 0) { // 如果选择的日期是今天  调整小时且不选中第一项
+      for (let m = 0; m < 60; m++) {
+        if (m < 10) {
+          minutes.push(`0${m}分`);
+        } else {
+          minutes.push(`${m}分`);
+        }
+      }
+      data.multiArray[2] = minutes;
+      data.multiIndex = [0, e.detail.value, 0]
+    } else if (data.multiIndex[0] === 0 && e.detail.column === 1 && e.detail.value === 0) { // 如果选择的日期是今天  调整小时且选中第一项
+      for (let m = minuteIndex; m < 60; m++) {
+        if (m < 10) {
+          minutes.push(`0${m}分`);
+        } else {
+          minutes.push(`${m}分`);
+        }
+      }
+      data.multiArray[2] = minutes;
+      data.multiIndex = [0, e.detail.value, 0]
     }
     data.multiIndex[e.detail.column] = e.detail.value;
     this.setData(data)

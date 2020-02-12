@@ -44,7 +44,7 @@
       </view>
     </checkbox-group>
     <view style="text-align:center;padding-top:100px" wx:else>
-      <image src="{{emptyCartIcon}}" mode="aspectFit" class="empty_cart_image" wx:if="{{noRecordsText!==''}}"></image>
+      <view wx:if="{{noRecordsText!==''}}" class="empty_cart"></view> 
       <text class="no_records">{{noRecordsText}}</text>
     </view>
   </view>

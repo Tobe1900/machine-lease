@@ -13,12 +13,12 @@
     <view class="handTitle">签名板</view>
   </view>
 </view> -->
-<view>
-  <view>
+<view style="overflow:hidden">
+  <view style="height:{{agreementHeight}}px;">
     <image src="{{agreementImg}}" mode="aspectFill"></image>
   </view>
   <view>
-    <view class="handTitle">签名区:</view>
+    <view class="handTitle">签名区</view>
   </view>
   <view class="handCenter">
     <canvas class="canvas" id="canvas" canvas-id="canvas" disable-scroll="true" bindtouchstart="canvasStart" bindtouchmove="canvasMove" bindtouchend="canvasEnd" touchcancel="canvasEnd" binderror="canvasIdErrorCallback"></canvas>
@@ -26,7 +26,7 @@
     </cover-image> -->
   </view>
   <view style="display:flex;flex-direction:row;margin-top:20rpx;">
-    <button class="backBtn">返回</button>
+    <button class="backBtn" catchtap="back">返回</button>
     <button catchtap="cleardraw" class="delBtn">清空</button>
     <button catchtap="getimg" class="subBtn">完成</button>
   </view>

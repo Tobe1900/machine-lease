@@ -13,9 +13,9 @@
       </block>
     </block>
   </view> -->
-  <view style="margin-top:42px;height:{{scrollHeight}}px;background-color:#fff;text-align:center" hidden="{{hasRecords}}">
-    <image src="{{noOrderIcon}}" mode="aspectFit" class="no_order_image" wx:if="{{noRecordsText!==''}}"></image>
-    <text class="no_records">{{noRecordsText}}</text>
+  <view class="no_records_container" style="height:{{scrollHeight}}px;" wx:if="{{noRecordsText!==''}}">
+    <view class="no_records" wx:if="{{noRecordsText!==''}}"></view>
+    <text>{{noRecordsText}}</text>
   </view>
   <scroll-view scroll-top="{{scrollTop}}" scroll-y="true" style="height:{{scrollHeight}}px;margin-top:34px;" class="list" bindscrolltolower="bindDownLoad" bindscrolltoupper="refresh">
 

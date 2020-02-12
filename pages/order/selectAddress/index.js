@@ -65,6 +65,7 @@ Page({
       _this.setData({
         addressObj: res.addressObj
       })
+      wx.setStorageSync('addressObj', JSON.stringify(res.addressObj))
     }, err => {
       console.log('error', err)
     })

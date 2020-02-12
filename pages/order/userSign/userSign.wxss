@@ -36,9 +36,11 @@ canvas {
 
 .handCenter {
   position: relative;
-  border: 4rpx dashed #e9e9e9;
+  border: 4rpx dashed #1296db;
   box-sizing: border-box;
   height: 240px;
+  background-color: #fefefe;
+  margin: 8px;
 }
 
 .overImg {
@@ -50,6 +52,9 @@ canvas {
 
 .handTitle {
   color: #666;
+  text-align: center;
+  padding: 4px 0 0 0;
+  border-top: 1px solid #dedede;
 }
 
 .handBtn button {

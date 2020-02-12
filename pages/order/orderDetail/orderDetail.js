@@ -80,14 +80,16 @@ Page({
                   icon: 'success',
                   duration: 2000
                 })
+                wx.navigateBack()
               }
             },
             fail(res) {
               wx.showToast({
-                title: 'wx.requestPayment系统错误',
+                title: '支付失败或已取消支付',
                 icon: 'none',
                 duration: 2000
               })
+              wx.navigateBack()
             }
           })
         }

@@ -48,6 +48,11 @@ Page({
   canvasEnd: function(event) {
 
   },
+  back() {
+    wx.navigateBack({
+      delta: 1
+    })
+  },
   cleardraw: function() {
     //清除画布
     arrx = [];
@@ -118,12 +123,14 @@ Page({
   data: {
     src: '',
     agreementImg: '',
-    orderId: ''
+    orderId: '',
+    agreementHeight: 0,
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+    const win = wx.getSystemInfoSync();
     wx.showLoading({
       title: '加载中...',
       mask: true
@@ -132,7 +139,8 @@ Page({
     let orderId = options.orderid
     this.setData({
       agreementImg: agreementImg,
-      orderId: orderId
+      orderId: orderId,
+      agreementHeight: (win.windowHeight - 320)
     })
     // 使用 wx.createContext 获取绘图上下文 context
     context = wx.createCanvasContext('canvas');

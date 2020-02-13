@@ -39,19 +39,22 @@
 }
 
 .order_item_btn {
-  padding: 6px 0;
+  padding: 5px 6px 5px 0;
   text-align: right;
+  height: 60rpx;
 }
 
 .order_item_btn button {
   height: 28px;
   line-height: 28px;
   width: 65px;
-  font-size: 11px;
+  font-size: 28rpx;
   padding: 0;
-  border: 1px solid #1296db;
-  color: #1296db;
-  border-radius: none;
+  background-color: #1296db;
+  /* background-image: linear-gradient(to right, #1296db, #9bc4ed); */
+  color: #fff;
+  border:none;
+  /* border-radius: none; */
 }
 
 .item_label {
@@ -90,7 +93,7 @@
 }
 
 .status_text {
-  color: #1296db;
+  color: #666;
 }
 
 .address_text {
@@ -110,12 +113,14 @@
   background-position: center center;
   background-repeat: no-repeat;
   margin-top: calc(50% - 21px);
-  height:70px;
+  height: 70px;
 }
-.no_records_container{
+
+.no_records_container {
   background-color: #fff;
   text-align: center;
 }
+
 .no_records_container text {
   color: #6e6e6e;
   text-align: center;
@@ -174,12 +179,12 @@
   top: 0;
   width: 100%;
   height: 32px;
-  background-color: #fff;
+  background-color: #f0f0f0;
+
   white-space: nowrap;
   display: flex;
   flex-wrap: wrap;
   z-index: 999;
-  border-bottom: 1px solid #ccc;
   padding-top: 8px;
 }
 
@@ -187,20 +192,18 @@
   flex: 1;
   display: inline-block;
   color: black;
-  font-size: 28rpx;
-  /* margin: 6rpx 18rpx; */
+  font-size: 30rpx;
   text-align: center;
-  padding: 10rpx;
+  padding: 16rpx 30rpx;
   height: 28rpx;
   line-height: 28rpx;
 }
 
 .tab_selected {
   display: inline-block;
-  font-size: 28rpx;
-  /* margin: 6rpx 18rpx; */
+  font-size: 30rpx;
   text-align: center;
-  padding: 10rpx 10rpx 22rpx;
+  padding: 16rpx 30rpx;
   height: 28rpx;
   line-height: 28rpx;
   color: #1296db;

@@ -11,6 +11,7 @@ import {
 Page({
   data: {
     isAuth: false,
+    orderType: '',
     selectedItems: [],
     startTimeText: '请选择',
     startDate: '',
@@ -66,8 +67,10 @@ Page({
   onLoad: function(option) {
     const isAuth = wx.getStorageSync("isAuth")
     const selectedItems = JSON.parse(option.selectedItems)
+    const orderType = option.orderType
     this.setData({
       selectedItems: selectedItems,
+      orderType,
       isAuth
     })
     this.pickerTap()
@@ -374,7 +377,6 @@ Page({
         mPrice
       }
     })
-    let productIDs = this.data.selectedItems.map(item => item.productID)
     let {
       name,
       address,
@@ -390,7 +392,8 @@ Page({
     let {
       rent,
       day,
-      isAuth
+      isAuth,
+      orderType
     } = this.data
     let beginTime = new Date().getFullYear() + '-' + convertDate(this.data.selectedDate) + ' ' + convertTime(this.data.selectedTime)
     if (address == '') {
@@ -424,23 +427,37 @@ Page({
       success: function(res) {
         let data = res.data
         if (!data.errcode) {
-          _this.deleteCartProduct(productIDs) // 删除购物车中相应商品
-          if (!isAuth) {
-            _this.showAuthDialog()
-          } else {
-            wx.showToast({
-              title: '订单提交成功',
-              icon: 'success',
-              duration: 1000
-            });
-            // 跳转到订单页面
-            wx.switchTab({
-              url: '/pages/order/order',
-              success: function (e) {
-                wx.setStorageSync('from', 'createOrder')
-              }
-            })
+          if (orderType == 'cart') {
+            let productIDs = _this.data.selectedItems.map(item => item.productID)
+            _this.deleteCartProduct(productIDs) // 删除购物车中相应商品
           }
+          // if (!isAuth) {
+          //   _this.showAuthDialog()
+          // } else {
+          //   wx.showToast({
+          //     title: '订单提交成功',
+          //     icon: 'success',
+          //     duration: 1000
+          //   });
+          //   // 跳转到订单页面
+          //   wx.switchTab({】 
+          //     url: '/pages/order/order',
+          //     success: function (e) {
+          //       wx.setStorageSync('from', 'createOrder')
+          //     }
+          //   })
+          // }
+          wx.showToast({
+            title: '订单提交成功',
+            icon: 'success',
+            duration: 1000
+          });
+          wx.switchTab({
+            url: '/pages/order/order',
+            success: function(e) {
+              wx.setStorageSync('targetTab', 'order')
+            }
+          })
         } else {
           wx.showToast({
             title: data.errmsg,
@@ -465,13 +482,11 @@ Page({
         'content-type': 'application/json'
       },
       method: 'POST',
-      success: function (res) {
+      success: function(res) {
         let data = res.data
-        if (!data.errcode) {
-        } else {
-        }
+        if (!data.errcode) {} else {}
       },
-      fail: function (error) {
+      fail: function(error) {
         console.log('DelCart Error:', error)
       }
     })

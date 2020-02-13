@@ -92,30 +92,35 @@ Page({
     scrollHeight: 0,
     locked: false,
     bottomInVisiable: true,
-    selectedIndex: 0,
+    selectedIndex: 1,
     noRecordsText: '',
     noOrderIcon: '../../icons/no_order.png',
     agreementImage: '../../../icons/agreement.png', // 模拟协议图片 后期可删除
-    tabs: [{
-        title: "已下单未审核",
+    tabs: [
+      {
+       title:"全部",
+       value:""
+      },
+      {
+        title: "待审核",
         value: "0"
       },
       {
-        title: "已审核可签约",
+        title: "待签约",
         value: "1"
       },
       {
-        title: "已签约未支付",
+        title: "待支付",
         value: "2"
       },
       {
         title: "已支付",
         value: "3"
-      },
-      {
-        title: "已取消",
-        value: "4"
       }
+      // {
+      //   title: "已取消",
+      //   value: "4"
+      // }
     ],
   },
   onLoad: function(options) {
@@ -140,10 +145,10 @@ Page({
   },
   onShow:function(){
     setTimeout(() => {
-      let from = wx.getStorageSync("from")
-      if (from == 'createOrder') {
+      let targetTab = wx.getStorageSync('targetTab')
+      if (targetTab == 'order') {
         this.setData({
-          selectedIndex: 0,
+          selectedIndex: 1,
           type: '0',
           noRecordsText: '',
           hasRecords: false,
@@ -151,7 +156,7 @@ Page({
         })
         queryOrder(this, 1, '0')
       }
-      wx.removeStorageSync('from')
+      wx.removeStorageSync('targetTab')
     }, 200)
   },
   selectTab(e) {

@@ -408,7 +408,7 @@ Page({
       return this.showDialog()
     }
     wx.navigateTo({
-      url: '../order/createOrder/index?selectedItems=' + JSON.stringify(selectedItems)
+      url: '../order/createOrder/index?selectedItems=' + JSON.stringify(selectedItems) + '&orderType=cart'
     })
   }
 })

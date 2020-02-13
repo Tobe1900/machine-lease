@@ -1,4 +1,6 @@
-<view class="page-section page-section-spacing swiper">
+<view class="page-section page-section-spacing swiper app_container">
+  <dialogCom id='phone_dialog' isPhone="true" title='提示' content='【及时到】需要您授权以获取手机号码' confirmText='授权' bind:confirmEvent='confirmEvent' bind:getPhoneNumber='getPhoneNumber'>
+  </dialogCom>
   <swiper autoplay="{{autoplay}}" indicator-dots="{{indicatorDots}}" interval="{{interval}}" duration="{{duration}}" style="height:240px">
     <block wx:for="{{detailImags}}" wx:key="*this">
       <swiper-item>
@@ -36,6 +38,18 @@
     <view class="description_item">
       <text class="item_label">机器(长宽高)</text>
       <text class="item_value">{{item.description.machineSize}}m</text>
+    </view>
+  </view>
+  <view class="bottom_container">
+    <view class="bottom_label">
+      <view class="bottom_btn add_cart" catchtap="bindAddCart" style="margin:6rpx;" data-id="{{item.id}}">
+        加入购物车
+      </view>
+    </view>
+    <view class="bottom_label">
+      <view class="bottom_btn" catchtap="createOrder" style="margin:6rpx;">
+        去下单
+      </view>
     </view>
   </view>
 </view>

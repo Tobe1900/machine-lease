@@ -98,12 +98,21 @@ Page({
             orderId: _this.data.orderId
           },
           success: function(res) {
+            wx.hideLoading()
             let data = res.data
             if (!!data && !data.errcode) {
               wx.showToast({
                 title: '签约成功',
-                duration: 3000
+                duration: 1000
               });
+              setTimeout(() => {
+                wx.switchTab({
+                  url: '/pages/order/order',
+                  success: function(e) {
+                    wx.setStorageSync('targetTab', 'order')
+                  }
+                })
+              }, 1500)
             } else {
               wx.showModal({
                 title: '提示',
@@ -112,7 +121,6 @@ Page({
             }
           }
         })
-        wx.hideLoading()
       }
     })
 

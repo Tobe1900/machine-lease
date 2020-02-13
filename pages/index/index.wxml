@@ -21,7 +21,7 @@
   </view>
   <view>
     <view class="goods_container">
-      <goodItem goodItem="{{item}}" wx:for="{{goods}}" wx:key="index" bind:addcart="addCart" />
+      <goodItem goodItem="{{item}}" wx:for="{{goods}}" wx:key="index" bind:addcart="bindAddCart" />
       <!-- <text class="nothingText">已到底</text> -->
     </view>
   </view>

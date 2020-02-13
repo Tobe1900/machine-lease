@@ -118,7 +118,7 @@ Page({
       }
     ],
   },
-  onLoad: function() {
+  onLoad: function(options) {
     let _this = this;
     const isAuth = wx.getStorageSync("isAuth")
     _this.setData({
@@ -137,6 +137,22 @@ Page({
       title: '获取数据中...',
     })
     queryOrder(this, this.data.page, this.data.type)
+  },
+  onShow:function(){
+    setTimeout(() => {
+      let from = wx.getStorageSync("from")
+      if (from == 'createOrder') {
+        this.setData({
+          selectedIndex: 0,
+          type: '0',
+          noRecordsText: '',
+          hasRecords: false,
+          orderList: []
+        })
+        queryOrder(this, 1, '0')
+      }
+      wx.removeStorageSync('from')
+    }, 200)
   },
   selectTab(e) {
     wx.showLoading({

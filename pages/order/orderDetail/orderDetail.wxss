@@ -60,15 +60,17 @@ page {
   text-align: center;
   color: #999;
 }
-.product_begin_time{
- padding: 15rpx;
- color:#666;
- border-bottom: 1px solid #dedede;
+
+.product_begin_time {
+  padding: 15rpx;
+  color: #666;
+  border-bottom: 1px solid #dedede;
 }
+
 .product_rent {
   text-align: right;
   padding: 15rpx;
-  font-size: 30rpx;
+  font-size: 32rpx;
 }
 
 .time_container {
@@ -77,8 +79,8 @@ page {
   flex-direction: column;
   background-color: #fff;
   padding: 20rpx 30rpx;
-  font-size: 28rpx;
   color: #555;
+  font-size:28rpx;
 }
 
 .amount_container {
@@ -86,6 +88,25 @@ page {
   flex-direction: column;
   background-color: #fff;
   padding: 15rpx 30rpx;
-  font-size: 30rpx;
   color: #555;
+}
+
+.amount_container view {
+  display: flex;
+  flex-direction: row;
+  padding: 5rpx;
+}
+
+.amount_container view text:nth-child(1) {
+  display: inline-block;
+  text-align: left;
+  flex:1;
+  font-size: 32rpx;
+}
+
+.amount_container view text:nth-child(2) {
+  text-align: right;
+  display: inline-block;
+  flex:1;
+  font-size: 32rpx;
 }

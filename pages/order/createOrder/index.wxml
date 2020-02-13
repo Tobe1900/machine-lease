@@ -7,9 +7,9 @@
     </view>
     <view wx:else style="display:flex;flex-direction:row;padding:8px 10px;height:60px;font-size:15px;">
       <view class="address_container" style="">
-    <text>{{addressObj.name}}</text>
-    <text>{{addressObj.address}}</text>
-  </view>
+        <text>{{addressObj.name}}</text>
+        <text>{{addressObj.address}}</text>
+      </view>
       <text bindtap="selectAddress" style="flex: 1;text-align: center;color: #888888;font-size:15px">
     更换地址
   </text>
@@ -63,10 +63,13 @@
 
   <view class="bottom_container">
     <view class="bottom_label">
-      <text>预估</text>
-      <text>￥{{rent}}</text>
+      <view>
+        <text>预估</text>
+        <text style="color:#1296db">￥{{rent}}</text>
+      </view>
+      <view style="font-size: 24rpx;color: #888;">最终费用，以实际使用天数为准。</view>
     </view>
-    <view style="flex:2;display:flex">
+    <view style="flex:1;display:flex">
       <view class="bottom_btn" bindtap="submitOrder">
         提交订单
       </view>

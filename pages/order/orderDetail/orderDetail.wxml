@@ -41,29 +41,31 @@
       </view>
     </view>
     <view class="amount_container">
-      <text>租金:￥{{order.rent}}</text>
-      <text wx:if="{{!!order.freight}}">运费:￥{{order.freight}}</text>
-    </view>
-  </view>
+      <view>
+        <text>租金</text>
+        <text>￥{{order.rent}}</text>
+      </view>
 
-  <view class="bottom_container" wx:if="{{order.status=='1'}}">
-    <view class="bottom_label">
-      <text>预估</text>
-      <text>￥{{order.rent + order.freight}}</text>
-    </view>
-    <view style="flex:2;display:flex">
-      <view class="bottom_btn" bindtap="navigateToSign" data-agreementimg="{{order.agreementImg}}" data-orderid="{{order.orderId}}">
-        签约
+      <view wx:if="{{!!order.freight}}">
+        <text>运费</text>
+        <text>￥{{order.freight}}</text>
       </view>
     </view>
   </view>
-  <view class="bottom_container" wx:elif="{{order.status=='2'}}">
+
+  <view class="bottom_container">
     <view class="bottom_label">
-      <text>预估</text>
-      <text>￥{{order.rent + order.freight}}</text>
+      <view>
+       <text>预估</text>
+      <text style="color:#1296db">￥{{order.rent + order.freight}}</text>
+      </view>
+      <view style="font-size: 24rpx;color: #888;">最终费用，以实际使用天数为准。</view>
     </view>
-    <view style="flex:2;display:flex">
-      <view class="bottom_btn" bindtap="payOrder" data-orderid="{{order.orderId}}">
+    <view style="flex:1;display:flex">
+      <view class="bottom_btn" wx:if="{{order.status=='1'}}" bindtap="navigateToSign" data-agreementimg="{{order.agreementImg}}" data-orderid="{{order.orderId}}">
+        签约
+      </view>
+      <view class="bottom_btn" wx:elif="{{order.status=='2'}}" bindtap="payOrder" data-orderid="{{order.orderId}}">
         支付
       </view>
     </view>

@@ -1,5 +1,8 @@
 const app = getApp()
 import QQmap from '../../utils/map.js';
+import {
+  debounce
+} from '../../utils/util.js';
 import config from '../../config/index.js'
 const qqmapObj = new QQmap()
 Page({
@@ -37,7 +40,6 @@ Page({
     }
   },
   onLoad: function() {
-    // this.dialog = this.selectComponent("#phone_dialog"); //设置dialog组件以获得手机号码
     this.setUserLocation() // 授权获取地理位置
   },
   handleAuth() {
@@ -45,12 +47,6 @@ Page({
       url: '../mine/auth/auth',
     })
   },
-  // showDialog() {
-  //   this.dialog.showDialog();
-  // },
-  // confirmEvent() {
-  //   this.dialog.hideDialog();
-  // },
   setUserLocation() {
     let _this = this
     wx.getSetting({
@@ -116,20 +112,6 @@ Page({
           _this.setData({
             goods: tmp
           })
-
-          // 弹出获取手机号码弹框
-          // let havePhone = wx.getStorageSync("havePhone") || app.globalData.havePhone
-          // if (!havePhone) {
-          //   setTimeout(() => {
-          //     _this.showDialog()
-          //   }, 500)
-          // }
-
-          // 模拟数据：
-          // let mokoData = [...Array(6)].map(item => {
-          //   return tmp[0]
-          // })
-          // _this.setData({ goods: mokoData })
         } else {
           wx.showToast({
             title: data.errmsg,
@@ -146,11 +128,10 @@ Page({
       }
     })
   },
-  addCart(event) {
+  bindAddCart: debounce(function(that, e) {
     let {
       productID
-    } = event.detail
-    console.log('productID', productID)
+    } = e.detail
     wx.request({
       url: config.requestUrl + 'addToCart',
       data: {
@@ -181,7 +162,7 @@ Page({
         console.log('error', error)
       }
     })
-  },
+  }),
   selectCity() {
     wx.navigateTo({
       url: '../cityList/cityList',
@@ -206,53 +187,4 @@ Page({
       console.log(err)
     })
   },
-  // getPhoneNumber(event) {
-  //   let _this = this
-  //   let {
-  //     code
-  //   } = event.detail
-  //   console.log('code get phonenmumber', code)
-  //   if (code.iv && code.encryptedData) {
-  //     // 用户同意授权获取手机号码
-  //     let {
-  //       iv,
-  //       encryptedData
-  //     } = code
-  //     wx.request({
-  //       url: config.requestUrl + 'getPhone',
-  //       data: {
-  //         token: wx.getStorageSync('token'),
-  //         iv,
-  //         encryptedData
-  //       },
-  //       header: {
-  //         'content-type': 'application/json'
-  //       },
-  //       method: 'POST',
-  //       success: function(res) {
-  //         let data = res.data
-  //         if (!data.errcode) {
-  //           _this.dialog.hideDialog()
-  //           wx.showToast({
-  //             title: '绑定成功',
-  //             icon: 'success',
-  //             duration: 1000
-  //           });
-  //         } else {
-  //           wx.showToast({
-  //             title: data.errmsg,
-  //             icon: 'none',
-  //             duration: 2000
-  //           })
-  //         }
-  //       },
-  //       fail: function(error) {
-  //         console.log('error', error)
-  //       }
-  //     })
-  //   } else {
-  //     // 用户拒绝授权
-  //     _this.dialog.hideDialog();
-  //   }
-  // }
 })

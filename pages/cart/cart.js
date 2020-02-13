@@ -24,7 +24,8 @@ Page({
       isCheckAll: false,
       totalCount: 0,
       isEdit: true,
-      noRecordsText: ''
+      noRecordsText: '',
+      cartList:[]
     })
   },
   showDialog() {

@@ -374,7 +374,7 @@ Page({
         mPrice
       }
     })
-    // let productIDs = this.data.selectedItems.map(item => item.productID)
+    let productIDs = this.data.selectedItems.map(item => item.productID)
     let {
       name,
       address,
@@ -424,7 +424,7 @@ Page({
       success: function(res) {
         let data = res.data
         if (!data.errcode) {
-          // _this.deleteCartProduct(productIDs)
+          _this.deleteCartProduct(productIDs) // 删除购物车中相应商品
           if (!isAuth) {
             _this.showAuthDialog()
           } else {
@@ -433,11 +433,14 @@ Page({
               icon: 'success',
               duration: 1000
             });
+            // 跳转到订单页面
             wx.switchTab({
               url: '/pages/order/order',
+              success: function (e) {
+                wx.setStorageSync('from', 'createOrder')
+              }
             })
           }
-          // 跳转到订单页面
         } else {
           wx.showToast({
             title: data.errmsg,
@@ -451,26 +454,26 @@ Page({
       }
     })
   },
-  // deleteCartProduct(productIDs) {
-  //   wx.request({
-  //     url: config.requestUrl + 'delCartProduct',
-  //     data: {
-  //       token: wx.getStorageSync('token'),
-  //       productIDs
-  //     },
-  //     header: {
-  //       'content-type': 'application/json'
-  //     },
-  //     method: 'POST',
-  //     success: function (res) {
-  //       let data = res.data
-  //       if (!data.errcode) {
-  //       } else {
-  //       }
-  //     },
-  //     fail: function (error) {
-  //       console.log('DelCart Error:', error)
-  //     }
-  //   })
-  // },
+  deleteCartProduct(productIDs) {
+    wx.request({
+      url: config.requestUrl + 'delCartProduct',
+      data: {
+        token: wx.getStorageSync('token'),
+        productIDs
+      },
+      header: {
+        'content-type': 'application/json'
+      },
+      method: 'POST',
+      success: function (res) {
+        let data = res.data
+        if (!data.errcode) {
+        } else {
+        }
+      },
+      fail: function (error) {
+        console.log('DelCart Error:', error)
+      }
+    })
+  },
 })

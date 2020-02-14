@@ -4,23 +4,28 @@ import {
   handleDate
 } from '../../utils/util.js'
 const queryOrder = (self, page, type) => {
+  wx.showLoading({
+    title: '加载数据中...',
+  })
+  let params = {
+    token: wx.getStorageSync('token'),
+    page: page
+  }
+  if (type !== '') {
+    params.type = type
+  }
   wx.request({
     url: config.requestUrl + 'queryOrder',
-    data: {
-      token: wx.getStorageSync('token'),
-      page: page,
-      type: type
-    },
+    data: params,
     header: {
       'content-type': 'application/json'
     },
     method: 'POST',
-    success: function(res) {
+    success: function (res) {
       let {
         data
       } = res
       let orderList = self.data.orderList
-      wx.hideLoading()
       if (Array.isArray(data) && data.length !== 0) {
         for (let i = 0; i < data.length; i++) {
           let products = data[i].products
@@ -37,11 +42,11 @@ const queryOrder = (self, page, type) => {
             Object.assign({}, {
               ...data[i]
             }, {
-              time: formatTime(data[i].time, 'yyyy-MM-dd hh:mm'),
-              beginTime: handleDate(data[i].beginTime),
-              products: tmpProducts,
-              agreementImg: data[i].agreementImage || self.data.agreementImage
-            })
+                time: formatTime(data[i].time, 'yyyy-MM-dd hh:mm'),
+                beginTime: handleDate(data[i].beginTime),
+                products: tmpProducts,
+                agreementImg: data[i].agreementImage || self.data.agreementImage
+              })
           )
         }
         if (page === 1 && data.length < 10) {
@@ -75,62 +80,65 @@ const queryOrder = (self, page, type) => {
 
       }
     },
-    fail: function(error) {
+    fail: function (error) {
       console.log('error', error)
+    },
+    complete: function () {
+      wx.hideLoading()
     }
   })
 }
 
 Page({
   data: {
-    isAuth:false,
+    isAuth: false,
     orderList: [],
     page: 1,
-    type: '0',
+    type: '',
     hasRecords: false,
     scrollTop: 0,
     scrollHeight: 0,
     locked: false,
     bottomInVisiable: true,
-    selectedIndex: 1,
+    selectedIndex: 0,
     noRecordsText: '',
     noOrderIcon: '../../icons/no_order.png',
     agreementImage: '../../../icons/agreement.png', // 模拟协议图片 后期可删除
-    tabs: [
-      {
-       title:"全部",
-       value:""
-      },
-      {
-        title: "待审核",
-        value: "0"
-      },
-      {
-        title: "待签约",
-        value: "1"
-      },
-      {
-        title: "待支付",
-        value: "2"
-      },
-      {
-        title: "已支付",
-        value: "3"
-      }
-      // {
-      //   title: "已取消",
-      //   value: "4"
-      // }
+    tabs: [{
+      title: "全部",
+      value: ""
+    },
+    {
+      title: "待审核",
+      value: "0"
+    },
+    {
+      title: "待签约",
+      value: "1"
+    },
+    {
+      title: "待支付",
+      value: "2"
+    },
+    {
+      title: "已支付",
+      value: "3"
+    },
+    {
+      title: "已取消",
+      value: "4"
+    }
     ],
   },
-  onLoad: function(options) {
+  onLoad: function (options) {
+    console.log('loaddddsssssss')
     let _this = this;
     const isAuth = wx.getStorageSync("isAuth")
     _this.setData({
       isAuth
     })
     wx.getSystemInfo({
-      success: function(res) {
+      success: function (res) {
         console.info(res.windowHeight);
         _this.setData({
           scrollHeight: res.windowHeight - 40,
@@ -138,18 +146,16 @@ Page({
         });
       }
     });
-    wx.showLoading({
-      title: '获取数据中...',
-    })
     queryOrder(this, this.data.page, this.data.type)
   },
-  onShow:function(){
+  onShow: function () {
+    console.log('showsssssss')
     setTimeout(() => {
       let targetTab = wx.getStorageSync('targetTab')
       if (targetTab == 'order') {
         this.setData({
-          selectedIndex: 1,
-          type: '0',
+          selectedIndex: 0,
+          type: '',
           noRecordsText: '',
           hasRecords: false,
           orderList: []
@@ -160,23 +166,21 @@ Page({
     }, 200)
   },
   selectTab(e) {
-    wx.showLoading({
-      title: '获取数据中...',
-    })
-    let {
-      index,
-      status
-    } = e.currentTarget.dataset
-    this.setData({
-      selectedIndex: index,
-      type: status,
-      noRecordsText: '',
-      hasRecords: false
-    })
-    this.setData({
-      orderList: []
-    })
-    queryOrder(this, 1, status)
+    let { index, status } = e.currentTarget.dataset
+    let selectedIndex = this.data.selectedIndex
+    console.log('sllllllll')
+    if (index !== selectedIndex) {
+      console.log('s22222222')
+       this.setData({
+        selectedIndex: index,
+        type: status,
+        noRecordsText: '',
+        hasRecords: false,
+        orderList: []
+      })
+      queryOrder(this, 1, status)
+    }
+    
   },
   getOrderDetail(e) {
     // 订单详情
@@ -185,7 +189,7 @@ Page({
       url: './orderDetail/orderDetail?order=' + JSON.stringify(order)
     })
   },
-  handleAuth(){
+  handleAuth() {
     wx.navigateTo({
       url: '../mine/auth/auth',
     })
@@ -201,14 +205,13 @@ Page({
       _this.setData({
         locked: true
       })
-      setTimeout(function() {
+      setTimeout(function () {
         _this.setData({
           locked: false,
           orderList: []
         });
         queryOrder(_this, 1, _this.data.type);
-        wx.hideLoading();
-      }, 1000)
+      }, 500)
     }
   },
   bindDownLoad(e) {
@@ -217,28 +220,22 @@ Page({
     let orderList = this.data.orderList
     let lastItem = orderList[orderList.length - 1]
     if (_this.data.locked) {
-      console.log("尝试解锁");
+      console.log("尝试解锁")
     } else {
       if (!lastItem.noMore) {
         currentPage++;
         _this.setData({
           locked: true
-        });
-        wx.showLoading({
-          title: "获取数据中..."
-        });
-        setTimeout(function() {
+        })
+        setTimeout(function () {
           queryOrder(_this, currentPage, _this.data.type);
           _this.setData({
             bottomInVisiable: true,
             locked: false,
             scrolltop: e.detail.scrollTop
           });
-          wx.hideLoading();
         }, 1500)
-      } else {
-
       }
     }
-  },
+  }
 })

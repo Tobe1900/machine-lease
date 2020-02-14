@@ -3,7 +3,7 @@
   <scroll-view class='scrollContainer' scroll-x>
     <block report-submit='true' data-id="{{item.id}}" wx:for="{{tabs}}" wx:key="{{index}}" data-status="{{item.value}}">
       <block>
-        <view class="{{selectedIndex !== index ? 'tab':'tab_selected'}}" bindtap="selectTab" data-status="{{item.value}}" data-index="{{index}}">{{item.title}}</view>
+        <view class="{{selectedIndex !== index ? 'tab':'tab_selected'}}" catchtap="selectTab" data-status="{{item.value}}" data-index="{{index}}">{{item.title}}</view>
       </block>
     </block>
   </scroll-view>

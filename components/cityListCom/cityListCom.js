@@ -50,6 +50,11 @@ Component({
     //点击城市字母
     letterTap(e) {
       const Item = e.currentTarget.dataset.item;
+      wx.showToast({
+        title: Item,
+        icon:'none',
+        duration: 500
+      })
       this.setData({
         cityListId: Item
       });

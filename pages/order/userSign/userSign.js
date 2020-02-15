@@ -106,7 +106,7 @@ Page({
                 duration: 1000
               });
               setTimeout(() => {
-                wx.switchTab({
+                wx.reLaunch({
                   url: '/pages/order/order',
                   success: function(e) {
                     wx.setStorageSync('targetTab', 'order')

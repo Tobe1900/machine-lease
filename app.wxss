@@ -13,7 +13,7 @@
   flex: 2;
   font-size: 14px;
   text-indent: 10px;
-  padding-right: 8px; 
+  /* padding-right: 8px;  */
 }
 
 .bottom_btn {

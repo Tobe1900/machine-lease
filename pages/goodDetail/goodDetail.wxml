@@ -41,13 +41,17 @@
     </view>
   </view>
   <view class="bottom_container">
+   <view class="bottom_label" style="flex:1">
+   <view class="bottom_btn add_cart" style="margin:6rpx 0;" catchtap="navToCart">
+      </view>
+   </view>
     <view class="bottom_label">
-      <view class="bottom_btn add_cart" catchtap="bindAddCart" style="margin:6rpx;" data-id="{{item.id}}">
+      <view class="bottom_btn" catchtap="bindAddCart" style="margin:6rpx 10rpx 6rpx 0;" data-id="{{item.id}}">
         加入购物车
       </view>
     </view>
-    <view class="bottom_label">
-      <view class="bottom_btn" catchtap="createOrder" style="margin:6rpx;">
+    <view class="bottom_label" style="flex:2">
+      <view class="bottom_btn" catchtap="createOrder" style="margin:6rpx 0;">
         去下单
       </view>
     </view>

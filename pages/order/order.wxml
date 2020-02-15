@@ -19,7 +19,7 @@
     <view class="no_records" wx:if="{{noRecordsText!==''}}"></view>
     <text>{{noRecordsText}}</text>
   </view>
-  <scroll-view scroll-top="{{scrollTop}}" scroll-y="true" style="height:{{scrollHeight}}px; margin-top:36px;" class="list" bindscrolltolower="bindDownLoad" bindscrolltoupper="refresh">
+  <scroll-view scroll-top="{{scrollTop}}" scroll-y="true" style="height:{{scrollHeight}}px; margin-top:36px;" class="list" bindscrolltolower="bindDownLoad" bindscrolltoupper="refresh" bindscroll="scroll">
 
     <view class="item" wx:for="{{orderList}}" wx:key="index">
       <view wx:if="{{item.noMore}}" style="display:none">

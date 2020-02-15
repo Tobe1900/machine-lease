@@ -34,20 +34,20 @@ Page({
     day: 0,
     rent: 0,
     days: [{
-        value: 3
-      },
-      {
-        value: 10
-      },
-      {
-        value: 30
-      },
-      {
-        value: 60
-      },
-      {
-        value: 90
-      }
+      value: 3
+    },
+    {
+      value: 10
+    },
+    {
+      value: 30
+    },
+    {
+      value: 60
+    },
+    {
+      value: 90
+    }
     ],
     otherDay: '',
     addressObj: {
@@ -58,13 +58,13 @@ Page({
       isSetAddress: false
     }
   },
-  onReady: function() {
+  onReady: function () {
     //获得dialog组件
     this.useDaysDialog = this.selectComponent("#useDaysDialog");
     this.rentRuleDialog = this.selectComponent("#rentRuleDialog")
     this.authDialog = this.selectComponent("#authDialog");
   },
-  onLoad: function(option) {
+  onLoad: function (option) {
     const isAuth = wx.getStorageSync("isAuth")
     const selectedItems = JSON.parse(option.selectedItems)
     const orderType = option.orderType
@@ -103,7 +103,7 @@ Page({
   },
   confirmEvent() {
     this.authDialog.hideDialog();
-    wx.switchTab({
+    wx.reLaunch({
       url: '/pages/order/order',
     })
   },
@@ -203,7 +203,7 @@ Page({
       }
     })
   },
-  pickerTap: function() {
+  pickerTap: function () {
     // 获取当前时间 让picker选中当前时间的时和分值
     let currentDate = new Date(),
       hourIndex = currentDate.getHours(),
@@ -424,7 +424,7 @@ Page({
         'content-type': 'application/json'
       },
       method: 'POST',
-      success: function(res) {
+      success: function (res) {
         let data = res.data
         if (!data.errcode) {
           if (orderType == 'cart') {
@@ -450,14 +450,16 @@ Page({
           wx.showToast({
             title: '订单提交成功',
             icon: 'success',
-            duration: 1000
+            duration: 1500
           });
-          wx.switchTab({
-            url: '/pages/order/order',
-            success: function(e) {
-              wx.setStorageSync('targetTab', 'order')
-            }
-          })
+          setTimeout(() => {
+            wx.reLaunch({
+              url: '/pages/order/order',
+              success: function (e) {
+                wx.setStorageSync('targetTab', 'order')
+              }
+            })
+          }, 1500)
         } else {
           wx.showToast({
             title: data.errmsg,
@@ -466,7 +468,7 @@ Page({
           })
         }
       },
-      fail: function(error) {
+      fail: function (error) {
         console.log('error', error)
       }
     })
@@ -482,11 +484,11 @@ Page({
         'content-type': 'application/json'
       },
       method: 'POST',
-      success: function(res) {
+      success: function (res) {
         let data = res.data
-        if (!data.errcode) {} else {}
+        if (!data.errcode) { } else { }
       },
-      fail: function(error) {
+      fail: function (error) {
         console.log('DelCart Error:', error)
       }
     })

@@ -4,9 +4,6 @@ import {
   handleDate
 } from '../../utils/util.js'
 const queryOrder = (self, page, type) => {
-  wx.showLoading({
-    title: '加载数据中...',
-  })
   let params = {
     token: wx.getStorageSync('token'),
     page: page
@@ -77,14 +74,17 @@ const queryOrder = (self, page, type) => {
             orderList: orderList
           })
         }
-
       }
+      wx.hideLoading()
     },
     fail: function (error) {
-      console.log('error', error)
+      wx.showModal({
+        title: '提示',
+        content: error,
+      })
     },
     complete: function () {
-      wx.hideLoading()
+      // wx.hideLoading()
     }
   })
 }
@@ -97,6 +97,7 @@ Page({
     type: '',
     hasRecords: false,
     scrollTop: 0,
+    hasScroll:false,
     scrollHeight: 0,
     locked: false,
     bottomInVisiable: true,
@@ -131,7 +132,9 @@ Page({
     ],
   },
   onLoad: function (options) {
-    console.log('loaddddsssssss')
+    wx.showLoading({
+      title: '加载数据中...',
+    })
     let _this = this;
     const isAuth = wx.getStorageSync("isAuth")
     _this.setData({
@@ -149,7 +152,6 @@ Page({
     queryOrder(this, this.data.page, this.data.type)
   },
   onShow: function () {
-    console.log('showsssssss')
     setTimeout(() => {
       let targetTab = wx.getStorageSync('targetTab')
       if (targetTab == 'order') {
@@ -165,22 +167,37 @@ Page({
       wx.removeStorageSync('targetTab')
     }, 200)
   },
+  scroll(e){
+    if(e.detail.scrollTop > 0){
+      this.setData({
+        hasScroll: true
+      })
+    } else {
+      this.setData({
+        hasScroll: false
+      })
+    }
+  },
   selectTab(e) {
+    wx.showLoading({
+      title: '加载数据中...',
+    })
     let { index, status } = e.currentTarget.dataset
     let selectedIndex = this.data.selectedIndex
-    console.log('sllllllll')
     if (index !== selectedIndex) {
-      console.log('s22222222')
-       this.setData({
+      this.setData({
         selectedIndex: index,
         type: status,
         noRecordsText: '',
         hasRecords: false,
         orderList: []
       })
+      if(this.data.hasScroll){
+        return
+      }
       queryOrder(this, 1, status)
     }
-    
+
   },
   getOrderDetail(e) {
     // 订单详情
@@ -214,7 +231,7 @@ Page({
       }, 500)
     }
   },
-  bindDownLoad(e) {
+  bindDownLoad() {
     let _this = this;
     let currentPage = this.data.page;
     let orderList = this.data.orderList
@@ -223,6 +240,9 @@ Page({
       console.log("尝试解锁")
     } else {
       if (!lastItem.noMore) {
+        wx.showLoading({
+          title: '加载数据中...',
+        })
         currentPage++;
         _this.setData({
           locked: true
@@ -231,10 +251,11 @@ Page({
           queryOrder(_this, currentPage, _this.data.type);
           _this.setData({
             bottomInVisiable: true,
-            locked: false,
-            scrolltop: e.detail.scrollTop
+            locked: false
           });
         }, 1500)
+      } else {
+        wx.hideLoading()
       }
     }
   }

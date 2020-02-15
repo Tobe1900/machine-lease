@@ -39,6 +39,11 @@ Page({
   confirmEvent() {
     this.dialog.hideDialog();
   },
+  navToCart(){
+    wx.reLaunch({
+      url: '/pages/cart/cart'
+    })
+  },
   bindAddCart: debounce(function(that, e) {
     let productID = e.currentTarget.dataset.id
     // console.log('11', productID)

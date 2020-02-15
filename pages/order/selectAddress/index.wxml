@@ -1,8 +1,8 @@
 <view>
   <map id="map" longitude="{{addressObj.longitude}}" latitude="{{addressObj.latitude}}" scale="15" markers="{{markers}}" bindmarkertap="markertap" bindregionchange="getCenterMap" show-location style="width:100%; height:{{mapHeight}}px;">
-    <!-- <cover-view class="search_container" catchtap="searchAddress">
+    <cover-view class="search_container" catchtap="searchAddress">
     搜索工程地址
-    </cover-view>  -->
+    </cover-view> 
     <view class="search_container" catchtap="searchAddress">
       搜索工程地址
     </view>

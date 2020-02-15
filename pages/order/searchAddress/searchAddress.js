@@ -1,7 +1,7 @@
 // pages/order/searchAddress/searchAddress.js
 import QQmap from '../../../utils/map.js';
 import {
-  throttle
+  throttle, debounce
 } from '../../../utils/util.js'
 const qqmapObj = new QQmap()
 Page({
@@ -24,7 +24,7 @@ Page({
       url: '../../cityList/cityList',
     })
   },
-  bindSearch: throttle(function(that, e) {
+  bindSearch: debounce(function(that, e) {
     // let that = this;
     let searchVal = e.detail.value;
     console.log(searchVal)

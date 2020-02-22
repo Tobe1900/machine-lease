@@ -49,6 +49,58 @@ Page({
     // console.log('11', productID)
     requestAddCart(productID)
   }),
+  getPhoneNumber(event) {
+    let _this = this
+    let {
+      code
+    } = event.detail
+    if (code.iv && code.encryptedData) {
+      // 用户同意授权获取手机号码
+      let {
+        iv,
+        encryptedData
+      } = code
+      wx.request({
+        url: config.requestUrl + 'getPhone',
+        data: {
+          token: wx.getStorageSync('token'),
+          iv,
+          encryptedData
+        },
+        header: {
+          'content-type': 'application/json'
+        },
+        method: 'POST',
+        success: function (res) {
+          let data = res.data
+          if (!data.errcode) {
+            _this.dialog.hideDialog()
+            _this.setData({
+              havePhone: true
+            })
+            wx.setStorageSync("havePhone", true)
+            wx.showToast({
+              title: '手机绑定成功',
+              icon: 'success',
+              duration: 1000
+            });
+          } else {
+            wx.showToast({
+              title: data.errmsg,
+              icon: 'none',
+              duration: 2000
+            })
+          }
+        },
+        fail: function (error) {
+          console.log('error', error)
+        }
+      })
+    } else {
+      // 用户拒绝授权
+      _this.dialog.hideDialog();
+    }
+  },
   createOrder() {
     let {
       cartList,

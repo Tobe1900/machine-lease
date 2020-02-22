@@ -60,7 +60,7 @@ Page({
         })
       }
     });
-  }, 2000),
+  }, 300),
   selectLocation(e){
     const location = e.currentTarget.dataset.location 
     let addressObj = {

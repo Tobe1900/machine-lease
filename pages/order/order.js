@@ -151,22 +151,22 @@ Page({
     });
     queryOrder(this, this.data.page, this.data.type)
   },
-  onShow: function () {
-    setTimeout(() => {
-      let targetTab = wx.getStorageSync('targetTab')
-      if (targetTab == 'order') {
-        this.setData({
-          selectedIndex: 0,
-          type: '',
-          noRecordsText: '',
-          hasRecords: false,
-          orderList: []
-        })
-        queryOrder(this, 1, '0')
-      }
-      wx.removeStorageSync('targetTab')
-    }, 200)
-  },
+  // onShow: function () {
+  //   setTimeout(() => {
+  //     let targetTab = wx.getStorageSync('targetTab')
+  //     if (targetTab == 'order') {
+  //       this.setData({
+  //         selectedIndex: 0,
+  //         type: '',
+  //         noRecordsText: '',
+  //         hasRecords: false,
+  //         orderList: []
+  //       })
+  //       // queryOrder(this, 1, '0')
+  //     }
+  //     wx.removeStorageSync('targetTab')
+  //   }, 200)
+  // },
   scroll(e){
     if(e.detail.scrollTop > 0){
       this.setData({
@@ -179,12 +179,15 @@ Page({
     }
   },
   selectTab(e) {
-    wx.showLoading({
-      title: '加载数据中...',
-    })
+    // wx.showLoading({
+    //   title: '加载数据中...',
+    // })
     let { index, status } = e.currentTarget.dataset
     let selectedIndex = this.data.selectedIndex
     if (index !== selectedIndex) {
+      wx.showLoading({
+        title: '加载数据中...',
+      })
       this.setData({
         selectedIndex: index,
         type: status,

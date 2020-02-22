@@ -109,7 +109,7 @@ Page({
                 wx.reLaunch({
                   url: '/pages/order/order',
                   success: function(e) {
-                    wx.setStorageSync('targetTab', 'order')
+                    // wx.setStorageSync('targetTab', 'order')
                   }
                 })
               }, 1500)

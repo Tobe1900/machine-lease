@@ -78,9 +78,11 @@ Page({
                 wx.showToast({
                   title: '支付成功',
                   icon: 'success',
-                  duration: 2000
+                  duration: 1500
                 })
-                wx.navigateBack()
+                setTimeout(() => {
+                  wx.reLaunch({ url: '/pages/order/order' })
+                }, 1500)
               }
             },
             fail(res) {

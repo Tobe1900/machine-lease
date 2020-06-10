@@ -12,7 +12,8 @@
     "pages/order/selectAddress/index",
     "pages/order/userSign/userSign",
     "pages/order/orderDetail/orderDetail",
-    "pages/order/searchAddress/searchAddress"
+    "pages/order/searchAddress/searchAddress",
+    "pages/baiduPage/baiduPage"
   ],
   "permission": {
     "scope.userLocation": {

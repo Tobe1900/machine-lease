@@ -55,6 +55,14 @@
     </view>
     <view class="rent_container">
       <view class="rent_item">
+        <text class="item_label">是否为涂料作业:</text>
+        <radio-group bindchange="radioChange">
+          <label class="radio" wx:for="{{radioList}}" wx:key="index"><radio checked="{{item.checked}}" value="{{item.label}}" />{{item.label}}</label>
+        </radio-group>
+      </view>
+    </view>
+    <view class="rent_container">
+      <view class="rent_item">
         <text class="item_label rent_rule_label" bindtap="showRentRuleDialog">租金</text>
         <text class="item_value">￥{{rent}}</text>
       </view>

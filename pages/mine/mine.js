@@ -83,4 +83,10 @@ Page({
     // 用户点击授权后，这里可以做一些操作
     this.getUserInfo();
   },
+
+  goToBaidu: function() {
+    wx.navigateTo({
+      url: '/pages/baiduPage/baiduPage?externalUrl=' + 'https://www.baidu.com',
+    })
+  }
 })

@@ -187,3 +187,8 @@
   background-position: 55px center;
   background-repeat: no-repeat;
 }
+
+.radio {
+  margin-left: 20rpx;
+  margin-right: 24rpx;
+}

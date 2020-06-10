@@ -34,20 +34,20 @@ Page({
     day: 0,
     rent: 0,
     days: [{
-      value: 3
-    },
-    {
-      value: 10
-    },
-    {
-      value: 30
-    },
-    {
-      value: 60
-    },
-    {
-      value: 90
-    }
+        value: 3
+      },
+      {
+        value: 10
+      },
+      {
+        value: 30
+      },
+      {
+        value: 60
+      },
+      {
+        value: 90
+      }
     ],
     otherDay: '',
     addressObj: {
@@ -56,15 +56,24 @@ Page({
       longitude: '',
       address: '',
       isSetAddress: false
-    }
+    },
+    radioList: [{
+        label: '是',
+        checked: false
+      },
+      {
+        label: '否',
+        checked: false
+      },
+    ]
   },
-  onReady: function () {
+  onReady: function() {
     //获得dialog组件
     this.useDaysDialog = this.selectComponent("#useDaysDialog");
     this.rentRuleDialog = this.selectComponent("#rentRuleDialog")
     this.authDialog = this.selectComponent("#authDialog");
   },
-  onLoad: function (option) {
+  onLoad: function(option) {
     const isAuth = wx.getStorageSync("isAuth")
     const selectedItems = JSON.parse(option.selectedItems)
     const orderType = option.orderType
@@ -75,6 +84,17 @@ Page({
     })
     this.pickerTap()
   },
+
+  radioChange(e) {
+    const items = this.data.radioList
+    for (let i = 0, len = items.length; i < len; ++i) {
+      items[i].checked = items[i].label === e.detail.value
+    }
+    this.setData({
+      radioList: items
+    })
+  },
+
   chooseUseDays() {
     let {
       startTimeText
@@ -203,7 +223,7 @@ Page({
       }
     })
   },
-  pickerTap: function () {
+  pickerTap: function() {
     // 获取当前时间 让picker选中当前时间的时和分值
     let currentDate = new Date(),
       hourIndex = currentDate.getHours(),
@@ -424,7 +444,7 @@ Page({
         'content-type': 'application/json'
       },
       method: 'POST',
-      success: function (res) {
+      success: function(res) {
         let data = res.data
         if (!data.errcode) {
           if (orderType == 'cart') {
@@ -455,7 +475,7 @@ Page({
           setTimeout(() => {
             wx.reLaunch({
               url: '/pages/order/order',
-              success: function (e) {
+              success: function(e) {
                 // wx.setStorageSync('targetTab', 'order')
               }
             })
@@ -468,7 +488,7 @@ Page({
           })
         }
       },
-      fail: function (error) {
+      fail: function(error) {
         console.log('error', error)
       }
     })
@@ -484,11 +504,11 @@ Page({
         'content-type': 'application/json'
       },
       method: 'POST',
-      success: function (res) {
+      success: function(res) {
         let data = res.data
-        if (!data.errcode) { } else { }
+        if (!data.errcode) {} else {}
       },
-      fail: function (error) {
+      fail: function(error) {
         console.log('DelCart Error:', error)
       }
     })

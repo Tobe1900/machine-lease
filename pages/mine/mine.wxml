@@ -25,6 +25,18 @@
       </view>
     </view>
   </view>
+  <view class="news-item-container" bindtap="goToBaidu">
+    <view class="news-item">
+      <view class="news-item-left">
+        <image src="../../icons/coupon.png" class="news-image" />
+        <text class="news-item-title">测试跳转外部网页</text>
+      </view>
+      <view class="news-item-right">
+        <image src="../../icons/arrow.png" class="news-image-right" />
+      </view>
+    </view>
+  </view>
+
   <!-- <view class="news-item-container" bindtap="goToMyCards">
     <view class="news-item">
       <view class="news-item-left">

@@ -30,6 +30,7 @@ Page({
       app.userLogin().then(res => {
         if (!res.errcode) {
           this.queryProduct()
+          this.getIdentifyInfo()
           this.setData({
             isAuth: wx.getStorageSync("isAuth")
           })
@@ -37,6 +38,7 @@ Page({
       })
     } else {
       this.queryProduct()
+      this.getIdentifyInfo()
       this.setData({
         isAuth: wx.getStorageSync("isAuth")
       })
@@ -50,6 +52,30 @@ Page({
       url: '../mine/auth/auth',
     })
   },
+
+  // 获取实名认证状态
+  getIdentifyInfo: function() {
+    wx.request({
+      url: config.requestUrl + 'getIdentifyInfo',
+      data: {
+        token: wx.getStorageSync('token')
+      },
+      header: {
+        'content-type': 'application/json'
+      },
+      method: 'POST',
+      success: function(res) {
+        if(res.statusCode == 200) {
+          let identifyInfo = res.data
+          wx.setStorageSync('identifyInfo', JSON.stringify(identifyInfo))
+        }
+      },
+      fail: function(error) {
+        console.log('error', error)
+      }
+    })
+  },
+
   setUserLocation() {
     let _this = this
     wx.getSetting({

@@ -7,35 +7,46 @@ Page({
     isUserLogin: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     default_avatarUrl: '../../icons/default_avatar.jpg',
-    isAuth:false
+    // isAuth: false,
+    pAuthStatus: 0,
   },
   onLoad: function() {
     let userInfo = wx.getStorageSync('userInfo') || null
-    let isAuth = wx.getStorageSync("isAuth")
     if (userInfo || app.globalData.userInfo) {
       this.setData({
         userInfo: userInfo || app.globalData.userInfo,
         isUserLogin: true
       })
     }
-    this.setData({
-      isAuth
-    })
+    if (wx.getStorageSync('identifyInfo')) {
+      let identifyInfo = JSON.parse(wx.getStorageSync('identifyInfo'))
+      let pAuthStatus = identifyInfo.pAuthStatus
+      this.setData({
+        pAuthStatus
+      })
+    }
+
+    // let isAuth = wx.getStorageSync("isAuth")
+
+
+    // this.setData({
+    //   isAuth
+    // })
   },
   setPersonalAuth: function() {
     // if (!this.data.isUserLogin) {
     //   this.showDialog()
     //   return
     // }
-    let isAuth = this.data.isAuth
-    if(isAuth){
+    let pAuthStatus = this.data.pAuthStatus
+    if (pAuthStatus == 2) {
       return
     }
     wx.navigateTo({
       url: './auth/auth',
     })
   },
-  loginOrRegist(){
+  loginOrRegist() {
     if (!this.data.isUserLogin) {
       this.showDialog()
     }
@@ -66,20 +77,20 @@ Page({
       }
     })
   },
-  onReady: function () {
+  onReady: function() {
     //获得dialog组件
     this.dialog = this.selectComponent("#dialog");
   },
 
-  showDialog: function () {
+  showDialog: function() {
     this.dialog.showDialog();
   },
 
-  confirmEvent: function () {
+  confirmEvent: function() {
     this.dialog.hideDialog();
   },
 
-  bindGetUserInfo: function () {
+  bindGetUserInfo: function() {
     // 用户点击授权后，这里可以做一些操作
     this.getUserInfo();
   },

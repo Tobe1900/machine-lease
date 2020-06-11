@@ -1,25 +1,34 @@
 <view class="container">
   <form bindsubmit="formSubmit" bindreset="formReset">
-    <view class="big-logos">
-      <image class="img" id="front" mode="aspectFit" bindtap="upimg" src='{{front ? front:default_front}}'></image>
+    <view wx:if="{{pAuthStatus === 0}}">
+      <view class="big-logos">
+        <image class="img" id="front" mode="aspectFit" bindtap="upimg" src='{{front ? front:default_front}}'></image>
+      </view>
+      <view class="tip">
+        为了提高识别率,请尽量保证照片完整清晰
+      </view>
     </view>
     <!-- <view class="big-logos">
       <image class="img" id="back" mode="aspectFit" bindtap="upimg" src='{{back ? back:default_back}}'></image>
-    </view>
+    </view> -->
     <view class="form-wrapper top">
       <label class="label">姓名:</label>
-      <label class="input">{{name}}</label>
+      <input class="name-input" value="{{name}}" bindinput='handleName' />
+      <!-- <label class="input">{{name}}</label> -->
     </view>
 
     <view class="form-wrapper">
       <label class="label">身份证号:</label>
-      <label class="input">{{idCode}}</label>
+      <label class="value">{{idCode}}</label>
     </view>
-    <button formType="submit" class="btn">确定提交</button> -->
+    <view class="form-wrapper">
+      <label class="label">地址:</label>
+      <label class="address">{{address}}</label>
+    </view>
+
+    <button formType="submit" class="btn">提交实名信息</button>
   </form>
-  <view class="tip">
-    为了增加认证通过率,请尽量保证照片完整清晰
-  </view>
+
   <!-- <ocr-navigator bind:onSuccess="success" certificateType="idCard" selectedOptions="{{['id','name']}}">
   <button class="btn">身份证识别</button>
 </ocr-navigator> -->

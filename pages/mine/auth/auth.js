@@ -22,7 +22,7 @@ Page({
   upload: function (img_file) {
     var that = this
       wx.uploadFile({
-        url: config.requestUrl + 'authName',
+        url: config.requestUrl + 'recognIdentity',
         filePath: img_file,
         header:{
           'content-type':'multipart/form-data'
@@ -33,6 +33,7 @@ Page({
           token: wx.getStorageSync('token'),
         },
         success: function (res) {
+          console.log('res', res)
           let data = res.data
           if (!!data && !data.errcode) {
             wx.showToast({
@@ -40,9 +41,9 @@ Page({
               duration: 3000
             });
             wx.setStorageSync("isAuth", true)
-            wx.navigateBack({
-              delta:1
-            })
+            // wx.navigateBack({
+            //   delta:1
+            // })
           } else {
             wx.showModal({
               title: '提示',

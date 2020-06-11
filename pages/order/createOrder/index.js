@@ -59,11 +59,13 @@ Page({
     },
     radioList: [{
         label: '是',
-        checked: false
+        checked: false,
+        value: true
       },
       {
         label: '否',
-        checked: false
+        checked: false,
+        value: false
       },
     ]
   },
@@ -413,7 +415,8 @@ Page({
       rent,
       day,
       isAuth,
-      orderType
+      orderType,
+      radioList
     } = this.data
     let beginTime = new Date().getFullYear() + '-' + convertDate(this.data.selectedDate) + ' ' + convertTime(this.data.selectedTime)
     if (address == '') {
@@ -428,6 +431,12 @@ Page({
         icon: 'none',
         duration: 2000
       })
+    } else if (radioList.filter(item => item.checked).length == 0) {
+      return wx.showToast({
+        title: '请选择是否为涂料作业',
+        icon: 'none',
+        duration: 2000
+      })
     }
     let formData = {
       token: wx.getStorageSync('token'),
@@ -435,7 +444,8 @@ Page({
       products: products,
       days: Number(day),
       addressDesc,
-      beginTime
+      beginTime,
+      isPaintJob: (radioList.filter(item => item.checked))[0].value
     }
     wx.request({
       url: config.requestUrl + 'createOrder',

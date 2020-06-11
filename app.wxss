@@ -28,6 +28,6 @@
 .app_container {
   position: absolute;
   top: 0;
-  bottom: -200px;
+  bottom: -240px;
   width: 100%;
 }

@@ -61,9 +61,18 @@ Page({
          if(res.statusCode == 200) {
            let data = res.data
            if(data.url) {
+             let signUrl = encodeURIComponent(data.url)
                wx.navigateTo({
-                 url: '/pages/signPage/signPage?externalUrl=' + data.url,
+                 url: '/pages/signPage/signPage?externalUrl=' + signUrl,
                })
+           } else {
+             if (data.errcode && data.errmsg) {
+                wx.showToast({
+                  title: data.errmsg,
+                  icon: 'none',
+                  duration: 2000
+                })
+              }
            }
          }
       },

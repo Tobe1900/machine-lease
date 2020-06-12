@@ -45,7 +45,7 @@
           </view>
         </view>
         <view class="description" class="order_item_btn">
-          <button plain="true" size="mini" catchtap="handleAuth" wx-if="{{!isAuth && item.status == '0'}}">去认证</button>
+          <button plain="true" size="mini" catchtap="handleAuth" wx-if="{{pAuthStatus !=2 && item.status == '0'}}">去认证</button>
           <button plain="true" size="mini" wx-if="{{item.status == '1'}}">签约</button>
           <button plain="true" size="mini" wx-if="{{item.status == '2'}}">支付</button>
         </view>

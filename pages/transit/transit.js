@@ -1,18 +1,35 @@
-// pages/baiduPage/baiduPage.js
+// pages/transit/transit.js
 Page({
+
   /**
    * 页面的初始数据
    */
   data: {
-    externalUrl: ''
+    count: 3,
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    let externalUrl = decodeURIComponent(options.externalUrl)
-    this.setData({externalUrl})
+    let _this = this
+    let timer = setInterval(function() {
+      let count = _this.data.count
+      count = count - 1
+      _this.setData({
+        count
+      })
+      if (count == 0) {
+        clearInterval(timer)
+        timer = null
+      }
+    }, 1000)
+
+    setTimeout(function() {
+      wx.reLaunch({
+        url: '/pages/order/order',
+      })
+    }, 3000)
   },
 
   /**

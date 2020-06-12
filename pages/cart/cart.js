@@ -145,7 +145,7 @@ Page({
             })
           } else {
             _this.setData({
-              noRecordsText: '您的购物车空空如也，快去首页选购吧！'
+              noRecordsText: '您的购物车空空如也，快去首页选购吧！'
             })
           }
         } else {

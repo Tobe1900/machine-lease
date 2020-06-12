@@ -18,7 +18,7 @@ const queryOrder = (self, page, type) => {
       'content-type': 'application/json'
     },
     method: 'POST',
-    success: function (res) {
+    success: function(res) {
       let {
         data
       } = res
@@ -39,11 +39,11 @@ const queryOrder = (self, page, type) => {
             Object.assign({}, {
               ...data[i]
             }, {
-                time: formatTime(data[i].time, 'yyyy-MM-dd hh:mm'),
-                beginTime: handleDate(data[i].beginTime),
-                products: tmpProducts,
-                agreementImg: data[i].agreementImage || self.data.agreementImage
-              })
+              time: formatTime(data[i].time, 'yyyy-MM-dd hh:mm'),
+              beginTime: handleDate(data[i].beginTime),
+              products: tmpProducts,
+              agreementImg: data[i].agreementImage || self.data.agreementImage
+            })
           )
         }
         if (page === 1 && data.length < 10) {
@@ -77,13 +77,13 @@ const queryOrder = (self, page, type) => {
       }
       wx.hideLoading()
     },
-    fail: function (error) {
+    fail: function(error) {
       wx.showModal({
         title: '提示',
         content: error,
       })
     },
-    complete: function () {
+    complete: function() {
       // wx.hideLoading()
     }
   })
@@ -91,13 +91,14 @@ const queryOrder = (self, page, type) => {
 
 Page({
   data: {
-    isAuth: false,
+    // isAuth: false,
+    pAuthStatus: 0,
     orderList: [],
     page: 1,
     type: '',
     hasRecords: false,
     scrollTop: 0,
-    hasScroll:false,
+    hasScroll: false,
     scrollHeight: 0,
     locked: false,
     bottomInVisiable: true,
@@ -106,42 +107,52 @@ Page({
     noOrderIcon: '../../icons/no_order.png',
     agreementImage: '../../../icons/agreement.png', // 模拟协议图片 后期可删除
     tabs: [{
-      title: "全部",
-      value: ""
-    },
-    {
-      title: "待审核",
-      value: "0"
-    },
-    {
-      title: "待签约",
-      value: "1"
-    },
-    {
-      title: "待支付",
-      value: "2"
-    },
-    {
-      title: "已支付",
-      value: "3"
-    },
-    {
-      title: "已取消",
-      value: "4"
-    }
+        title: "全部",
+        value: ""
+      },
+      {
+        title: "待审核",
+        value: "0"
+      },
+      {
+        title: "待签约",
+        value: "1"
+      },
+      {
+        title: "待支付",
+        value: "2"
+      },
+      {
+        title: "已支付",
+        value: "3"
+      },
+      {
+        title: "已取消",
+        value: "4"
+      }
     ],
   },
-  onLoad: function (options) {
+  onLoad: function(options) {
     wx.showLoading({
       title: '加载数据中...',
     })
     let _this = this;
-    const isAuth = wx.getStorageSync("isAuth")
-    _this.setData({
-      isAuth
-    })
+
+    if (wx.getStorageSync('identifyInfo')) {
+      let identifyInfo = JSON.parse(wx.getStorageSync('identifyInfo'))
+      let pAuthStatus = identifyInfo.pAuthStatus
+      _this.setData({
+        pAuthStatus
+      })
+    }
+
+    // const isAuth = wx.getStorageSync("isAuth")
+    // _this.setData({
+    //   isAuth
+    // })
+
     wx.getSystemInfo({
-      success: function (res) {
+      success: function(res) {
         console.info(res.windowHeight);
         _this.setData({
           scrollHeight: res.windowHeight - 40,
@@ -167,8 +178,8 @@ Page({
   //     wx.removeStorageSync('targetTab')
   //   }, 200)
   // },
-  scroll(e){
-    if(e.detail.scrollTop > 0){
+  scroll(e) {
+    if (e.detail.scrollTop > 0) {
       this.setData({
         hasScroll: true
       })
@@ -182,7 +193,10 @@ Page({
     // wx.showLoading({
     //   title: '加载数据中...',
     // })
-    let { index, status } = e.currentTarget.dataset
+    let {
+      index,
+      status
+    } = e.currentTarget.dataset
     let selectedIndex = this.data.selectedIndex
     if (index !== selectedIndex) {
       wx.showLoading({
@@ -195,7 +209,7 @@ Page({
         hasRecords: false,
         orderList: []
       })
-      if(this.data.hasScroll){
+      if (this.data.hasScroll) {
         return
       }
       queryOrder(this, 1, status)
@@ -225,7 +239,7 @@ Page({
       _this.setData({
         locked: true
       })
-      setTimeout(function () {
+      setTimeout(function() {
         _this.setData({
           locked: false,
           orderList: []
@@ -250,7 +264,7 @@ Page({
         _this.setData({
           locked: true
         })
-        setTimeout(function () {
+        setTimeout(function() {
           queryOrder(_this, currentPage, _this.data.type);
           _this.setData({
             bottomInVisiable: true,

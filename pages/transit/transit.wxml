@@ -1,0 +1,8 @@
+<view class="count_wrapper">
+  <view>
+    <text>正在等待处理......</text>
+  </view>
+  <view class="count">
+    <text class="count_text">{{count}}s</text>
+  </view>
+</view>

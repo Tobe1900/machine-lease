@@ -31,7 +31,7 @@
     </view>
   </view>
 
-  <!-- <view class="news-item-container" bindtap="goToBaidu">
+  <!-- <view class="news-item-container" bindtap="goToSignUrl">
     <view class="news-item">
       <view class="news-item-left">
         <image src="../../icons/coupon.png" class="news-image" />

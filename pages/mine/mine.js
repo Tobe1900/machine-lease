@@ -95,9 +95,12 @@ Page({
     this.getUserInfo();
   },
 
-  goToSignUrl: function() {
-    wx.navigateTo({
-      url: '/pages/signPage/signPage?externalUrl=' + 'https://www.baidu.com',
-    })
-  }
+  // goToSignUrl: function() {
+  //   // wx.navigateTo({
+  //   //   url: '/pages/signPage/signPage?externalUrl=' + 'https://www.m-th.cn/orchid/test/',
+  //   // })
+  //   wx.navigateTo({
+  //     url: '/pages/transit/transit',
+  //   })
+  // }
 })

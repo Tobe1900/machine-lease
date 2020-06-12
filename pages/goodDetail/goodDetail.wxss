@@ -37,7 +37,7 @@ page {
 
 .swiper-item {
   display: block;
-  height: 300px;
+  height: 350px;
 }
 
 .slide {

@@ -28,7 +28,7 @@
 .app_container {
   position: absolute;
   top: 0;
-  bottom: -300px;
+  bottom: -360px;
   width: 100%;
 }
 

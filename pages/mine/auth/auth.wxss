@@ -99,3 +99,16 @@
   height: 40px;
   line-height: 40px;
 }
+
+.sms-input {
+  flex: 2;
+  height: 75rpx;
+  line-height: 75rpx;
+  border: 1px solid #dedede;
+}
+
+.resend-btn {
+  flex: 1;
+  height: 75rpx;
+  line-height: 75rpx;
+}

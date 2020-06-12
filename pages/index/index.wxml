@@ -3,7 +3,7 @@
   <!-- <dialogCom id='phone_dialog' isPhone="true" title='提示' content='【及时到】需要您授权以获取手机号码' confirmText='授权' bind:confirmEvent='confirmEvent' bind:getPhoneNumber='getPhoneNumber'>
   </dialogCom> -->
   <view class="slideContainer">
-    <view style="display:flex;flex-direction:row" wx:if="{{!isAuth}}">
+    <view style="display:flex;flex-direction:row" wx:if="{{pAuthStatus != 2}}">
       <text class="message">{{message}}</text>
       <button class="authBtn" catchtap="handleAuth">立即实名</button>
     </view>

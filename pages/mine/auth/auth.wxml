@@ -25,6 +25,24 @@
       <label class="label">地址:</label>
       <label class="address">{{address}}</label>
     </view>
+    <modalComp id="smsCodeDialog">
+      <view slot="title">
+        <view style="display:flex;flex-direction:row">
+          <text style="flex:3;padding-left:20px;">请输入手机收到的短信验证码</text>
+          <view class="close_svg" bindtap="hideSmsCodeDialogDialog">
+          </view>
+        </view>
+      </view>
+      <view slot="content">
+        <view style="display:flex;flex-direction:row;margin-bottom:20rpx;">
+          <input class="sms-input" type="number" value="{{smsCode}}" bindinput="bindKeyInput" placeholder="请输入验证码" />
+          <button class="resend-btn" catchtap="resendSms">重新发送</button>
+        </view>
+      </view>
+      <view slot="footer" class="confirm_btn_container">
+        <button class="confirm_btn" catchtap="handleAuthPerson">确认</button>
+      </view>
+    </modalComp>
 
     <button formType="submit" class="btn">提交实名信息</button>
   </form>

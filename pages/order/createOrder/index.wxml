@@ -83,7 +83,7 @@
       </view>
     </view>
   </view>
-  <useDaysCom id="useDaysDialog">
+  <modalComp id="useDaysDialog">
     <view slot="title">
       <view style="display:flex;flex-direction:row">
         <text style="flex:3;padding-left:20px;">请选择用车天数</text>
@@ -100,8 +100,8 @@
     <view slot="footer" class="confirm_btn_container">
       <button class="confirm_btn" catchtap="confirmDay">确认</button>
     </view>
-  </useDaysCom>
-  <useDaysCom id="rentRuleDialog">
+  </modalComp>
+  <modalComp id="rentRuleDialog">
     <view slot="title">
       <view style="display:flex;flex-direction:row">
         <text style="flex:3;padding-left:20px;">租金计算规则</text>
@@ -117,5 +117,5 @@
         <text>2.少于30天，租金=天租价×天数(如果超过月租价，只收取月租价)</text>
       </view>
     </view>
-  </useDaysCom>
+  </modalComp>
 </view>

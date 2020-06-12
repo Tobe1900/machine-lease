@@ -95,9 +95,9 @@ Page({
     this.getUserInfo();
   },
 
-  goToBaidu: function() {
+  goToSignUrl: function() {
     wx.navigateTo({
-      url: '/pages/baiduPage/baiduPage?externalUrl=' + 'https://www.baidu.com',
+      url: '/pages/signPage/signPage?externalUrl=' + 'https://www.baidu.com',
     })
   }
 })

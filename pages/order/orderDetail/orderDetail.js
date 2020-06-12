@@ -38,12 +38,40 @@ Page({
 
   navigateToSign(e) {
     // 跳转签名
-    console.log(e.currentTarget)
-    let agreementImg = e.currentTarget.dataset.agreementimg
+    // console.log(e.currentTarget)
+    // let agreementImg = e.currentTarget.dataset.agreementimg
+    // let orderid = e.currentTarget.dataset.orderid
+    // wx.navigateTo({
+    //   url: '../userSign/userSign?agreementimg=' + agreementImg + '&orderid=' + orderid
+    // })
+    
     let orderid = e.currentTarget.dataset.orderid
-    wx.navigateTo({
-      url: '../userSign/userSign?agreementimg=' + agreementImg + '&orderid=' + orderid
+    wx.request({
+      url: config.requestUrl + 'sign',
+      data: {
+        token: wx.getStorageSync('token'),
+        orderId: orderid
+      },
+      method: 'POST',
+      header: {
+        'content-type': 'application/json'
+      },
+      success:function(res) {
+         console.log('res', res)
+         if(res.statusCode == 200) {
+           let data = res.data
+           if(data.url) {
+               wx.navigateTo({
+                 url: '/pages/signPage/signPage?externalUrl=' + data.url,
+               })
+           }
+         }
+      },
+      fail:function(error){
+        console.log('sign error', error)
+      }
     })
+
   },
   payOrder(e) {
     let orderId = e.currentTarget.dataset.orderid

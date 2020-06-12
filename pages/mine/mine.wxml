@@ -20,13 +20,18 @@
         <text class="news-item-title">实名认证</text>
       </view>
       <view class="news-item-right">
-        <view wx:if="{{pAuthStatus === 0}}">未实名<image src="../../icons/arrow.png" class="news-image-right" /></view>
-        <view wx:elif="{{pAuthStatus === 1}}">实名中<image src="../../icons/arrow.png" class="news-image-right" /></view>
+        <view wx:if="{{pAuthStatus === 0}}">未实名
+          <image src="../../icons/arrow.png" class="news-image-right" />
+        </view>
+        <view wx:elif="{{pAuthStatus === 1}}">实名中
+          <image src="../../icons/arrow.png" class="news-image-right" />
+        </view>
         <text style="color: #888;margin-right: 10px;" wx:elif="{{pAuthStatus === 2}}">已实名</text>
       </view>
     </view>
   </view>
-  <view class="news-item-container" bindtap="goToBaidu">
+
+  <!-- <view class="news-item-container" bindtap="goToBaidu">
     <view class="news-item">
       <view class="news-item-left">
         <image src="../../icons/coupon.png" class="news-image" />
@@ -36,7 +41,7 @@
         <image src="../../icons/arrow.png" class="news-image-right" />
       </view>
     </view>
-  </view>
+  </view> -->
 
   <!-- <view class="news-item-container" bindtap="goToMyCards">
     <view class="news-item">

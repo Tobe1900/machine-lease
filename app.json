@@ -13,7 +13,7 @@
     "pages/order/userSign/userSign",
     "pages/order/orderDetail/orderDetail",
     "pages/order/searchAddress/searchAddress",
-    "pages/baiduPage/baiduPage"
+    "pages/signPage/signPage"
   ],
   "permission": {
     "scope.userLocation": {

@@ -15,6 +15,7 @@ Page({
     slideImg: '../../icons/slide.jpg',
     goods: [],
     isAuth: false,
+    pAuthStatus: 0,
     message: '为了您的账号安全，请尽快完成实名认证！'
   },
   onShow() {
@@ -31,17 +32,17 @@ Page({
         if (!res.errcode) {
           this.queryProduct()
           this.getIdentifyInfo()
-          this.setData({
-            isAuth: wx.getStorageSync("isAuth")
-          })
+          // this.setData({
+          //   isAuth: wx.getStorageSync("isAuth")
+          // })
         }
       })
     } else {
       this.queryProduct()
       this.getIdentifyInfo()
-      this.setData({
-        isAuth: wx.getStorageSync("isAuth")
-      })
+      // this.setData({
+      //   isAuth: wx.getStorageSync("isAuth")
+      // })
     }
   },
   onLoad: function() {
@@ -55,6 +56,7 @@ Page({
 
   // 获取实名认证状态
   getIdentifyInfo: function() {
+    let _this = this
     wx.request({
       url: config.requestUrl + 'getIdentifyInfo',
       data: {
@@ -67,6 +69,9 @@ Page({
       success: function(res) {
         if(res.statusCode == 200) {
           let identifyInfo = res.data
+          _this.setData({
+            pAuthStatus: identifyInfo.pAuthStatus
+          })
           wx.setStorageSync('identifyInfo', JSON.stringify(identifyInfo))
         }
       },

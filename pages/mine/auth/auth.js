@@ -13,6 +13,11 @@ Page({
     back: null,
     formData: '',
     pAuthStatus: 0,
+    smsCode: '',
+  },
+  onReady: function() {
+    //获得dialog组件
+    this.smsCodeDialog = this.selectComponent("#smsCodeDialog");
   },
   onLoad: function() {
     // 页面加载时调用
@@ -30,7 +35,87 @@ Page({
         })
       }
     }
-
+  },
+  hideSmsCodeDialogDialog() {
+    this.smsCodeDialog.hide()
+  },
+  showSmsCodeDialogDialog() {
+    this.smsCodeDialog.show()
+  },
+  resendSms: function() {
+    wx.request({
+      url: config.requestUrl + 'authPerson',
+      data: {
+        token: wx.getStorageSync('token'),
+        smsCode
+      },
+      header: {
+        'content-type': 'application/json'
+      },
+      method: 'POST',
+      success: function(res) {
+        let data = res.data
+        if (!data.errcode) {
+          wx.showToast({
+            title: '已重发,注意查收',
+            duration: 1500
+          })
+        }
+      },
+      fail: function(error) {
+        console.log('Error:', error)
+      }
+    })
+  },
+  handleAuthPerson: function() {
+    let _this = this
+    let {
+      smsCode
+    } = this.data
+    if (smsCode == '') {
+      return wx.showToast({
+        title: '请输入验证码',
+        icon: 'none',
+        duration: 1500
+      });
+    }
+    wx.request({
+      url: config.requestUrl + 'authPerson',
+      data: {
+        token: wx.getStorageSync('token'),
+        smsCode
+      },
+      header: {
+        'content-type': 'application/json'
+      },
+      method: 'POST',
+      success: function(res) {
+        let data = res.data
+        if (!data.errcode) {
+          wx.showToast({
+            title: '认证成功',
+            duration: 1500
+          })
+          _this.hideSmsCodeDialogDialog()
+          wx.navigateBack({
+            delta: 1
+          })
+        } else {
+          wx.showModal({
+            title: '提示',
+            content: data.errmsg,
+          })
+        }
+      },
+      fail: function(error) {
+        console.log('Error:', error)
+      }
+    })
+  },
+  bindKeyInput(e) {
+    this.setData({
+      smsCode: e.detail.value
+    })
   },
   handleName: function(e) {
     this.setData({
@@ -38,6 +123,7 @@ Page({
     })
   },
   formSubmit: function(e) {
+    let _this = this
     let {
       name,
       idCode,
@@ -62,7 +148,6 @@ Page({
       content: '请确认身份信息识别无误，如发现姓名识别错误，可手动修改！',
       success(res) {
         if (res.confirm) {
-          console.log('用户点击确定')
           wx.request({
             url: config.requestUrl + 'reqPersonAuth',
             data: params,
@@ -71,7 +156,16 @@ Page({
             },
             method: 'POST',
             success: function(res) {
+              let data = res.data
               console.log('res', res)
+              if (!data.errcode) {
+                _this.showSmsCodeDialogDialog()
+              } else {
+                wx.showModal({
+                  title: '提示',
+                  content: data.errmsg,
+                })
+              }
             },
             fail: function(error) {
               wx.showModal({

@@ -25,10 +25,8 @@ App({
     //           if (!data.errcode) {
     //             _this.globalData.token = data.token
     //             _this.globalData.havePhone = data.havePhone
-    //             _this.globalData.isAuth = data.isAuth
     //             wx.setStorageSync('token', data.token)
     //             wx.setStorageSync('havePhone', data.havePhone)
-    //             wx.setStorageSync('isAuth', data.isAuth)
     //           } else {
     //             wx.showToast({
     //               title: data.errmsg,
@@ -67,10 +65,8 @@ App({
                if (!data.errcode) {
                  _this.globalData.token = data.token
                  _this.globalData.havePhone = data.havePhone
-                 _this.globalData.isAuth = data.isAuth
                  wx.setStorageSync('token', data.token)
                  wx.setStorageSync('havePhone', data.havePhone)
-                 wx.setStorageSync('isAuth', data.isAuth)
                  resolve(data)
                } else {
                  wx.showToast({
@@ -102,7 +98,6 @@ App({
     city: '',
     hasLogin: false,
     token: '',
-    hasPhone: false,
-    isAuth: false
+    hasPhone: false
   }
 })

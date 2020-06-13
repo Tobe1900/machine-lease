@@ -101,10 +101,10 @@
 }
 
 .sms-input {
-  flex: 2;
+  flex: 3;
   height: 75rpx;
   line-height: 75rpx;
-  border: 1px solid #dedede;
+  border-bottom: 1px solid #555;
 }
 
 .resend-btn {

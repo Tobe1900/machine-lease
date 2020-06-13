@@ -3,6 +3,9 @@ import {
   formatTime,
   handleDate
 } from '../../utils/util.js'
+import {
+  getIdentifyInfo
+} from '../../api/index.js'
 const queryOrder = (self, page, type) => {
   let params = {
     token: wx.getStorageSync('token'),
@@ -91,7 +94,6 @@ const queryOrder = (self, page, type) => {
 
 Page({
   data: {
-    // isAuth: false,
     pAuthStatus: 0,
     orderList: [],
     page: 1,
@@ -137,20 +139,7 @@ Page({
       title: '加载数据中...',
     })
     let _this = this;
-
-    if (wx.getStorageSync('identifyInfo')) {
-      let identifyInfo = JSON.parse(wx.getStorageSync('identifyInfo'))
-      let pAuthStatus = identifyInfo.pAuthStatus
-      _this.setData({
-        pAuthStatus
-      })
-    }
-
-    // const isAuth = wx.getStorageSync("isAuth")
-    // _this.setData({
-    //   isAuth
-    // })
-
+    getIdentifyInfo(_this)
     wx.getSystemInfo({
       success: function(res) {
         console.info(res.windowHeight);

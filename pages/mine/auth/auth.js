@@ -1,4 +1,7 @@
 import config from '../../../config/index.js'
+import {
+  getIdentifyInfo
+} from '../../../api/index.js'
 const app = getApp()
 
 Page({
@@ -14,27 +17,25 @@ Page({
     formData: '',
     pAuthStatus: 0,
     smsCode: '',
+    countdown: 60,
+    timer: null
   },
   onReady: function() {
     //获得dialog组件
     this.smsCodeDialog = this.selectComponent("#smsCodeDialog");
   },
   onLoad: function() {
+    let _this = this
     // 页面加载时调用
-    if (wx.getStorageSync('identifyInfo')) {
-      let identifyInfo = JSON.parse(wx.getStorageSync('identifyInfo'))
-      let pAuthStatus = identifyInfo.pAuthStatus
-      this.setData({
-        pAuthStatus
-      })
-      if (pAuthStatus == 1) {
-        this.setData({
+    getIdentifyInfo(_this, identifyInfo => {
+      if (identifyInfo.pAuthStatus == 1) {
+        _this.setData({
           name: identifyInfo.name,
           idCode: identifyInfo.idCode,
           address: identifyInfo.address
         })
       }
-    }
+    })
   },
   hideSmsCodeDialogDialog() {
     this.smsCodeDialog.hide()
@@ -42,12 +43,46 @@ Page({
   showSmsCodeDialogDialog() {
     this.smsCodeDialog.show()
   },
+
+  openTimer() {
+    let _this = this
+    if (_this.timer) {
+      clearInterval(this.timer)
+      _this.setData({
+        timer: null,
+        countdown: 60
+      })
+    }
+    let timer = setInterval(function() {
+      let countdown = _this.data.countdown
+      countdown = countdown - 1
+      _this.setData({
+        countdown
+      })
+      if (countdown == 1) {
+        clearInterval(timer)
+        _this.setData({
+          timer: null,
+          countdown: 60
+        })
+      }
+    }, 1000)
+    _this.setData({
+      timer
+    })
+
+  },
+
+  // clearTimer() {
+
+  // },
+
   resendSms: function() {
+    this.openTimer()
     wx.request({
-      url: config.requestUrl + 'authPerson',
+      url: config.requestUrl + 'resendSms',
       data: {
-        token: wx.getStorageSync('token'),
-        smsCode
+        token: wx.getStorageSync('token')
       },
       header: {
         'content-type': 'application/json'
@@ -56,10 +91,10 @@ Page({
       success: function(res) {
         let data = res.data
         if (!data.errcode) {
-          wx.showToast({
-            title: '已重发,注意查收',
-            duration: 1500
-          })
+          // wx.showToast({
+          //   title: '已重发,注意查收',
+          //   duration: 1500
+          // })
         }
       },
       fail: function(error) {
@@ -160,6 +195,20 @@ Page({
               console.log('res', res)
               if (!data.errcode) {
                 _this.showSmsCodeDialogDialog()
+                _this.openTimer() // 开启定时器
+                // let counter = setInterval(function () {
+                //   let countdown = _this.data.countdown
+                //   countdown = countdown - 1
+                //   _this.setData({
+                //     countdown
+                //   })
+                //   if (countdown == 0) {
+                //     clearInterval(counter)
+                //     counter = null
+                //   }
+                // }, 1000)
+
+
               } else {
                 wx.showModal({
                   title: '提示',
@@ -201,14 +250,13 @@ Page({
         if (!!data && !data.errcode) {
           wx.showToast({
             title: '识别成功',
-            duration: 3000
+            duration: 1500
           });
           that.setData({
             name: data.name,
             idCode: data.idCode,
             address: data.address
           })
-          // wx.setStorageSync("isAuth", true)
           // wx.navigateBack({
           //   delta:1
           // })

@@ -10,7 +10,6 @@ import {
 
 Page({
   data: {
-    isAuth: false,
     orderType: '',
     selectedItems: [],
     startTimeText: '请选择',
@@ -76,13 +75,11 @@ Page({
     this.authDialog = this.selectComponent("#authDialog");
   },
   onLoad: function(option) {
-    const isAuth = wx.getStorageSync("isAuth")
     const selectedItems = JSON.parse(option.selectedItems)
     const orderType = option.orderType
     this.setData({
       selectedItems: selectedItems,
       orderType,
-      isAuth
     })
     this.pickerTap()
   },
@@ -414,7 +411,6 @@ Page({
     let {
       rent,
       day,
-      isAuth,
       orderType,
       radioList
     } = this.data
@@ -461,22 +457,6 @@ Page({
             let productIDs = _this.data.selectedItems.map(item => item.productID)
             _this.deleteCartProduct(productIDs) // 删除购物车中相应商品
           }
-          // if (!isAuth) {
-          //   _this.showAuthDialog()
-          // } else {
-          //   wx.showToast({
-          //     title: '订单提交成功',
-          //     icon: 'success',
-          //     duration: 1000
-          //   });
-          //   // 跳转到订单页面
-          //   wx.switchTab({】 
-          //     url: '/pages/order/order',
-          //     success: function (e) {
-          //       wx.setStorageSync('from', 'createOrder')
-          //     }
-          //   })
-          // }
           wx.showToast({
             title: '订单提交成功',
             icon: 'success',

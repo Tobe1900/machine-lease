@@ -80,7 +80,7 @@ page {
   background-color: #fff;
   padding: 20rpx 30rpx;
   color: #555;
-  font-size:28rpx;
+  font-size: 28rpx;
 }
 
 .amount_container {
@@ -100,13 +100,19 @@ page {
 .amount_container view text:nth-child(1) {
   display: inline-block;
   text-align: left;
-  flex:1;
+  flex: 1;
   font-size: 32rpx;
 }
 
 .amount_container view text:nth-child(2) {
   text-align: right;
   display: inline-block;
-  flex:1;
+  flex: 1;
   font-size: 32rpx;
+}
+
+.bottom_text {
+  font-size: 28rpx;
+  color: #888;
+  padding-top: 24rpx;
 }

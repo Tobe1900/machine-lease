@@ -404,6 +404,16 @@ Page({
         duration: 1500
       })
     }
+
+    if (selectedItems.length > 4) {
+      return wx.showToast({
+        title: '下单时勾选的商品不能超过4种',
+        icon: 'none',
+        duration: 2000
+      })
+    }
+    
+
     if (!havePhone) {
       return this.showDialog()
     }

@@ -72,10 +72,10 @@
   <view class="bottom_container">
     <view class="bottom_label">
       <view>
-        <text>预估</text>
+        <text>租金</text>
         <text style="color:#1296db">￥{{rent}}</text>
       </view>
-      <view style="font-size: 24rpx;color: #888;">最终费用，以实际使用天数为准。</view>
+      <view style="font-size: 28rpx;color: #888;">最终费用，以后台审核为准</view>
     </view>
     <view style="flex:1;display:flex">
       <view class="bottom_btn" bindtap="submitOrder">

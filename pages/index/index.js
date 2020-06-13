@@ -4,7 +4,8 @@ import {
   debounce
 } from '../../utils/util.js';
 import {
-  requestAddCart
+  requestAddCart,
+  getIdentifyInfo
 } from '../../api/index.js'
 import config from '../../config/index.js'
 const qqmapObj = new QQmap()
@@ -14,7 +15,6 @@ Page({
     isUserLogin: false,
     slideImg: '../../icons/slide.jpg',
     goods: [],
-    isAuth: false,
     pAuthStatus: 0,
     message: '为了您的账号安全，请尽快完成实名认证！'
   },
@@ -31,18 +31,12 @@ Page({
       app.userLogin().then(res => {
         if (!res.errcode) {
           this.queryProduct()
-          this.getIdentifyInfo()
-          // this.setData({
-          //   isAuth: wx.getStorageSync("isAuth")
-          // })
+          getIdentifyInfo(this)
         }
       })
     } else {
       this.queryProduct()
-      this.getIdentifyInfo()
-      // this.setData({
-      //   isAuth: wx.getStorageSync("isAuth")
-      // })
+      getIdentifyInfo(this)
     }
   },
   onLoad: function() {
@@ -53,34 +47,7 @@ Page({
       url: '../mine/auth/auth',
     })
   },
-
-  // 获取实名认证状态
-  getIdentifyInfo: function() {
-    let _this = this
-    wx.request({
-      url: config.requestUrl + 'getIdentifyInfo',
-      data: {
-        token: wx.getStorageSync('token')
-      },
-      header: {
-        'content-type': 'application/json'
-      },
-      method: 'POST',
-      success: function(res) {
-        if(res.statusCode == 200) {
-          let identifyInfo = res.data
-          _this.setData({
-            pAuthStatus: identifyInfo.pAuthStatus
-          })
-          wx.setStorageSync('identifyInfo', JSON.stringify(identifyInfo))
-        }
-      },
-      fail: function(error) {
-        console.log('error', error)
-      }
-    })
-  },
-
+  
   setUserLocation() {
     let _this = this
     wx.getSetting({

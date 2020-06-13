@@ -1,13 +1,15 @@
 //获取应用实例
 const app = getApp()
-
+import {
+  requestAddCart,
+  getIdentifyInfo
+} from '../../api/index.js'
 Page({
   data: {
     userInfo: {},
     isUserLogin: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     default_avatarUrl: '../../icons/default_avatar.jpg',
-    // isAuth: false,
     pAuthStatus: 0,
   },
   onLoad: function() {
@@ -18,20 +20,7 @@ Page({
         isUserLogin: true
       })
     }
-    if (wx.getStorageSync('identifyInfo')) {
-      let identifyInfo = JSON.parse(wx.getStorageSync('identifyInfo'))
-      let pAuthStatus = identifyInfo.pAuthStatus
-      this.setData({
-        pAuthStatus
-      })
-    }
-
-    // let isAuth = wx.getStorageSync("isAuth")
-
-
-    // this.setData({
-    //   isAuth
-    // })
+    getIdentifyInfo(this)
   },
   setPersonalAuth: function() {
     // if (!this.data.isUserLogin) {

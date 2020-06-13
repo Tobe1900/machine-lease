@@ -28,15 +28,19 @@
     <modalComp id="smsCodeDialog">
       <view slot="title">
         <view style="display:flex;flex-direction:row">
-          <text style="flex:3;padding-left:20px;">请输入手机收到的短信验证码</text>
+          <text style="flex:3;padding-left:20px;">请输入手机收到的验证码</text>
           <view class="close_svg" bindtap="hideSmsCodeDialogDialog">
           </view>
         </view>
       </view>
       <view slot="content">
-        <view style="display:flex;flex-direction:row;margin-bottom:20rpx;">
+        <view style="display: flex;flex-direction: row;margin-bottom: 20rpx;height: 100rpx;padding-top: 40rpx;">
           <input class="sms-input" type="number" value="{{smsCode}}" bindinput="bindKeyInput" placeholder="请输入验证码" />
-          <button class="resend-btn" catchtap="resendSms">重新发送</button>
+          <view class="resend-btn">
+            <text wx:if="{{!timer}}" catchtap="resendSms" style="color:#1296db">重新发送</text>
+            <text wx:else style="color:#1296db">({{countdown}}s)</text>
+          </view>
+          <!-- <button class="resend-btn" catchtap="resendSms">重新发送</button> -->
         </view>
       </view>
       <view slot="footer" class="confirm_btn_container">

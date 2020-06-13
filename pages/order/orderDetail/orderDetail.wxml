@@ -70,16 +70,16 @@
     <view class="bottom_label" wx:if="{{order.status=='3'}}">
       <view>
         <text>实付款</text>
-        <text style="color:#1296db;font-size:36rpx;padding-left:20rpx;font-weight:600;">￥{{order.rent + order.freight + order.cleanFee}}</text>
+        <text style="color:#1296db;font-size:36rpx;padding-left:20rpx;font-weight:600;">￥{{order.amountTtl}}</text>
       </view>
     </view>
 
     <view class="bottom_label" wx:else>
-      <view>
-        <text>预估</text>
-        <text style="color:#1296db;font-size:36rpx;padding-left:20rpx;font-weight:600;">￥{{order.rent + order.freight + order.cleanFee}}</text>
+      <view wx:if="{{order.amountTtl}}" class="bottom_text">
+        <text>总金额</text>
+        <text style="color:#1296db;font-size:36rpx;padding-left:20rpx;font-weight:600;">￥{{order.amountTtl}}</text>
       </view>
-      <view style="font-size: 24rpx;color: #888;">最终费用，以实际使用天数为准。</view>
+      <view wx:else class="bottom_text">最终费用，以后台审核为准</view>
     </view>
 
     <view style="flex:1;display:flex">

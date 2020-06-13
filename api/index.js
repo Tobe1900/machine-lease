@@ -33,6 +33,35 @@ const requestAddCart = (productID) => {
   })
 }
 
+
+const getIdentifyInfo = (self, callback) => {
+  let _this = self
+  wx.request({
+    url: config.requestUrl + 'getIdentifyInfo',
+    data: {
+      token: wx.getStorageSync('token')
+    },
+    header: {
+      'content-type': 'application/json'
+    },
+    method: 'POST',
+    success: function(res) {
+      if (res.statusCode == 200) {
+        let identifyInfo = res.data
+        _this.setData({
+          pAuthStatus: identifyInfo.pAuthStatus
+        })
+        if (callback) callback(identifyInfo)
+      }
+    },
+    fail: function(error) {
+      console.log('error', error)
+    }
+  })
+}
+
+
 module.exports = {
-  requestAddCart
+  requestAddCart,
+  getIdentifyInfo
 }

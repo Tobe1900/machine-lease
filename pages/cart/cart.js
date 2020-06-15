@@ -1,4 +1,5 @@
 import config from '../../config/index.js'
+import {handleGetPhoneNumber} from '../../api/index.js'
 Page({
   data: {
     cartList: [],
@@ -35,58 +36,61 @@ Page({
     this.dialog.hideDialog();
   },
   getPhoneNumber(event) {
-    let _this = this
-    let {
-      code
-    } = event.detail
-    console.log('code get phonenmumber', code)
-    if (code.iv && code.encryptedData) {
-      // 用户同意授权获取手机号码
-      let {
-        iv,
-        encryptedData
-      } = code
-      wx.request({
-        url: config.requestUrl + 'getPhone',
-        data: {
-          token: wx.getStorageSync('token'),
-          iv,
-          encryptedData
-        },
-        header: {
-          'content-type': 'application/json'
-        },
-        method: 'POST',
-        success: function (res) {
-          let data = res.data
-          if (!data.errcode) {
-            _this.dialog.hideDialog()
-            _this.setData({
-              havePhone:true
-            })
-            wx.setStorageSync("havePhone", true)
-            wx.showToast({
-              title: '手机绑定成功',
-              icon: 'success',
-              duration: 1000
-            });
-          } else {
-            wx.showToast({
-              title: data.errmsg,
-              icon: 'none',
-              duration: 2000
-            })
-          }
-        },
-        fail: function (error) {
-          console.log('error', error)
-        }
-      })
-    } else {
-      // 用户拒绝授权
-      _this.dialog.hideDialog();
-    }
+    handleGetPhoneNumber(event, this, 'dialog')
   },
+  // getPhoneNumber(event) {
+  //   let _this = this
+  //   let {
+  //     code
+  //   } = event.detail
+  //   console.log('code get phonenmumber', code)
+  //   if (code.iv && code.encryptedData) {
+  //     // 用户同意授权获取手机号码
+  //     let {
+  //       iv,
+  //       encryptedData
+  //     } = code
+  //     wx.request({
+  //       url: config.requestUrl + 'getPhone',
+  //       data: {
+  //         token: wx.getStorageSync('token'),
+  //         iv,
+  //         encryptedData
+  //       },
+  //       header: {
+  //         'content-type': 'application/json'
+  //       },
+  //       method: 'POST',
+  //       success: function (res) {
+  //         let data = res.data
+  //         if (!data.errcode) {
+  //           _this.dialog.hideDialog()
+  //           _this.setData({
+  //             havePhone:true
+  //           })
+  //           wx.setStorageSync("havePhone", true)
+  //           wx.showToast({
+  //             title: '手机绑定成功',
+  //             icon: 'success',
+  //             duration: 1000
+  //           });
+  //         } else {
+  //           wx.showToast({
+  //             title: data.errmsg,
+  //             icon: 'none',
+  //             duration: 2000
+  //           })
+  //         }
+  //       },
+  //       fail: function (error) {
+  //         console.log('error', error)
+  //       }
+  //     })
+  //   } else {
+  //     // 用户拒绝授权
+  //     _this.dialog.hideDialog();
+  //   }
+  // },
   getCart() {
     let _this = this
     wx.request({
@@ -412,8 +416,6 @@ Page({
         duration: 2000
       })
     }
-    
-
     if (!havePhone) {
       return this.showDialog()
     }

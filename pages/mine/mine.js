@@ -20,6 +20,8 @@ Page({
         isUserLogin: true
       })
     }
+  },
+  onShow: function(){
     getIdentifyInfo(this)
   },
   setPersonalAuth: function() {

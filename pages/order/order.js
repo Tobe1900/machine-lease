@@ -139,7 +139,6 @@ Page({
       title: '加载数据中...',
     })
     let _this = this;
-    getIdentifyInfo(_this)
     wx.getSystemInfo({
       success: function(res) {
         console.info(res.windowHeight);
@@ -151,6 +150,11 @@ Page({
     });
     queryOrder(this, this.data.page, this.data.type)
   },
+  
+  onShow:function() {
+    getIdentifyInfo(this)
+  },
+
   // onShow: function () {
   //   setTimeout(() => {
   //     let targetTab = wx.getStorageSync('targetTab')

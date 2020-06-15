@@ -1,6 +1,7 @@
 import config from '../../../config/index.js'
 import {
-  getIdentifyInfo
+  getIdentifyInfo,
+  handleGetPhoneNumber
 } from '../../../api/index.js'
 const app = getApp()
 
@@ -21,8 +22,7 @@ Page({
     timer: null
   },
   onReady: function() {
-    //获得dialog组件
-    this.smsCodeDialog = this.selectComponent("#smsCodeDialog");
+    this.smsCodeDialog = this.selectComponent("#smsCodeDialog"); //获得dialog组件以获得验证码
   },
   onLoad: function() {
     let _this = this
@@ -36,6 +36,11 @@ Page({
         })
       }
     })
+    this.phoneDialog = this.selectComponent("#phoneDialog"); //设置dialog组件以获得手机号码
+    let havePhone = wx.getStorageSync("havePhone")
+    if (!havePhone) {
+      return this.phoneDialog.showDialog()
+    }
   },
   hideSmsCodeDialogDialog() {
     this.smsCodeDialog.hide()
@@ -44,6 +49,15 @@ Page({
     this.smsCodeDialog.show()
   },
 
+  confirmEvent() {
+    this.phoneDialog.hideDialog();
+    wx.navigateBack({
+      delta: 1
+    })
+  },
+  getPhoneNumber(event) {
+    handleGetPhoneNumber(event, this, 'phoneDialog')
+  },
   openTimer() {
     let _this = this
     if (_this.timer) {
@@ -207,8 +221,6 @@ Page({
                 //     counter = null
                 //   }
                 // }, 1000)
-
-
               } else {
                 wx.showModal({
                   title: '提示',
@@ -263,7 +275,7 @@ Page({
         } else {
           wx.showModal({
             title: '提示',
-            content: data.errmsg,
+            content: data.errcode + data.errmsg,
           })
         }
       }

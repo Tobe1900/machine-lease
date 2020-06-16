@@ -64,9 +64,7 @@ App({
                let data = res.data
                if (!data.errcode) {
                  _this.globalData.token = data.token
-                 _this.globalData.havePhone = data.havePhone
                  wx.setStorageSync('token', data.token)
-                 wx.setStorageSync('havePhone', data.havePhone)
                  resolve(data)
                } else {
                  wx.showToast({
@@ -96,8 +94,6 @@ App({
   globalData: {
     userInfo: null,
     city: '',
-    hasLogin: false,
-    token: '',
-    hasPhone: false
+    hasLogin: false
   }
 })

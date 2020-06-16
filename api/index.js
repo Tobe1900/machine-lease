@@ -82,7 +82,6 @@ const handleGetPhoneNumber = (event, self, dialogName) => {
         let data = res.data
         if (!data.errcode) {
           self[dialogName].hideDialog()
-          wx.setStorageSync("havePhone", true)
           wx.showToast({
             title: '手机绑定成功',
             icon: 'success',

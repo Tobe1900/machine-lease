@@ -26,14 +26,15 @@ Page({
     this.setData({
       city: app.globalData.city !== '' ? app.globalData.city : ''
     })
+
     let token = wx.getStorageSync("token")
     if (!token) {
-      app.userLogin().then(res => {
-        if (!res.errcode) {
-          this.queryProduct()
-          getIdentifyInfo(this)
-        }
-      })
+      // app.userLogin().then(res => {
+      //   if (!res.errcode) {
+      //     this.queryProduct()
+      //     getIdentifyInfo(this)
+      //   }
+      // })
     } else {
       this.queryProduct()
       getIdentifyInfo(this)
@@ -41,13 +42,19 @@ Page({
   },
   onLoad: function() {
     this.setUserLocation() // 授权获取地理位置
+    app.userLogin().then(res => {
+      if (!res.errcode) {
+        this.queryProduct()
+        getIdentifyInfo(this)
+      }
+    })
   },
   handleAuth() {
     wx.navigateTo({
       url: '../mine/auth/auth',
     })
   },
-  
+
   setUserLocation() {
     let _this = this
     wx.getSetting({

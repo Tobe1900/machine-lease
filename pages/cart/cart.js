@@ -1,5 +1,8 @@
 import config from '../../config/index.js'
-import {handleGetPhoneNumber} from '../../api/index.js'
+import {
+  getIdentifyInfo,
+  handleGetPhoneNumber
+} from '../../api/index.js'
 Page({
   data: {
     cartList: [],
@@ -8,14 +11,9 @@ Page({
     isCheckAll: false,
     noRecordsText: '',
     emptyCartIcon: '../../icons/empty_cart.png',
-    havePhone: false
   },
   onLoad: function() {
     this.dialog = this.selectComponent("#phone_dialog"); //设置dialog组件以获得手机号码
-    let havePhone = wx.getStorageSync("havePhone")
-    this.setData({
-      havePhone
-    })
   },
   onShow: function() {
     this.getCart()
@@ -26,7 +24,7 @@ Page({
       totalCount: 0,
       isEdit: true,
       noRecordsText: '',
-      cartList:[]
+      cartList: []
     })
   },
   showDialog() {
@@ -38,59 +36,6 @@ Page({
   getPhoneNumber(event) {
     handleGetPhoneNumber(event, this, 'dialog')
   },
-  // getPhoneNumber(event) {
-  //   let _this = this
-  //   let {
-  //     code
-  //   } = event.detail
-  //   console.log('code get phonenmumber', code)
-  //   if (code.iv && code.encryptedData) {
-  //     // 用户同意授权获取手机号码
-  //     let {
-  //       iv,
-  //       encryptedData
-  //     } = code
-  //     wx.request({
-  //       url: config.requestUrl + 'getPhone',
-  //       data: {
-  //         token: wx.getStorageSync('token'),
-  //         iv,
-  //         encryptedData
-  //       },
-  //       header: {
-  //         'content-type': 'application/json'
-  //       },
-  //       method: 'POST',
-  //       success: function (res) {
-  //         let data = res.data
-  //         if (!data.errcode) {
-  //           _this.dialog.hideDialog()
-  //           _this.setData({
-  //             havePhone:true
-  //           })
-  //           wx.setStorageSync("havePhone", true)
-  //           wx.showToast({
-  //             title: '手机绑定成功',
-  //             icon: 'success',
-  //             duration: 1000
-  //           });
-  //         } else {
-  //           wx.showToast({
-  //             title: data.errmsg,
-  //             icon: 'none',
-  //             duration: 2000
-  //           })
-  //         }
-  //       },
-  //       fail: function (error) {
-  //         console.log('error', error)
-  //       }
-  //     })
-  //   } else {
-  //     // 用户拒绝授权
-  //     _this.dialog.hideDialog();
-  //   }
-  // },
   getCart() {
     let _this = this
     wx.request({
@@ -395,8 +340,7 @@ Page({
   },
   createOrder() {
     let {
-      cartList,
-      havePhone
+      cartList
     } = this.data
     let selectedItems = cartList.filter(item => {
       return item.selected
@@ -416,11 +360,14 @@ Page({
         duration: 2000
       })
     }
-    if (!havePhone) {
-      return this.showDialog()
-    }
-    wx.navigateTo({
-      url: '../order/createOrder/index?selectedItems=' + JSON.stringify(selectedItems) + '&orderType=cart'
+
+    getIdentifyInfo(this, identifyInfo => {
+      if (!identifyInfo.mobile) {
+        return this.showDialog()
+      }
+      wx.navigateTo({
+        url: '../order/createOrder/index?selectedItems=' + JSON.stringify(selectedItems) + '&orderType=cart'
+      })
     })
   }
 })

@@ -25,22 +25,20 @@ Page({
     this.smsCodeDialog = this.selectComponent("#smsCodeDialog"); //获得dialog组件以获得验证码
   },
   onLoad: function() {
-    let _this = this
-    // 页面加载时调用
-    getIdentifyInfo(_this, identifyInfo => {
+    this.phoneDialog = this.selectComponent("#phoneDialog"); //设置dialog组件以获得手机号码
+    getIdentifyInfo(this, identifyInfo => {
+      if(!identifyInfo.mobile) {
+        return this.phoneDialog.showDialog()
+      }
+
       if (identifyInfo.pAuthStatus == 1) {
-        _this.setData({
+        this.setData({
           name: identifyInfo.name,
           idCode: identifyInfo.idCode,
           address: identifyInfo.address
         })
       }
     })
-    this.phoneDialog = this.selectComponent("#phoneDialog"); //设置dialog组件以获得手机号码
-    let havePhone = wx.getStorageSync("havePhone")
-    if (!havePhone) {
-      return this.phoneDialog.showDialog()
-    }
   },
   hideSmsCodeDialogDialog() {
     this.smsCodeDialog.hide()

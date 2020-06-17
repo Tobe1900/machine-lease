@@ -1,7 +1,8 @@
 const app = getApp()
 import QQmap from '../../utils/map.js';
 import {
-  debounce
+  debounce,
+  getDescription
 } from '../../utils/util.js';
 import {
   requestAddCart,
@@ -115,6 +116,11 @@ Page({
             item.detailImgs = item.picNames && item.picNames.pics.map(picItem => {
               return config.imageUrl + item.id + '/' + picItem + '.jpg'
             })
+            item.description.height = getDescription(item.description.height)
+            item.description.load = getDescription(item.description.load)
+            item.description.machineSize = getDescription(item.description.machineSize)
+            item.description.size = getDescription(item.description.size)
+            item.description.weight = getDescription(item.description.weight)
             return item
           })
           _this.setData({

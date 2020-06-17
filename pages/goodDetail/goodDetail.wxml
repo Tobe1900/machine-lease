@@ -16,35 +16,35 @@
   </view>
   <view class="description_container">
     <view class="description_item">
-      <text class="item_label">平台高度</text>
-      <text class="item_value">{{item.description.height}}m</text>
+      <text class="item_label">平台高度(m)</text>
+      <text class="item_value">{{item.description.height}}</text>
     </view>
     <view wx:if="{{item.description.outreach}}" class="description_item">
-      <text class="item_label">平台延伸</text>
-      <text class="item_value">{{item.description.outreach}}m</text>
+      <text class="item_label">平台延伸(m)</text>
+      <text class="item_value">{{item.description.outreach}}</text>
     </view>
     <view class="description_item">
-      <text class="item_label">平台尺寸</text>
-      <text class="item_value">{{item.description.size}}m</text>
+      <text class="item_label">平台尺寸(m)</text>
+      <text class="item_value">{{item.description.size}}</text>
     </view>
     <view class="description_item">
-      <text class="item_label">平台载重</text>
-      <text class="item_value">{{item.description.load}}kg</text>
+      <text class="item_label">平台载重(kg)</text>
+      <text class="item_value">{{item.description.load}}</text>
     </view>
     <view class="description_item">
-      <text class="item_label">自重</text>
-      <text class="item_value">{{item.description.weight}}kg</text>
+      <text class="item_label">自重(kg)</text>
+      <text class="item_value">{{item.description.weight}}</text>
     </view>
     <view class="description_item">
-      <text class="item_label">机器(长宽高)</text>
-      <text class="item_value">{{item.description.machineSize}}m</text>
+      <text class="item_label">机器长宽高(m)</text>
+      <text class="item_value">{{item.description.machineSize}}</text>
     </view>
   </view>
   <view class="bottom_container">
-   <view class="bottom_label" style="flex:1">
-   <view class="bottom_btn add_cart" style="margin:6rpx 0;" catchtap="navToCart">
+    <view class="bottom_label" style="flex:1">
+      <view class="bottom_btn add_cart" style="margin:6rpx 0;" catchtap="navToCart">
       </view>
-   </view>
+    </view>
     <view class="bottom_label">
       <view class="bottom_btn" catchtap="bindAddCart" style="margin:6rpx 10rpx 6rpx 0;" data-id="{{item.id}}">
         加入购物车

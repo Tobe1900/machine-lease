@@ -105,6 +105,9 @@ const debounce = (fn, interval) => {
   };
 }
 
+const getDescription = value => {
+  return (value != '' && value != '0' && value != '0*0*0') ? value : '-'
+}
 
 module.exports = {
   formatTime,
@@ -115,5 +118,6 @@ module.exports = {
   replaceMinuteStr,
   handleDate,
   throttle,
-  debounce
+  debounce,
+  getDescription
 }

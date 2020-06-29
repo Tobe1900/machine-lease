@@ -57,7 +57,8 @@
       <view class="rent_item">
         <text class="item_label">是否为涂料作业</text>
         <radio-group bindchange="radioChange">
-          <label class="radio" wx:for="{{radioList}}" wx:key="index"><radio checked="{{item.checked}}" value="{{item.label}}" />{{item.label}}</label>
+          <label class="radio" wx:for="{{radioList}}" wx:key="index">
+            <radio checked="{{item.checked}}" value="{{item.label}}" />{{item.label}}</label>
         </radio-group>
       </view>
     </view>

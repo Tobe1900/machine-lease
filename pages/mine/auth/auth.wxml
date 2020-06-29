@@ -50,6 +50,17 @@
       </view>
     </modalComp>
 
+    <view style="margin-top: 15px;padding-left: 10px;">
+      <checkbox-group bindchange="checkboxChange" style="display:flex;flex-direction:row">
+        <label class="weui-cell weui-check__label" wx:for="{{agreementItems}}" wx:key="{{item.value}}">
+          <view class="weui-cell__hd">
+            <checkbox value="{{item.value}}" checked="{{item.checked}}" />{{item.name}}
+          </view>
+        </label>
+        <text bindtap="previewAgreement" style="color:#1296db">《数字证书使用协议》</text>
+      </checkbox-group>
+    </view>
+
     <button formType="submit" class="btn">提交实名信息</button>
   </form>
 

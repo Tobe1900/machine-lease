@@ -502,5 +502,5 @@ Page({
         console.log('DelCart Error:', error)
       }
     })
-  },
+  }
 })

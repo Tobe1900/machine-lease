@@ -19,7 +19,12 @@ Page({
     pAuthStatus: 0,
     smsCode: '',
     countdown: 60,
-    timer: null
+    timer: null,
+    agreementItems: [{
+      value: 'hasRead',
+      name: '已阅读',
+      checked: false
+    }, ],
   },
   onReady: function() {
     this.smsCodeDialog = this.selectComponent("#smsCodeDialog"); //获得dialog组件以获得验证码
@@ -27,7 +32,7 @@ Page({
   onLoad: function() {
     this.phoneDialog = this.selectComponent("#phoneDialog"); //设置dialog组件以获得手机号码
     getIdentifyInfo(this, identifyInfo => {
-      if(!identifyInfo.mobile) {
+      if (!identifyInfo.mobile) {
         return this.phoneDialog.showDialog()
       }
 
@@ -174,11 +179,20 @@ Page({
     let {
       name,
       idCode,
-      address
+      address,
+      agreementItems
     } = this.data
     if (idCode == '拍照自动识别') {
       return wx.showToast({
         title: '请先上传身份证照片',
+        icon: 'none',
+        duration: 1500
+      });
+    }
+    let hasReadFlag = (agreementItems.filter(item => item.checked)).length
+    if (hasReadFlag === 0) {
+      return wx.showToast({
+        title: '请先确认已阅读《数字证书使用协议》',
         icon: 'none',
         duration: 1500
       });
@@ -189,7 +203,6 @@ Page({
       idCode,
       address
     }
-
     wx.showModal({
       title: '温馨提示',
       content: '请确认身份信息识别无误，如发现姓名识别错误，可手动修改！',
@@ -306,6 +319,27 @@ Page({
             break
         }
       }
+    })
+  },
+  previewAgreement() {
+    wx.navigateTo({
+      url: '/pages/agreement/agreement',
+    })
+  },
+  checkboxChange(e) {
+    const items = this.data.agreementItems
+    const values = e.detail.value
+    for (let i = 0, lenI = items.length; i < lenI; ++i) {
+      items[i].checked = false
+      for (let j = 0, lenJ = values.length; j < lenJ; ++j) {
+        if (items[i].value === values[j]) {
+          items[i].checked = true
+          break
+        }
+      }
+    }
+    this.setData({
+      agreementItems: items
     })
   }
 })

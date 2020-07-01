@@ -7,7 +7,7 @@
         <image class="img" id="front" mode="aspectFit" bindtap="upimg" src='{{front ? front:default_front}}'></image>
       </view>
       <view class="tip">
-        为了提高识别率,请尽量保证照片完整清晰
+        温馨提示：为提高识别率,请尽量保证照片完整清晰
       </view>
     </view>
     <!-- <view class="big-logos">
@@ -20,10 +20,10 @@
     </view>
 
     <view class="form-wrapper">
-      <label class="label">身份证号:</label>
+      <label class="label">身份证:</label>
       <label class="value">{{idCode}}</label>
     </view>
-    <view class="form-wrapper">
+    <view class="form-wrapper" style="height:90px;">
       <label class="label">地址:</label>
       <label class="address">{{address}}</label>
     </view>
@@ -50,7 +50,7 @@
       </view>
     </modalComp>
 
-    <view style="margin-top: 15px;padding-left: 10px;">
+    <view style="margin-top: 15px;padding-left: 10px;font-size:14px;">
       <checkbox-group bindchange="checkboxChange" style="display:flex;flex-direction:row">
         <label class="weui-cell weui-check__label" wx:for="{{agreementItems}}" wx:key="{{item.value}}">
           <view class="weui-cell__hd">

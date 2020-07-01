@@ -18,7 +18,7 @@ Page({
     formData: '',
     pAuthStatus: 0,
     smsCode: '',
-    countdown: 60,
+    countdown: 180,
     timer: null,
     agreementItems: [{
       value: 'hasRead',
@@ -67,7 +67,7 @@ Page({
       clearInterval(this.timer)
       _this.setData({
         timer: null,
-        countdown: 60
+        countdown: 180
       })
     }
     let timer = setInterval(function() {
@@ -80,7 +80,7 @@ Page({
         clearInterval(timer)
         _this.setData({
           timer: null,
-          countdown: 60
+          countdown: 180
         })
       }
     }, 1000)

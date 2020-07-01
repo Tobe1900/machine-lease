@@ -8,11 +8,20 @@
       <button class="authBtn" catchtap="handleAuth">立即实名</button>
     </view>
     <span bindtap="selectCity" class="cityBtn" wx:if="{{city!==''}}">{{city}}</span>
-    <!-- <view style="display:flex;flex-direction:row">
-      <text class="message">{{text}}</text>
-      <button class="authBtn">立即实名</button>
-    </view> -->
-    <image class="slide" src="{{slideImg}}" mode="aspectFill" style="height:240px;"></image>
+
+    <!-- <image class="slide" src="{{slideImg}}" mode="aspectFill" style="height:240px;"></image> -->
+    
+    <swiper class="slide" autoplay="{{autoplay}}" indicator-dots="{{indicatorDots}}" interval="{{interval}}" duration="{{duration}}" style="height:270px;width:100%">
+    <block wx:for="{{mainImages}}" wx:key="*this">
+      <swiper-item>
+        <view class="swiper-item {{item}}">
+          <image class="slide" src="{{item}}"></image>
+        </view>
+      </swiper-item>
+    </block>
+  </swiper>
+
+
     <view class="instruction">
       <text class="desc">15分钟及时响应</text>
       <text class="desc">6小时按时交付</text>

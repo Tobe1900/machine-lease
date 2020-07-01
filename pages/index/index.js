@@ -17,7 +17,12 @@ Page({
     slideImg: '../../icons/slide.jpg',
     goods: [],
     pAuthStatus: 0,
-    message: '为了您的账号安全，请尽快完成实名认证！'
+    message: '为了您的账号安全，请尽快完成实名认证！',
+    indicatorDots: true,
+    autoplay: true,
+    interval: 2000,
+    duraion: 500,
+    mainImages: ['../../icons/slide.jpg']
   },
   onShow() {
     wx.showLoading({

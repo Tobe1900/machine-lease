@@ -180,6 +180,13 @@ Page({
     this.useDaysDialog.hide()
   },
   bindKeyInput(e) {
+    if (parseInt(e.detail.value) <= 0) {
+      return wx.showToast({
+        title: '至少1天起租',
+        icon: 'none',
+        duration: 2000
+      })
+    }
     this.setData({
       otherDay: e.detail.value
     })
@@ -415,9 +422,9 @@ Page({
       radioList
     } = this.data
     let beginTime = new Date().getFullYear() + '-' + convertDate(this.data.selectedDate) + ' ' + convertTime(this.data.selectedTime)
-    if (address == '') {
+    if (address == '' || address == undefined) {
       return wx.showToast({
-        title: '请选择用车地址',
+        title: '请选择具体用车地址',
         icon: 'none',
         duration: 2000
       })
@@ -434,6 +441,7 @@ Page({
         duration: 2000
       })
     }
+
     let formData = {
       token: wx.getStorageSync('token'),
       rent: rent,

@@ -20,9 +20,9 @@ Page({
     message: '为了您的账号安全，请尽快完成实名认证！',
     indicatorDots: true,
     autoplay: true,
-    interval: 2000,
-    duraion: 500,
-    mainImages: ['../../icons/slide.jpg']
+    interval: 4000,
+    duraion: 1500,
+    mainImages: ['../../icons/slide/jsd_1.jpg', '../../icons/slide/jsd_2.jpg', '../../icons/slide/jsd_3.jpg']
   },
   onShow() {
     wx.showLoading({

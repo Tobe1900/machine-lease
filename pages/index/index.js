@@ -22,6 +22,7 @@ Page({
     autoplay: true,
     interval: 4000,
     duraion: 1500,
+    scrollTop: 0,
     mainImages: ['../../icons/slide/jsd_1.jpg', '../../icons/slide/jsd_2.jpg', '../../icons/slide/jsd_3.jpg']
   },
   onShow() {
@@ -55,6 +56,19 @@ Page({
       }
     })
   },
+
+  // onPageScroll: function (ev) {
+  //   this.setData({
+  //     scrollTop: ev.scrollTop
+  //   })
+  // },
+
+  onPageScroll: debounce(function (that, ev) {
+    that.setData({
+      scrollTop: ev.scrollTop
+    })
+  }, 500),
+
   handleAuth() {
     wx.navigateTo({
       url: '../mine/auth/auth',
@@ -148,9 +162,7 @@ Page({
     })
   },
   bindAddCart: debounce(function(that, e) {
-    let {
-      productID
-    } = e.detail
+    let {productID} = e.detail
     requestAddCart(productID)
   }),
   selectCity() {
@@ -177,4 +189,10 @@ Page({
       console.log(err)
     })
   },
+  scollToTop(){
+    wx.pageScrollTo({
+      scrollTop: 0,
+      duration: 500
+    })
+  }
 })

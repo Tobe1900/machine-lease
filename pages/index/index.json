@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "及时到",
+  "navigationBarTitleText": "及时租车",
   "usingComponents": {
     "goodItem": "../../components/goodItemCom/goodItemCom"
   }

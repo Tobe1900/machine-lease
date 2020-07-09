@@ -37,14 +37,6 @@ Page({
   },
 
   navigateToSign(e) {
-    // 跳转签名
-    // console.log(e.currentTarget)
-    // let agreementImg = e.currentTarget.dataset.agreementimg
-    // let orderid = e.currentTarget.dataset.orderid
-    // wx.navigateTo({
-    //   url: '../userSign/userSign?agreementimg=' + agreementImg + '&orderid=' + orderid
-    // })
-    
     let orderid = e.currentTarget.dataset.orderid
     wx.request({
       url: config.requestUrl + 'sign',

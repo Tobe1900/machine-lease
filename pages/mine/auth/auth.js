@@ -24,7 +24,8 @@ Page({
       value: 'hasRead',
       name: '已阅读',
       checked: false
-    }, ],
+    }],
+    hasReadFlag: 0 
   },
   onReady: function() {
     this.smsCodeDialog = this.selectComponent("#smsCodeDialog"); //获得dialog组件以获得验证码
@@ -189,14 +190,14 @@ Page({
         duration: 1500
       });
     }
-    let hasReadFlag = (agreementItems.filter(item => item.checked)).length
-    if (hasReadFlag === 0) {
-      return wx.showToast({
-        title: '请先确认已阅读《数字证书使用协议》',
-        icon: 'none',
-        duration: 1500
-      });
-    }
+    // let hasReadFlag = (agreementItems.filter(item => item.checked)).length
+    // if (hasReadFlag === 0) {
+    //   return wx.showToast({
+    //     title: '请先确认已阅读《数字证书使用协议》',
+    //     icon: 'none',
+    //     duration: 1500
+    //   });
+    // }
     let params = {
       token: wx.getStorageSync('token'),
       name,
@@ -338,8 +339,11 @@ Page({
         }
       }
     }
+
+    let hasReadFlag = (items.filter(item => item.checked)).length
     this.setData({
-      agreementItems: items
+      agreementItems: items,
+      hasReadFlag: hasReadFlag
     })
   }
 })

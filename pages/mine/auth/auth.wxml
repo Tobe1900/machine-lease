@@ -61,7 +61,7 @@
       </checkbox-group>
     </view>
 
-    <button formType="submit" class="btn">提交实名信息</button>
+    <button formType="submit" class="btn" disabled="{{hasReadFlag == 0}}">提交实名信息</button>
   </form>
 
   <!-- <ocr-navigator bind:onSuccess="success" certificateType="idCard" selectedOptions="{{['id','name']}}">

@@ -20,13 +20,15 @@
         <text class="news-item-title">实名认证</text>
       </view>
       <view class="news-item-right">
-        <view wx:if="{{pAuthStatus === 0}}">未实名
+        <view wx:if="{{pAuthStatus === 0}}" class="right-item">
+          <text style="color:#666;font-size:15px">未实名</text>
           <image src="../../icons/arrow.png" class="news-image-right" />
         </view>
-        <view wx:elif="{{pAuthStatus === 1}}">实名中
+        <view wx:elif="{{pAuthStatus === 1}}" class="right-item">
+          <text style="color:#f5a623;font-size:15px">继续提交信息</text>
           <image src="../../icons/arrow.png" class="news-image-right" />
         </view>
-        <text style="color: #888;margin-right: 10px;" wx:elif="{{pAuthStatus === 2}}">已实名</text>
+        <text style="color: #7ed321;margin-right: 10px;font-size:15px" wx:elif="{{pAuthStatus === 2}}">已实名</text>
       </view>
     </view>
   </view>

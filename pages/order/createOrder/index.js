@@ -110,6 +110,9 @@ Page({
   },
   hideUseDaysDialog() {
     this.useDaysDialog.hide()
+    this.setData({
+      otherDay: ''
+    })
   },
   hideRentRuleDialog() {
     this.rentRuleDialog.hide()
@@ -180,21 +183,19 @@ Page({
     this.useDaysDialog.hide()
   },
   bindKeyInput(e) {
-    if (parseInt(e.detail.value) <= 0) {
-      return wx.showToast({
-        title: '至少1天起租',
-        icon: 'none',
-        duration: 2000
-      })
-    }
     this.setData({
       otherDay: e.detail.value
     })
   },
   confirmDay() {
+    console.log('hehehehhe')
     let otherDay = this.data.otherDay
-    if (otherDay == '') {
-      return this.useDaysDialog.hide()
+    if (otherDay == 0) {
+     return wx.showToast({
+        title: '至少1天起租',
+        icon: 'none',
+        duration: 1000
+      })
     }
     this.setUseDays(undefined, otherDay)
     this.setData({

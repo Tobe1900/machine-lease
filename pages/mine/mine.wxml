@@ -28,7 +28,7 @@
           <text style="color:#f5a623;font-size:15px">继续提交信息</text>
           <image src="../../icons/arrow.png" class="news-image-right" />
         </view>
-        <text style="color: #7ed321;margin-right: 10px;font-size:15px" wx:elif="{{pAuthStatus === 2}}">已实名</text>
+        <text style="color: #7ed321;margin-right: 10px;font-size:15px" wx:elif="{{pAuthStatus === 2}}">已认证</text>
       </view>
     </view>
   </view>

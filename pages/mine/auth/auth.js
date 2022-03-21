@@ -1,113 +1,113 @@
-import config from '../../../config/index.js'
-import {
-  getIdentifyInfo,
-  handleGetPhoneNumber
-} from '../../../api/index.js'
-const app = getApp()
+import config from "../../../config/index.js";
+import { getIdentifyInfo, handleGetPhoneNumber } from "../../../api/index.js";
+const app = getApp();
 
 Page({
   data: {
-    name: '拍照自动识别',
-    idCode: '拍照自动识别',
-    address: '拍照自动识别',
+    cWidth: 0,
+    cHeight: 0,
+    name: "拍照自动识别",
+    idCode: "拍照自动识别",
+    address: "拍照自动识别",
     access_token: null,
-    default_front: '../../../icons/front.png',
-    default_back: '../../../icons/back.png',
+    default_front: "../../../icons/front.png",
+    default_back: "../../../icons/back.png",
     front: null,
     back: null,
-    formData: '',
+    formData: "",
     pAuthStatus: 0,
-    smsCode: '',
+    smsCode: "",
     countdown: 180,
     timer: null,
-    agreementItems: [{
-      value: 'hasRead',
-      name: '已阅读',
-      checked: false
-    }],
-    hasReadFlag: 0 
+    agreementItems: [
+      {
+        value: "hasRead",
+        name: "已阅读",
+        checked: false,
+      },
+    ],
+    hasReadFlag: 0,
   },
-  onReady: function() {
+  onReady: function () {
     this.smsCodeDialog = this.selectComponent("#smsCodeDialog"); //获得dialog组件以获得验证码
   },
-  onLoad: function() {
+  onLoad: function () {
     this.phoneDialog = this.selectComponent("#phoneDialog"); //设置dialog组件以获得手机号码
-    getIdentifyInfo(this, identifyInfo => {
+    getIdentifyInfo(this, (identifyInfo) => {
       if (!identifyInfo.mobile) {
-        return this.phoneDialog.showDialog()
+        return this.phoneDialog.showDialog();
       }
 
       if (identifyInfo.pAuthStatus == 1) {
         this.setData({
           name: identifyInfo.name,
           idCode: identifyInfo.idCode,
-          address: identifyInfo.address
-        })
+          address: identifyInfo.address,
+        });
       }
-    })
+    });
   },
   hideSmsCodeDialogDialog() {
-    this.smsCodeDialog.hide()
+    this.smsCodeDialog.hide();
   },
   showSmsCodeDialogDialog() {
-    this.smsCodeDialog.show()
+    this.smsCodeDialog.show();
   },
 
   confirmEvent() {
     this.phoneDialog.hideDialog();
     wx.navigateBack({
-      delta: 1
-    })
+      delta: 1,
+    });
   },
   getPhoneNumber(event) {
-    handleGetPhoneNumber(event, this, 'phoneDialog')
+    handleGetPhoneNumber(event, this, "phoneDialog");
   },
   openTimer() {
-    let _this = this
+    let _this = this;
     if (_this.timer) {
-      clearInterval(this.timer)
+      clearInterval(this.timer);
       _this.setData({
         timer: null,
-        countdown: 180
-      })
+        countdown: 180,
+      });
     }
-    let timer = setInterval(function() {
-      let countdown = _this.data.countdown
-      countdown = countdown - 1
+    let timer = setInterval(function () {
+      let countdown = _this.data.countdown;
+      countdown = countdown - 1;
       _this.setData({
-        countdown
-      })
+        countdown,
+      });
       if (countdown == 1) {
-        clearInterval(timer)
+        clearInterval(timer);
         _this.setData({
           timer: null,
-          countdown: 180
-        })
+          countdown: 180,
+        });
       }
-    }, 1000)
+    }, 1000);
     _this.setData({
-      timer
-    })
-
+      timer,
+    });
   },
 
   // clearTimer() {
 
   // },
 
-  resendSms: function() {
-    this.openTimer()
+  resendSms: function () {
+    this.openTimer();
     wx.request({
-      url: config.requestUrl + 'resendSms',
+      url: config.requestUrl + "resendSms",
       data: {
-        token: wx.getStorageSync('token')
+        token: wx.getStorageSync("token"),
       },
       header: {
-        'content-type': 'application/json'
+        "content-type": "application/json",
       },
-      method: 'POST',
-      success: function(res) {
-        let data = res.data
+      method: "POST",
+      success: function (res) {
+        let data = res.data;
         if (!data.errcode) {
           // wx.showToast({
           //   title: '已重发,注意查收',
@@ -115,79 +115,72 @@ Page({
           // })
         }
       },
-      fail: function(error) {
-        console.log('Error:', error)
-      }
-    })
+      fail: function (error) {
+        console.log("Error:", error);
+      },
+    });
   },
-  handleAuthPerson: function() {
-    let _this = this
-    let {
-      smsCode
-    } = this.data
-    if (smsCode == '') {
+  handleAuthPerson: function () {
+    let _this = this;
+    let { smsCode } = this.data;
+    if (smsCode == "") {
       return wx.showToast({
-        title: '请输入验证码',
-        icon: 'none',
-        duration: 1500
+        title: "请输入验证码",
+        icon: "none",
+        duration: 1500,
       });
     }
     wx.request({
-      url: config.requestUrl + 'authPerson',
+      url: config.requestUrl + "authPerson",
       data: {
-        token: wx.getStorageSync('token'),
-        smsCode
+        token: wx.getStorageSync("token"),
+        smsCode,
       },
       header: {
-        'content-type': 'application/json'
+        "content-type": "application/json",
       },
-      method: 'POST',
-      success: function(res) {
-        let data = res.data
+      method: "POST",
+      success: function (res) {
+        let data = res.data;
         if (!data.errcode) {
           wx.showToast({
-            title: '认证成功',
-            duration: 1500
-          })
-          _this.hideSmsCodeDialogDialog()
+            title: "认证成功",
+            duration: 1500,
+          });
+          _this.hideSmsCodeDialogDialog();
           wx.navigateBack({
-            delta: 1
-          })
+            delta: 1,
+          });
         } else {
           wx.showModal({
-            title: '提示',
+            title: "提示",
             content: data.errmsg,
-          })
+          });
         }
       },
-      fail: function(error) {
-        console.log('Error:', error)
-      }
-    })
+      fail: function (error) {
+        console.log("Error:", error);
+      },
+    });
   },
   bindKeyInput(e) {
     this.setData({
-      smsCode: e.detail.value
-    })
+      smsCode: e.detail.value,
+    });
   },
-  handleName: function(e) {
+  handleName: function (e) {
     this.setData({
-      name: e.detail.value
-    })
+      name: e.detail.value,
+    });
   },
-  formSubmit: function(e) {
-    let _this = this
-    let {
-      name,
-      idCode,
-      address,
-      agreementItems
-    } = this.data
-    if (idCode == '拍照自动识别') {
+  formSubmit: function (e) {
+    let _this = this;
+    let { name, idCode, address, agreementItems } = this.data;
+    if (idCode == "拍照自动识别") {
       return wx.showToast({
-        title: '请先上传身份证照片',
-        icon: 'none',
-        duration: 1500
+        title: "请先上传身份证照片",
+        icon: "none",
+        duration: 1500,
       });
     }
     // let hasReadFlag = (agreementItems.filter(item => item.checked)).length
@@ -199,29 +192,29 @@ Page({
     //   });
     // }
     let params = {
-      token: wx.getStorageSync('token'),
+      token: wx.getStorageSync("token"),
       name,
       idCode,
-      address
-    }
+      address,
+    };
     wx.showModal({
-      title: '温馨提示',
-      content: '请确认身份信息识别无误，如发现姓名识别错误，可手动修改！',
+      title: "温馨提示",
+      content: "请确认身份信息识别无误，如发现姓名识别错误，可手动修改！",
       success(res) {
         if (res.confirm) {
           wx.request({
-            url: config.requestUrl + 'reqPersonAuth',
+            url: config.requestUrl + "reqPersonAuth",
             data: params,
             header: {
-              'content-type': 'application/json'
+              "content-type": "application/json",
             },
-            method: 'POST',
-            success: function(res) {
-              let data = res.data
-              console.log('res', res)
+            method: "POST",
+            success: function (res) {
+              let data = res.data;
+              console.log("res", res);
               if (!data.errcode) {
-                _this.showSmsCodeDialogDialog()
-                _this.openTimer() // 开启定时器
+                _this.showSmsCodeDialogDialog();
+                _this.openTimer(); // 开启定时器
                 // let counter = setInterval(function () {
                 //   let countdown = _this.data.countdown
                 //   countdown = countdown - 1
@@ -235,115 +228,150 @@ Page({
                 // }, 1000)
               } else {
                 wx.showModal({
-                  title: '提示',
+                  title: "提示",
                   content: data.errmsg,
-                })
+                });
               }
             },
-            fail: function(error) {
+            fail: function (error) {
               wx.showModal({
-                title: '提示',
+                title: "提示",
                 content: error,
-              })
+              });
             },
-            complete: function() {
+            complete: function () {
               // wx.hideLoading()
-            }
-          })
+            },
+          });
         } else if (res.cancel) {
-
         }
-      }
-    })
+      },
+    });
   },
-  upload: function(img_file) {
-    var that = this
+  upload: function (img_file) {
+    console.log("img_file", img_file);
+    var that = this;
     wx.uploadFile({
-      url: config.requestUrl + 'recognIdentity',
+      url: config.requestUrl + "recognIdentity",
       filePath: img_file,
       header: {
-        'content-type': 'multipart/form-data'
+        "content-type": "multipart/form-data",
       },
-      name: 'file',
+      name: "file",
       formData: {
-        method: 'POST',
-        token: wx.getStorageSync('token'),
+        method: "POST",
+        token: wx.getStorageSync("token"),
       },
-      success: function(res) {
-        let data = JSON.parse(res.data)
+      success: function (res) {
+        let data = JSON.parse(res.data);
         if (!!data && !data.errcode) {
           wx.showToast({
-            title: '识别成功',
-            duration: 1500
+            title: "识别成功",
+            duration: 1500,
           });
           that.setData({
             name: data.name,
             idCode: data.idCode,
-            address: data.address
-          })
+            address: data.address,
+          });
           // wx.navigateBack({
           //   delta:1
           // })
         } else {
           wx.showModal({
-            title: '提示',
+            title: "提示",
             content: data.errcode + data.errmsg,
-          })
+          });
         }
-      }
-    })
+      },
+    });
   },
-  upimg: function(e) {
-    let type = e.target.id
+  upimg: function (e) {
+    let type = e.target.id;
     var that = this;
     wx.chooseImage({
-      sizeType: ['original', 'compressed'],
-      success: function(res) {
-        switch (type) {
-          case 'front':
-            console.log('heeeh front')
-            wx.showLoading({
-              title: '正在上传'
-            })
+      count: 1, // 默认9
+      sizeType: ["compressed"], // 指定只能为压缩图，首先进行一次默认压缩
+      sourceType: ["album", "camera"], // 可以指定来源是相册还是相机，默认二者都有
+      success: function (photo) {
+        wx.showLoading({
+          title: "识别中...",
+        });
+        wx.getImageInfo({
+          src: photo.tempFilePaths[0],
+          success: function (res) {
+            var ratio = 5;
+            var canvasWidth = res.width; //图片原始长宽
+            var canvasHeight = res.height;
+            while (canvasWidth > 720 || canvasHeight > 720) {
+              // 保证宽高在720以内
+              canvasWidth = Math.trunc(res.width / ratio);
+              canvasHeight = Math.trunc(res.height / ratio);
+              ratio++;
+            }
             that.setData({
-              front: res.tempFilePaths[0]
-            })
-            that.upload(res.tempFilePaths[0])
-            break
-          case 'back':
-            that.setData({
-              back: res.tempFilePaths[0]
-            })
-            that.upload(res.tempFilePaths[0])
-            break
-          default:
-            break
-        }
-      }
-    })
+              cWidth: canvasWidth,
+              cHeight: canvasHeight,
+            });
+            var ctx = wx.createCanvasContext("canvas");
+            ctx.drawImage(res.path, 0, 0, canvasWidth, canvasHeight);
+            ctx.draw(
+              false,
+              setTimeout(function () {
+                wx.canvasToTempFilePath({
+                  canvasId: "canvas",
+                  destWidth: canvasWidth,
+                  destHeight: canvasHeight,
+                  success: function (res) {
+                    console.log(res.tempFilePath); //最终图片路径
+                    if (type === "front") {
+                      that.setData({
+                        front: res.tempFilePath,
+                      });
+                    }
+                    if (type === "back") {
+                      that.setData({
+                        back: res.tempFilePath,
+                      });
+                    }
+                    that.upload(res.tempFilePath);
+                  },
+                  fail: function (res) {
+                    console.log(res.errMsg);
+                  },
+                });
+              }, 100)
+            ); //留一定的时间绘制canvas
+          },
+          fail: function (res) {
+            console.log(res.errMsg);
+          },
+        });
+      },
+    });
   },
   previewAgreement() {
     wx.navigateTo({
-      url: '/pages/agreement/agreement',
-    })
+      url: "/pages/agreement/agreement",
+    });
   },
   checkboxChange(e) {
-    const items = this.data.agreementItems
-    const values = e.detail.value
+    const items = this.data.agreementItems;
+    const values = e.detail.value;
     for (let i = 0, lenI = items.length; i < lenI; ++i) {
-      items[i].checked = false
+      items[i].checked = false;
       for (let j = 0, lenJ = values.length; j < lenJ; ++j) {
         if (items[i].value === values[j]) {
-          items[i].checked = true
-          break
+          items[i].checked = true;
+          break;
         }
       }
     }
 
-    let hasReadFlag = (items.filter(item => item.checked)).length
+    let hasReadFlag = items.filter((item) => item.checked).length;
     this.setData({
       agreementItems: items,
-      hasReadFlag: hasReadFlag
-    })
-  }
-})
+      hasReadFlag: hasReadFlag,
+    });
+  },
+});

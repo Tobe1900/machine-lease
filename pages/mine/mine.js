@@ -29,10 +29,10 @@ Page({
     //   this.showDialog()
     //   return
     // }
-    let pAuthStatus = this.data.pAuthStatus
-    if (pAuthStatus == 2) {
-      return
-    }
+    // let pAuthStatus = this.data.pAuthStatus
+    // if (pAuthStatus == 2) {
+    //   return
+    // }
     wx.navigateTo({
       url: './auth/auth',
     })

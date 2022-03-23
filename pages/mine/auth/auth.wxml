@@ -2,15 +2,24 @@
   <dialogCom id='phoneDialog' isPhone="true" title='提示' content='【及时到】需要您授权以获取手机号码' confirmText='授权' bind:confirmEvent='confirmEvent' bind:getPhoneNumber='getPhoneNumber'>
   </dialogCom>
   <form bindsubmit="formSubmit" bindreset="formReset">
-      <view wx:if="{{pAuthStatus === 0}}">
-          <view class="big-logos">
-              <image class="img" id="front" mode="aspectFit" bindtap="upimg" src='{{front ? front:default_front}}'></image>
-              <canvas style="width: {{cWidth}}px; height: {{cHeight}}px;position:absolute;left:-1000px;top:-1000px" canvas-id="canvas"></canvas>
-          </view>
-          <view class="tip">
-              温馨提示：为提高识别率,请尽量保证照片完整清晰
-          </view>
+<!--      <view wx:if="{{pAuthStatus === 0}}">-->
+<!--          <view class="big-logos">-->
+<!--              <image class="img" id="front" mode="aspectFit" bindtap="upimg" src='{{front ? front:default_front}}'></image>-->
+<!--              <canvas style="width: {{cWidth}}px; height: {{cHeight}}px;position:absolute;left:-1000px;top:-1000px" canvas-id="canvas"></canvas>-->
+<!--          </view>-->
+<!--          <view class="tip">-->
+<!--              温馨提示：为提高识别率,请尽量保证照片完整清晰-->
+<!--          </view>-->
+<!--      </view>-->
+    <view>
+      <view class="big-logos">
+        <image class="img" id="front" mode="aspectFit" bindtap="upimg" src='{{front ? front:default_front}}'></image>
+        <canvas style="width: {{cWidth}}px; height: {{cHeight}}px;position:absolute;left:-1000px;top:-1000px" canvas-id="canvas"></canvas>
       </view>
+      <view class="tip">
+        温馨提示：为提高识别率,请尽量保证照片完整清晰
+      </view>
+    </view>
     <!-- <view class="big-logos">
       <image class="img" id="back" mode="aspectFit" bindtap="upimg" src='{{back ? back:default_back}}'></image>
     </view> -->

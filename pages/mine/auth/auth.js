@@ -4,8 +4,8 @@ const app = getApp();
 
 Page({
   data: {
-    cWidth: 0,
-    cHeight: 0,
+    cWidth: 480,
+    cHeight: 640,
     name: "拍照自动识别",
     idCode: "拍照自动识别",
     address: "拍照自动识别",
@@ -94,7 +94,9 @@ Page({
   // clearTimer() {
 
   // },
-
+  success: function (e) {
+    alert("e:::", e.detail);
+  },
   resendSms: function () {
     this.openTimer();
     wx.request({
@@ -263,6 +265,7 @@ Page({
         token: wx.getStorageSync("token"),
       },
       success: function (res) {
+        wx.hideLoading();
         let data = JSON.parse(res.data);
         if (!!data && !data.errcode) {
           wx.showToast({
@@ -300,28 +303,50 @@ Page({
         wx.getImageInfo({
           src: photo.tempFilePaths[0],
           success: function (res) {
-            var ratio = 5;
-            var canvasWidth = res.width; //图片原始长宽
-            var canvasHeight = res.height;
-            while (canvasWidth > 720 || canvasHeight > 720) {
-              // 保证宽高在720以内
-              canvasWidth = Math.trunc(res.width / ratio);
-              canvasHeight = Math.trunc(res.height / ratio);
-              ratio++;
+            let originHeight = res.height;
+            let originWidth = res.width;
+            // 压缩比例
+            // 最大尺寸限制
+            let maxWidth = 480,
+              maxHeight = 640;
+            // 目标尺寸
+            let targetWidth = originWidth,
+              targetHeight = originHeight;
+            // 等比例压缩，如果宽度大于高度，则宽度优先，否则高度优先
+            if (originWidth > maxWidth || originHeight > maxHeight) {
+              if (originWidth / originHeight > maxWidth / maxHeight) {
+                // 要求宽度*(原生图片比例)=新图片尺寸
+                targetWidth = maxWidth;
+                targetHeight = Math.round(
+                  maxWidth * (originHeight / originWidth)
+                );
+              } else {
+                targetHeight = maxHeight;
+                targetWidth = Math.round(
+                  maxHeight * (originWidth / originHeight)
+                );
+              }
             }
             that.setData({
-              cWidth: canvasWidth,
-              cHeight: canvasHeight,
+              cWidth: targetWidth,
+              cHeight: targetHeight,
             });
             var ctx = wx.createCanvasContext("canvas");
-            ctx.drawImage(res.path, 0, 0, canvasWidth, canvasHeight);
+            ctx.clearRect(0, 0, targetWidth, targetHeight);
+            ctx.drawImage(
+              photo.tempFilePaths[0],
+              0,
+              0,
+              targetWidth,
+              targetHeight
+            );
             ctx.draw(
               false,
               setTimeout(function () {
                 wx.canvasToTempFilePath({
                   canvasId: "canvas",
-                  destWidth: canvasWidth,
-                  destHeight: canvasHeight,
+                  destWidth: targetWidth,
+                  destHeight: targetHeight,
                   success: function (res) {
                     console.log(res.tempFilePath); //最终图片路径
                     if (type === "front") {

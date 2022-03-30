@@ -14,7 +14,7 @@
     <view>
       <view class="big-logos">
         <image class="img" id="front" mode="aspectFit" bindtap="upimg" src='{{front ? front:default_front}}'></image>
-        <canvas style="width: {{cWidth}}px; height: {{cHeight}}px;position:absolute;left:-1000px;top:-1000px" canvas-id="canvas"></canvas>
+        <canvas style="width: {{cWidth}}px; height: {{cHeight}}px;position:absolute;left:-10000px;top:-10000px" canvas-id="canvas"></canvas>
       </view>
       <view class="tip">
         温馨提示：为提高识别率,请尽量保证照片完整清晰
@@ -74,7 +74,11 @@
     <button formType="submit" class="btn" disabled="{{hasReadFlag == 0}}">提交实名信息</button>
   </form>
 
-  <!-- <ocr-navigator bind:onSuccess="success" certificateType="idCard" selectedOptions="{{['id','name']}}">
-  <button class="btn">身份证识别</button>
-</ocr-navigator> -->
+<!-- <ocr-navigator bind:onSuccess="success" certificateType="idCard" selectedOptions="{{['id','name']}}">-->
+<!--  <button class="btn">身份证识别</button>-->
+<!--</ocr-navigator>-->
+
+    <!-- <ocr-navigator bind:onSuccess="success" certificateType="idCard" opposite="{{false}}">
+        <button type="primary">身份证识别</button>
+    </ocr-navigator> -->
 </view>

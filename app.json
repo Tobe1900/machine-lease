@@ -57,5 +57,11 @@
     "navigationBarTitleText": "首页",
     "navigationBarTextStyle": "white"
   },
-  "sitemapLocation": "sitemap27.json"
+  "sitemapLocation": "sitemap27.json",
+  "plugins": {
+    "ocr-plugin": {
+      "version": "3.1.1",
+      "provider": "wx4418e3e031e551be"
+    }
+  }
 }

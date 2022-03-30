@@ -2,41 +2,58 @@
   <dialogCom id='phoneDialog' isPhone="true" title='提示' content='【及时到】需要您授权以获取手机号码' confirmText='授权' bind:confirmEvent='confirmEvent' bind:getPhoneNumber='getPhoneNumber'>
   </dialogCom>
   <form bindsubmit="formSubmit" bindreset="formReset">
-<!--      <view wx:if="{{pAuthStatus === 0}}">-->
-<!--          <view class="big-logos">-->
-<!--              <image class="img" id="front" mode="aspectFit" bindtap="upimg" src='{{front ? front:default_front}}'></image>-->
-<!--              <canvas style="width: {{cWidth}}px; height: {{cHeight}}px;position:absolute;left:-1000px;top:-1000px" canvas-id="canvas"></canvas>-->
-<!--          </view>-->
-<!--          <view class="tip">-->
-<!--              温馨提示：为提高识别率,请尽量保证照片完整清晰-->
-<!--          </view>-->
-<!--      </view>-->
-    <view>
-      <view class="big-logos">
-        <image class="img" id="front" mode="aspectFit" bindtap="upimg" src='{{front ? front:default_front}}'></image>
-        <canvas style="width: {{cWidth}}px; height: {{cHeight}}px;position:absolute;left:-10000px;top:-10000px" canvas-id="canvas"></canvas>
-      </view>
-      <view class="tip">
-        温馨提示：为提高识别率,请尽量保证照片完整清晰
-      </view>
+      <scroll-view class='scrollContainer' scroll-x>
+          <block report-submit='true' data-id="{{item.id}}" wx:for="{{tabs}}" wx:key="{{index}}" data-status="{{item.value}}">
+              <block>
+                  <view class="{{navType !== item.value ? 'tab':'tab_selected'}}" catchtap="selectTab" data-status="{{item.value}}" data-index="{{index}}">{{item.title}}</view>
+              </block>
+          </block>
+      </scroll-view>
+    <view wx-if="{{navType==='1'}}">
+        <view>
+            <view class="big-logos">
+                <image class="img" id="front" mode="aspectFit" bindtap="upimg" src='{{front ? front:default_front}}'></image>
+                <canvas style="width: {{cWidth}}px; height: {{cHeight}}px;position:absolute;left:-10000px;top:-10000px" canvas-id="canvas"></canvas>
+            </view>
+            <view class="tip">
+                温馨提示：为提高识别率,请尽量保证照片完整清晰
+            </view>
+        </view>
+        <!-- <view class="big-logos">
+          <image class="img" id="back" mode="aspectFit" bindtap="upimg" src='{{back ? back:default_back}}'></image>
+        </view> -->
+        <view class="form-wrapper top">
+            <label class="label">姓名:</label>
+            <input class="name-input" value="{{name}}" bindinput='handleName' />
+        </view>
+
+        <view class="form-wrapper">
+            <label class="label">身份证:</label>
+            <label class="value">{{idCode}}</label>
+        </view>
+        <view class="form-wrapper" style="height:90px;">
+            <label class="label">地址:</label>
+                  <label class="address">{{address}}</label>
+        </view>
     </view>
-    <!-- <view class="big-logos">
-      <image class="img" id="back" mode="aspectFit" bindtap="upimg" src='{{back ? back:default_back}}'></image>
-    </view> -->
-    <view class="form-wrapper top">
-      <label class="label">姓名:</label>
-      <input class="name-input" value="{{name}}" bindinput='handleName' />
-      <!-- <label class="input">{{name}}</label> -->
+    <view wx-if="{{navType==='2'}}">
+        <view class="form-wrapper top">
+            <label class="label">姓名:</label>
+            <input class="name-input" value="{{name}}" bindinput='handleName' placeholder="请输入姓名"/>
+            <!-- <label class="input">{{name}}</label> -->
+        </view>
+
+        <view class="form-wrapper">
+            <label class="label">身份证:</label>
+            <input class="name-input" value="{{idCode}}" bindinput='handleIdCode' placeholder="请输入身份证号码"/>
+        </view>
+        <view class="form-wrapper" style="height:90px;">
+            <label class="label">地址:</label>
+            <input class="name-input" value="{{address}}" bindinput='handleAddress' placeholder="请输入身份证地址"/>
+        </view>
     </view>
 
-    <view class="form-wrapper">
-      <label class="label">身份证:</label>
-      <label class="value">{{idCode}}</label>
-    </view>
-    <view class="form-wrapper" style="height:90px;">
-      <label class="label">地址:</label>
-      <label class="address">{{address}}</label>
-    </view>
+
     <modalComp id="smsCodeDialog">
       <view slot="title">
         <view style="display:flex;flex-direction:row">
@@ -74,11 +91,7 @@
     <button formType="submit" class="btn" disabled="{{hasReadFlag == 0}}">提交实名信息</button>
   </form>
 
-<!-- <ocr-navigator bind:onSuccess="success" certificateType="idCard" selectedOptions="{{['id','name']}}">-->
-<!--  <button class="btn">身份证识别</button>-->
-<!--</ocr-navigator>-->
-
-    <!-- <ocr-navigator bind:onSuccess="success" certificateType="idCard" opposite="{{false}}">
-        <button type="primary">身份证识别</button>
-    </ocr-navigator> -->
+<!--    <ocr-navigator bind:onSuccess="success" certificateType="idCard" opposite="{{false}}">-->
+<!--        <button type="primary">身份证识别</button>-->
+<!--    </ocr-navigator>-->
 </view>

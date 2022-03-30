@@ -4,6 +4,17 @@ const app = getApp();
 
 Page({
   data: {
+    tabs: [
+      {
+        title: "拍照识别",
+        value: "1",
+      },
+      {
+        title: "手工录入",
+        value: "2",
+      },
+    ],
+    navType: "1",
     cWidth: 480,
     cHeight: 640,
     name: "拍照自动识别",
@@ -97,6 +108,28 @@ Page({
   success: function (e) {
     alert("e:::", e.detail);
   },
+
+  selectTab(e) {
+    let { index, status } = e.currentTarget.dataset;
+    if (status === "1") {
+      this.setData({
+        name: "拍照自动识别",
+        idCode: "拍照自动识别",
+        address: "拍照自动识别",
+      });
+    }
+    if (status === "2") {
+      this.setData({
+        name: "",
+        idCode: "",
+        address: "",
+      });
+    }
+    this.setData({
+      navType: status,
+    });
+  },
+
   resendSms: function () {
     this.openTimer();
     wx.request({
@@ -175,10 +208,20 @@ Page({
       name: e.detail.value,
     });
   },
+  handleIdCode: function (e) {
+    this.setData({
+      idCode: e.detail.value,
+    });
+  },
+  handleAddress: function (e) {
+    this.setData({
+      address: e.detail.value,
+    });
+  },
   formSubmit: function (e) {
     let _this = this;
-    let { name, idCode, address, agreementItems } = this.data;
-    if (idCode == "拍照自动识别") {
+    let { name, idCode, address, navType, agreementItems } = this.data;
+    if (navType === "1" && idCode == "拍照自动识别") {
       return wx.showToast({
         title: "请先上传身份证照片",
         icon: "none",
@@ -193,6 +236,26 @@ Page({
     //     duration: 1500
     //   });
     // }
+    if (navType === "2") {
+      if (name.trim() === "")
+        return wx.showToast({
+          title: "姓名不能为空",
+          icon: "none",
+          duration: 1500,
+        });
+      if (idCode.trim() === "")
+        return wx.showToast({
+          title: "身份证号码不能为空",
+          icon: "none",
+          duration: 1500,
+        });
+      if (address.trim() === "")
+        return wx.showToast({
+          title: "地址不能为空",
+          icon: "none",
+          duration: 1500,
+        });
+    }
     let params = {
       token: wx.getStorageSync("token"),
       name,

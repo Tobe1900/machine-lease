@@ -112,3 +112,39 @@
   height: 75rpx;
   line-height: 75rpx;
 }
+
+.scrollContainer {
+  top: 0;
+  width: 100%;
+  height: 32px;
+  background-color: #f0f0f0;
+  white-space: nowrap;
+  display: flex;
+  flex-wrap: wrap;
+  z-index: 999;
+  padding-top: 8px;
+  margin-bottom: 10px;
+}
+
+.tab {
+  flex: 1;
+  display: inline-block;
+  color: black;
+  font-size: 30rpx;
+  text-align: center;
+  padding: 16rpx 30rpx;
+  height: 28rpx;
+  line-height: 28rpx;
+}
+
+.tab_selected {
+  display: inline-block;
+  font-size: 30rpx;
+  text-align: center;
+  padding: 16rpx 30rpx;
+  height: 28rpx;
+  line-height: 28rpx;
+  color: #1296db;
+  font-weight: bold;
+  border-bottom: 2px solid #1296db;
+}

@@ -1,5 +1,5 @@
 <view class="container">
-  <dialogCom id='phoneDialog' isPhone="true" title='提示' content='【及时到】需要您授权以获取手机号码' confirmText='授权' bind:confirmEvent='confirmEvent' bind:getPhoneNumber='getPhoneNumber'>
+  <dialogCom id='phoneDialog' isPhone="true" title='提示' content='【及时租车】需要您授权以获取手机号码' confirmText='授权' bind:confirmEvent='confirmEvent' bind:getPhoneNumber='getPhoneNumber'>
   </dialogCom>
   <form bindsubmit="formSubmit" bindreset="formReset">
       <scroll-view class='scrollContainer' scroll-x>

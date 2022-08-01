@@ -49,6 +49,11 @@ Page({
         return this.phoneDialog.showDialog();
       }
 
+      const havePhone = wx.getStorageSync('havePhone')
+      if(!havePhone) {
+        return this.phoneDialog.showDialog();
+      }
+
       if (identifyInfo.pAuthStatus == 1) {
         this.setData({
           name: identifyInfo.name,
@@ -72,7 +77,11 @@ Page({
     });
   },
   getPhoneNumber(event) {
-    handleGetPhoneNumber(event, this, "phoneDialog");
+    handleGetPhoneNumber(event, this, "phoneDialog", () => {
+      wx.navigateBack({
+        delta: 1,
+      });
+    });
   },
   openTimer() {
     let _this = this;

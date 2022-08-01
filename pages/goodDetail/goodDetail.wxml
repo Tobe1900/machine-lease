@@ -1,5 +1,5 @@
 <view class="page-section page-section-spacing swiper app_container">
-  <dialogCom id='phone_dialog' isPhone="true" title='提示' content='【及时到】需要您授权以获取手机号码' confirmText='授权' bind:confirmEvent='confirmEvent' bind:getPhoneNumber='getPhoneNumber'>
+  <dialogCom id='phone_dialog' isPhone="true" title='提示' content='【及时租车】需要您授权以获取手机号码' confirmText='授权' bind:confirmEvent='confirmEvent' bind:getPhoneNumber='getPhoneNumber'>
   </dialogCom>
   <swiper autoplay="{{autoplay}}" indicator-dots="{{indicatorDots}}" interval="{{interval}}" duration="{{duration}}" style="height:270px;width:100%">
     <block wx:for="{{detailImags}}" wx:key="*this">

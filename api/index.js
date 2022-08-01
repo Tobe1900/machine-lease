@@ -61,7 +61,7 @@ const getIdentifyInfo = (self, callback) => {
 }
 
 
-const handleGetPhoneNumber = (event, self, dialogName) => {
+const handleGetPhoneNumber = (event, self, dialogName,callback) => {
   let {code} = event.detail
   console.log('code get phonenmumber', code)
   if (code.iv && code.encryptedData) {
@@ -82,6 +82,7 @@ const handleGetPhoneNumber = (event, self, dialogName) => {
         let data = res.data
         if (!data.errcode) {
           self[dialogName].hideDialog()
+          wx.setStorageSync('havePhone', true)
           wx.showToast({
             title: '手机绑定成功',
             icon: 'success',
@@ -102,6 +103,7 @@ const handleGetPhoneNumber = (event, self, dialogName) => {
   } else {
     // 用户拒绝授权
     self[dialogName].hideDialog();
+    if(callback) callback()
   }
 }
 

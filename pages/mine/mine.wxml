@@ -10,7 +10,7 @@
     </block>
   </view>
 
-  <dialogCom id='dialog' isUserInfo="true" title='提示' content='【及时到】需要您授权以获取用户信息' confirmText='授权' bind:confirmEvent='confirmEvent' bind:bindGetUserInfo='bindGetUserInfo'>
+  <dialogCom id='dialog' isUserInfo="true" title='提示' content='【及时租车】需要您授权以获取用户信息' confirmText='授权' bind:confirmEvent='confirmEvent' bind:bindGetUserInfo='bindGetUserInfo'>
   </dialogCom>
 
   <view class="news-item-container" bindtap="setPersonalAuth">

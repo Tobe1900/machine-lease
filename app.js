@@ -65,6 +65,7 @@ App({
                if (!data.errcode) {
                  _this.globalData.token = data.token
                  wx.setStorageSync('token', data.token)
+                 wx.setStorageSync('havePhone', data.havePhone)
                  resolve(data)
                } else {
                  wx.showToast({
